@@ -2,9 +2,12 @@
 
 export(check_and_fix_contin_table)
 export(generate_contin_table_with_clustered_AE)
-export(get_expected_count)
+export(get_expected_counts)
 export(get_std_pearson_res)
 export(mddc_boxplot)
 export(mddc_mc)
+export(report_drug_AE_pairs)
+import(RcppEigen)
 importFrom(MASS,mvrnorm)
 importFrom(MixMatrix,CSgenerate)
+useDynLib(MDDC)

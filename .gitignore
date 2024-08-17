@@ -1,0 +1,8 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+..Rcheck
+.DS_Store
+data/.DS_Store
+.vscode

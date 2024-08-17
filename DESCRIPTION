@@ -1,18 +1,18 @@
 Package: MDDC
 Type: Package
-Title: Modified Detecting Deviating Cells (MDDC) Algorithm to Adverse
-        Event Identification in Pharmacovigilance
-Version: 0.1.0
+Title: Modified Detecting Deviating Cells (MDDC) Algorithm for Adverse Event Identification in Pharmacovigilance
+Version: 1.0.0
 Authors@R: c(person(given = "Anran", family = "Liu", role = c("aut", "cre"),  email = "anranliu@buffalo.edu"),person(given = "Raktim", family = "Mukhopadhyay",   role = "aut",  email = "raktimmu@buffalo.edu"),person(given = "Marianthi",  family = "Markatou",  role = "aut", email = "markatou@buffalo.edu"))
 Maintainer: Raktim Mukhopadhyay <raktimmu@buffalo.edu>
 Description: This package provides two MDDC methods for detecting (adverse event, drug) signals, a data generating function for simulating pharmacovigilance data, and a few functions for pre-processing and computing statistics such as expectations or residuals. 
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.2.3
-Imports: MASS, MixMatrix
-NeedsCompilation: no
-Packaged: 2024-07-22 19:55:29 UTC; liuanran
+RoxygenNote: 7.3.1
+Imports: stats, MASS, MixMatrix, Rcpp, RcppEigen
+LinkingTo: 
+    Rcpp,
+    RcppEigen
 Author: Anran Liu [aut, cre],
   Raktim Mukhopadhyay [aut],
   Marianthi Markatou [aut]

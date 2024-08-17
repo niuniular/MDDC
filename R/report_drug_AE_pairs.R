@@ -62,7 +62,7 @@ report_drug_AE_pairs <- function(contin_table, contin_table_signal) {
   row_names <- rownames(contin_table)
   col_names <- colnames(contin_table)
 
-  mat_expected_count <- round(get_expected_count(contin_table),4)
+  mat_expected_count <- round(get_expected_counts(contin_table),4)
   mat_std_res <- round(get_std_pearson_res(contin_table),4)
 
   pairs <- list()
