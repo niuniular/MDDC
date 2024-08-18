@@ -8,10 +8,10 @@ mddc_mc(
   contin_table,
   quantile_mc = 0.95,
   mc_num = 10000,
-  exclude_same_drug_class = T,
-  col_specific_cutoff = T,
-  separate = T,
-  if_col_cor = F,
+  exclude_same_drug_class = TRUE,
+  col_specific_cutoff = TRUE,
+  separate = TRUE,
+  if_col_cor = FALSE,
   cor_lim = 0.8
 )
 }
@@ -38,7 +38,7 @@ A list with the following components:
 \item \code{mc_pval} returns the p values for each cell in the step 2. For cells with count greater than five, the p values are obtained via MC method. For cells with count less than or equal to five, the p values are obtained via Fisher's exact tests.
 \item \code{mc_signal} returns the signals with a count greater than five and identified in the step 2 by MC method. 1 indicates signals, 0 for non signal.
 \item \code{fisher_signal} returns the signals with a count less than or equal to five and identified in the step 2 by Fisher's exact tests. 1 indicates signals, 0 for non signal.
-\item \code{corr_signal_pval} returns the p values for each cell in the contingency table in the step 5, when the r_{ij} values are mapped back to the standard normal distribution.
+\item \code{corr_signal_pval} returns the p values for each cell in the contingency table in the step 5, when the \eqn{r_{ij}} values are mapped back to the standard normal distribution.
 \item \code{corr_signal_adj_pval} returns the Benjamini-Hochberg adjusted p values for each cell in the step 5. We leave here an option for the user to decide whether to use \code{corr_signal_pval} or \code{corr_signal_adj_pval}, and what threshold for p values should be used (for example, 0.05). Please see the example below.
 }
 }

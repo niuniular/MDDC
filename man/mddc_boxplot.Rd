@@ -6,9 +6,9 @@
 \usage{
 mddc_boxplot(
   contin_table,
-  col_specific_cutoff = T,
-  separate = T,
-  if_col_cor = F,
+  col_specific_cutoff = TRUE,
+  separate = TRUE,
+  if_col_cor = FALSE,
   cor_lim = 0.8
 )
 }
@@ -27,7 +27,7 @@ mddc_boxplot(
 A list with the following components:
 \itemize{
 \item \code{boxplot_signal} returns the signals identified in the step 2. 1 indicates signals, 0 for non signal.
-\item \code{corr_signal_pval} returns the p values for each cell in the contingency table in the step 5, when the r_{ij} values are mapped back to the standard normal distribution.
+\item \code{corr_signal_pval} returns the p values for each cell in the contingency table in the step 5, when the \eqn{r_{ij}} values are mapped back to the standard normal distribution.
 \item \code{corr_signal_adj_pval} returns the Benjamini-Hochberg adjusted p values for each cell in the step 5. We leave here an option for the user to decide whether to use \code{corr_signal_pval} or \code{corr_signal_adj_pval}, and what threshold for p values should be used (for example, 0.05). Please see the example below.
 }
 }

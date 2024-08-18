@@ -1,9 +1,10 @@
 #include <Rcpp.h>
 #include <RcppEigen.h>
-#include <Eigen/Dense>
 #include <tuple>
 #include <limits>
 #include <algorithm>
+#include <Eigen/Dense>
+
 
 // [[Rcpp::depends(RcppEigen)]]
 //'

@@ -26,17 +26,19 @@
 #' contin_table_signal_corr <- test1$corr_signal_pval < 0.05
 #'
 #' # identify the (drug, AE) signals for step 2
-#' result_1 <- report_drug_AE_pairs(contin_table = statin49,
-#'                                  contin_table_signal = contin_table_signal)
+#' result_1 <- report_drug_AE_pairs(
+#'   contin_table = statin49,
+#'   contin_table_signal = contin_table_signal
+#' )
 #' result_1
 #'
 #' # identify the (drug, AE) signals for step 5
-#' result_2 <- report_drug_AE_pairs(contin_table = statin49,
-#'                                  contin_table_signal = contin_table_signal_corr)
+#' result_2 <- report_drug_AE_pairs(
+#'   contin_table = statin49,
+#'   contin_table_signal = contin_table_signal_corr
+#' )
 #' result_2
-
 report_drug_AE_pairs <- function(contin_table, contin_table_signal) {
-
   # Check if the inputs are data matrix
   if (!is.matrix(contin_table) || !is.matrix(contin_table_signal)) {
     stop("Both inputs must be data matrices.")
@@ -62,19 +64,21 @@ report_drug_AE_pairs <- function(contin_table, contin_table_signal) {
   row_names <- rownames(contin_table)
   col_names <- colnames(contin_table)
 
-  mat_expected_count <- round(get_expected_counts(contin_table),4)
-  mat_std_res <- round(get_std_pearson_res(contin_table),4)
+  mat_expected_count <- round(get_expected_counts(contin_table), 4)
+  mat_std_res <- round(get_std_pearson_res(contin_table), 4)
 
   pairs <- list()
 
   for (j in seq_len(ncol(contin_table_signal))) {
     for (i in seq_len(nrow(contin_table_signal))) {
       if (contin_table_signal[i, j] == 1 && contin_table[i, j] != 0) {
-        pairs <- c(pairs, list(c(col_names[j],
-                                 row_names[i],
-                                 contin_table[i,j],
-                                 mat_expected_count[i,j],
-                                 mat_std_res[i,j])))
+        pairs <- c(pairs, list(c(
+          col_names[j],
+          row_names[i],
+          contin_table[i, j],
+          mat_expected_count[i, j],
+          mat_std_res[i, j]
+        )))
       }
     }
   }
@@ -87,6 +91,3 @@ report_drug_AE_pairs <- function(contin_table, contin_table_signal) {
     return(data.frame(Column = character(0), Row = character(0)))
   }
 }
-
-
-

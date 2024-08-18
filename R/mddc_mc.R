@@ -15,7 +15,7 @@
 #' \item \code{mc_pval} returns the p values for each cell in the step 2. For cells with count greater than five, the p values are obtained via MC method. For cells with count less than or equal to five, the p values are obtained via Fisher's exact tests.
 #' \item \code{mc_signal} returns the signals with a count greater than five and identified in the step 2 by MC method. 1 indicates signals, 0 for non signal.
 #' \item \code{fisher_signal} returns the signals with a count less than or equal to five and identified in the step 2 by Fisher's exact tests. 1 indicates signals, 0 for non signal.
-#' \item \code{corr_signal_pval} returns the p values for each cell in the contingency table in the step 5, when the r_{ij} values are mapped back to the standard normal distribution.
+#' \item \code{corr_signal_pval} returns the p values for each cell in the contingency table in the step 5, when the \eqn{r_{ij}} values are mapped back to the standard normal distribution.
 #' \item \code{corr_signal_adj_pval} returns the Benjamini-Hochberg adjusted p values for each cell in the step 5. We leave here an option for the user to decide whether to use \code{corr_signal_pval} or \code{corr_signal_adj_pval}, and what threshold for p values should be used (for example, 0.05). Please see the example below.
 #' }
 #' @export
@@ -32,24 +32,33 @@
 #'
 #' # signals identified in step 5 by considering AE correlations
 #' # In this example, cells with p values less than 0.05 are identified as signals
-#' signal_step5 <- (eg2$corr_signal_pval < 0.05)*1
+#' signal_step5 <- (eg2$corr_signal_pval < 0.05) * 1
+#' @importFrom grDevices boxplot.stats
+#' @importFrom stats cor
+#' @importFrom stats weighted.mean
+#' @importFrom stats sd
+#' @importFrom stats pnorm
+#' @importFrom stats p.adjust
+#' @importFrom stats rmultinom
+#' @importFrom stats fisher.test
+#' @importFrom stats quantile
+#' @importFrom stats lm
+
 mddc_mc <- function(contin_table,
-                          quantile_mc = 0.95,
-                          mc_num = 1e4,
-                          exclude_same_drug_class = T,
-                          col_specific_cutoff = T,
-                          separate = T,
-                          if_col_cor = F, # if consider column correlations? set it to F since we are using row correlations (AE correlations)
-                          cor_lim =  0.8 # c_corr in step 3
-
+                    quantile_mc = 0.95,
+                    mc_num = 1e4,
+                    exclude_same_drug_class = TRUE,
+                    col_specific_cutoff = TRUE,
+                    separate = TRUE,
+                    if_col_cor = FALSE, # if consider column correlations? set it to F since we are using row correlations (AE correlations)
+                    cor_lim = 0.8 # c_corr in step 3
 ) {
-
   # get p-value
 
-  get_pval <- function(obs, dist){
+  get_pval <- function(obs, dist) {
     dist <- as.vector(dist)
     dist <- dist[!is.na(dist)]
-    pval <- (1+sum(obs < dist)) / (1+length(dist))
+    pval <- (1 + sum(obs < dist)) / (1 + length(dist))
     return(pval)
   }
 
@@ -75,7 +84,7 @@ mddc_mc <- function(contin_table,
       (contin_table - E_ij_mat) / sqrt(E_ij_mat * ((1 - p_i_dot) %*% t((1 - p_dot_j))))
 
     ##    !!!!!! keep only the residual with a cell count > 5 ########
-    Z_ij_mat[which(contin_table<6)] <- NA
+    Z_ij_mat[which(contin_table < 6)] <- NA
 
     return(Z_ij_mat)
   }
@@ -102,21 +111,27 @@ mddc_mc <- function(contin_table,
 
     set.seed(42)
 
-    sim_tab_list <- lapply(1:mc_num,
-                           function(a)
-                             matrix(rmultinom(1, n_dot_dot, p_mat), ncol = n_col))
+    sim_tab_list <- lapply(
+      seq_len(mc_num),
+      function(a) {
+        matrix(rmultinom(1, n_dot_dot, p_mat), ncol = n_col)
+      }
+    )
 
     Z_ij_mat_list <- lapply(sim_tab_list, get_Z_ij_mat)
 
     max_list <-
-      matrix(unlist(lapply(Z_ij_mat_list, function(a)
-        apply(a, 2, function(b)
-          max(log(b), na.rm = T)))), byrow = T, ncol = n_col)
+      matrix(unlist(lapply(Z_ij_mat_list, function(a) {
+        apply(a, 2, function(b) {
+          max(log(b), na.rm = TRUE)
+        })
+      })), byrow = TRUE, ncol = n_col)
 
     cutoffs <-
-      unlist(lapply(1:n_col, function(a)
-        quantile(max_list[, a], quantile_mc, na.rm = T)))
-    #  cutoffs <- unlist(lapply(1:n_col, function(a) quantile(max_list[,a], 0.75, na.rm = T)))
+      unlist(lapply(seq_len(n_col), function(a) {
+        quantile(max_list[, a], quantile_mc, na.rm = TRUE)
+      }))
+    #  cutoffs <- unlist(lapply(1:n_col, function(a) quantile(max_list[,a], 0.75, na.rm = TRUE)))
 
     names(cutoffs) <- colnames(contin_table)
 
@@ -152,33 +167,32 @@ mddc_mc <- function(contin_table,
     (contin_table - E_ij_mat) / sqrt(E_ij_mat * ((1 - p_i_dot) %*% t((1 - p_dot_j))))
 
 
-  p_val_mat <- suppressWarnings(matrix(unlist(lapply(1:n_col, function(a) V_get_pval(as.vector(log(Z_ij_mat)[,a]), as.vector(null_dist_s[,a])))),
-                      ncol=n_col, byrow = F))
+  p_val_mat <- suppressWarnings(matrix(unlist(lapply(seq_len(n_col), function(a) V_get_pval(as.vector(log(Z_ij_mat)[, a]), as.vector(null_dist_s[, a])))),
+    ncol = n_col, byrow = FALSE
+  ))
 
 
   ###### Fisher's exact test for cell <= 5 #########
 
-  get_fisher <- function(row_idx, col_idx){
-
+  get_fisher <- function(row_idx, col_idx) {
     tabl <- matrix(NA, 2, 2)
-    tabl[1,1] <- contin_table[row_idx, col_idx]
-    tabl[2,1] <- sum(contin_table[-row_idx, col_idx])
+    tabl[1, 1] <- contin_table[row_idx, col_idx]
+    tabl[2, 1] <- sum(contin_table[-row_idx, col_idx])
 
-    if (exclude_same_drug_class == T){
-      tabl[1,2] <- contin_table[row_idx, n_col]
-      tabl[2,2] <- sum(contin_table[-row_idx, n_col])
-
+    if (exclude_same_drug_class == TRUE) {
+      tabl[1, 2] <- contin_table[row_idx, n_col]
+      tabl[2, 2] <- sum(contin_table[-row_idx, n_col])
     } else {
-      tabl[1,2] <- sum(contin_table[row_idx, -col_idx])
-      tabl[2,2] <- sums(contin_table[-row_idx, -col_idx])
+      tabl[1, 2] <- sum(contin_table[row_idx, -col_idx])
+      tabl[2, 2] <- sum(contin_table[-row_idx, -col_idx])
     }
     return(fisher.test(tabl)$p.value)
   }
 
 
-  for (j in 1:n_col){
-    for (i in which((contin_table[,j]<6) & (contin_table[,j]>0))){
-      p_val_mat[i,j] <- get_fisher(i,j)
+  for (j in seq_len(n_col)) {
+    for (i in which((contin_table[, j] < 6) & (contin_table[, j] > 0))) {
+      p_val_mat[i, j] <- get_fisher(i, j)
     }
   }
 
@@ -189,8 +203,8 @@ mddc_mc <- function(contin_table,
   colnames(p_val_mat) <- col_names
 
 
-  signal_mat <- ifelse((p_val_mat<(1-quantile_mc))&(contin_table>5),1,0)
-  second_signal_mat <- ifelse((p_val_mat<(1-quantile_mc))&(contin_table<6),1,0)
+  signal_mat <- ifelse((p_val_mat < (1 - quantile_mc)) & (contin_table > 5), 1, 0)
+  second_signal_mat <- ifelse((p_val_mat < (1 - quantile_mc)) & (contin_table < 6), 1, 0)
 
 
 
@@ -201,39 +215,32 @@ mddc_mc <- function(contin_table,
   res_zero <- as.vector(Z_ij_mat[which(contin_table == 0)])
 
 
-  if (col_specific_cutoff == T) {
-    if (separate == T) {
-
-      zero_drug_cutoff <- unlist(lapply(1:n_col, function(a) boxplot.stats(Z_ij_mat[which(contin_table[,a]==0),a])$stats[[1]]))
-
+  if (col_specific_cutoff == TRUE) {
+    if (separate == TRUE) {
+      zero_drug_cutoff <- unlist(lapply(seq_len(n_col), function(a) boxplot.stats(Z_ij_mat[which(contin_table[, a] == 0), a])$stats[[1]]))
     } else {
-
       zero_drug_cutoff <- apply(Z_ij_mat, 2, function(a) boxplot.stats(a)$stats[[1]])
     }
-
   } else {
-    if (separate == T) {
-
+    if (separate == TRUE) {
       zero_drug_cutoff <- rep(boxplot.stats(res_zero)$stats[1], n_col)
-
     } else {
-      zero_drug_cutoff <- rep(boxplot.stats(res_all)$stats[1],n_col)
+      zero_drug_cutoff <- rep(boxplot.stats(res_all)$stats[1], n_col)
     }
-
   }
 
   # Step 2: apply univariate outlier detection to all the cells
 
-  high_outlier <- matrix(unlist(lapply(1:n_col, function(a) (Z_ij_mat[,a]>exp(c_univ_drug)[a])*1)),ncol=n_col)
+  high_outlier <- matrix(unlist(lapply(seq_len(n_col), function(a) (Z_ij_mat[, a] > exp(c_univ_drug)[a]) * 1)), ncol = n_col)
   colnames(high_outlier) <- colnames(contin_table)
   row.names(high_outlier) <- row.names(contin_table)
 
-  low_outlier <- matrix(unlist(lapply(1:n_col, function(a) (Z_ij_mat[,a]< -exp(c_univ_drug)[a])*1)),ncol=n_col)
+  low_outlier <- matrix(unlist(lapply(seq_len(n_col), function(a) (Z_ij_mat[, a] < -exp(c_univ_drug)[a]) * 1)), ncol = n_col)
   colnames(low_outlier) <- colnames(contin_table)
   row.names(low_outlier) <- row.names(contin_table)
 
-  zero_cell_out <- matrix(unlist(lapply(1:n_col, function(a) (Z_ij_mat[,a]< zero_drug_cutoff[a]))),ncol=n_col)
-  zero_cell_outlier <- ((zero_cell_out) & (contin_table == 0))*1
+  zero_cell_out <- matrix(unlist(lapply(seq_len(n_col), function(a) (Z_ij_mat[, a] < zero_drug_cutoff[a]))), ncol = n_col)
+  zero_cell_outlier <- ((zero_cell_out) & (contin_table == 0)) * 1
 
 
 
@@ -247,7 +254,7 @@ mddc_mc <- function(contin_table,
 
   cor_with_NA <- function(mat, if_col_corr) {
     # this function can be replaced by cor(mat, use = "pairwise.complete.obs")
-    if (if_col_corr == F) {
+    if (if_col_corr == FALSE) {
       mat <- t(mat)
     }
 
@@ -256,13 +263,12 @@ mddc_mc <- function(contin_table,
     row.names(cor_mat) <- colnames(mat)
     colnames(cor_mat) <- colnames(mat)
 
-    for (i in 1:n_col) {
-      for (j in setdiff(1:n_col, i)) {
+    for (i in seq_len(n_col)) {
+      for (j in setdiff(seq_len(n_col), i)) {
         idx <- which((!is.na(mat[, i])) & (!is.na(mat[, j])))
         # cor_mat[i,j] <- cor(mat[idx,i], mat[idx,j])
         cor_mat[i, j] <-
           ifelse((length(idx) >= 3), cor(mat[idx, i], mat[idx, j]), NA)
-
       }
     }
     return(cor_mat)
@@ -274,16 +280,16 @@ mddc_mc <- function(contin_table,
     cor(t(Z_ij_mat)) # correlation between the standardized Pearson residuals
   cor_U <-
     cor_with_NA(U_ij_mat, if_col_cor) # correlation between the standardized Pearson residuals without the outlying cells
-  #cor_U <- cor(t(U_ij_mat), use = "pairwise.complete.obs")
+  # cor_U <- cor(t(U_ij_mat), use = "pairwise.complete.obs")
 
-  if (if_col_cor == T) {
+  if (if_col_cor == TRUE) {
     cor_list <- list()
     weight_list <- list()
     fitted_value_list <- list()
     Z_ij_hat_mat <- matrix(NA, n_row, n_col)
     coef_list <- list()
 
-    for (i in 1:(n_col)) {
+    for (i in seq_len(n_col)) {
       idx <-
         which(abs(cor_U[i, ]) >= cor_lim)
       cor_list[[i]] <- idx[!idx %in% i]
@@ -291,13 +297,12 @@ mddc_mc <- function(contin_table,
 
       if (length(cor_list[[i]]) == 0) {
         fitted_value_list[[i]] <- NA
-
       } else {
         mat <- matrix(NA, n_row, length(cor_list[[i]]))
         row.names(mat) <- row_names
         colnames(mat) <- col_names[cor_list[[i]]]
 
-        for (j in 1:length(cor_list[[i]])) {
+        for (j in seq_len(length(cor_list[[i]]))) {
           coeff <-
             lm(U_ij_mat[, i] ~ U_ij_mat[, cor_list[[i]][j]])$coefficient
           fit_values <-
@@ -313,13 +318,16 @@ mddc_mc <- function(contin_table,
       if (length(weight_list[[i]]) == 0) {
 
       } else {
-        Z_ij_hat_mat[, i] <- apply(fitted_value_list[[i]], 1,
-                                   function(a)
-                                     weighted.mean(
-                                       x = a,
-                                       w = weight_list[[i]],
-                                       na.rm = T
-                                     ))
+        Z_ij_hat_mat[, i] <- apply(
+          fitted_value_list[[i]], 1,
+          function(a) {
+            weighted.mean(
+              x = a,
+              w = weight_list[[i]],
+              na.rm = TRUE
+            )
+          }
+        )
       }
     }
   } else {
@@ -329,20 +337,19 @@ mddc_mc <- function(contin_table,
     Z_ij_hat_mat <- matrix(NA, n_row, n_col)
     coef_list <- list()
 
-    for (i in 1:(n_row)) {
+    for (i in seq_len(n_row)) {
       idx <- which(abs(cor_U[i, ]) >= cor_lim)
       cor_list[[i]] <- idx[!idx %in% i]
       weight_list[[i]] <- abs(cor_U[i, cor_list[[i]]])
 
       if (length(cor_list[[i]]) == 0) {
         fitted_value_list[[i]] <- NA
-
       } else {
         mat <- matrix(NA, length(cor_list[[i]]), n_col)
         row.names(mat) <- row_names[cor_list[[i]]]
         colnames(mat) <- col_names
 
-        for (j in 1:length(cor_list[[i]])) {
+        for (j in seq_len(length(cor_list[[i]]))) {
           coeff <-
             lm(U_ij_mat[i, ] ~ U_ij_mat[cor_list[[i]][j], ])$coefficient
           fit_values <-
@@ -358,16 +365,18 @@ mddc_mc <- function(contin_table,
       if (length(weight_list[[i]]) == 0) {
 
       } else {
-        Z_ij_hat_mat[i, ] <- apply(fitted_value_list[[i]], 2,
-                                   function(a)
-                                     weighted.mean(
-                                       x = a,
-                                       w = weight_list[[i]],
-                                       na.rm = T
-                                     ))
+        Z_ij_hat_mat[i, ] <- apply(
+          fitted_value_list[[i]], 2,
+          function(a) {
+            weighted.mean(
+              x = a,
+              w = weight_list[[i]],
+              na.rm = TRUE
+            )
+          }
+        )
       }
     }
-
   }
 
 
@@ -377,29 +386,31 @@ mddc_mc <- function(contin_table,
   R_ij_mat <- Z_ij_mat - Z_ij_hat_mat
 
   r_ij_mat <-
-    apply(R_ij_mat, 2, function(a)
-      (a - mean(a, na.rm = T)) / sd(a, na.rm = T))
+    apply(R_ij_mat, 2, function(a) {
+      (a - mean(a, na.rm = TRUE)) / sd(a, na.rm = TRUE)
+    })
 
-  r_pval <- 1-pnorm(r_ij_mat)
+  r_pval <- 1 - pnorm(r_ij_mat)
   r_adj_pval <- matrix(p.adjust(r_pval, method = "BH"),
-                       nrow = n_row,
-                       ncol= n_col)
+    nrow = n_row,
+    ncol = n_col
+  )
 
-  list_mat <- list(p_val_mat,
-                   signal_mat,
-                   second_signal_mat,
-                   r_pval,
-                   r_adj_pval)
+  list_mat <- list(
+    p_val_mat,
+    signal_mat,
+    second_signal_mat,
+    r_pval,
+    r_adj_pval
+  )
 
-  names(list_mat) <- c("mc_pval",
-                       "mc_signal",
-                       "fisher_signal",
-                       "corr_signal_pval",
-                       "corr_signal_adj_pval")
+  names(list_mat) <- c(
+    "mc_pval",
+    "mc_signal",
+    "fisher_signal",
+    "corr_signal_pval",
+    "corr_signal_adj_pval"
+  )
 
   return(list_mat)
-
 }
-
-
-

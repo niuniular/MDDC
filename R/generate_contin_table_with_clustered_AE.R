@@ -1,13 +1,28 @@
-#' Generate simulated contingency tables with option of incorporating adverse event correlation within clusters
+#' Generate simulated contingency tables with option of incorporating
+#' adverse event correlation within clusters.
 #'
-#' @description Generate simulated contingency tables with option of incorporating adverse event correlation within clusters.
-#' @param contin_table  A data matrix of an \eqn{I} x \eqn{J} contingency table with row (adverse event) and column (drug) names, of which the row and column marginals are used to generated the simulated data. Please first check the input contingency table using the function \code{check_and_fix_contin_table()}.
-#' @param n_rep Number of contingency tables are generated.
-#' @param AE_idx A data frame with two variables \code{idx} and \code{AE}, where \code{idx} indicates the cluster index (can be either a name or a number), \code{AE} list the adverse event names. See the \code{AE_idx} for \code{statin49} data as an example.
-#' @param rho A numeric value. The correlation of the AEs within each cluster. Default is 0.5.
-#' @param signal_mat A data matrix of the same dimension as the contingency table with entries the signal strength. The values should be greater or equal to 1, where 1 indicate non signal, values greater than 1 indicate signal.
+#' @description Generate simulated contingency tables with option of
+#' incorporating adverse event correlation within clusters.
 #'
-#' @return A list of \code{n_rep} of simulated contingency table.
+#' @param contin_table A data matrix of an \eqn{I} x \eqn{J} contingency
+#' table with row (adverse event) and column (drug) names, of which the
+#' row and column marginals are used to generate the simulated data.
+#' Please first check the input contingency table using the function
+#' \code{check_and_fix_contin_table()}.
+#' @param n_rep Number of contingency tables to be generated.
+#' @param AE_idx A data frame with two variables \code{idx} and \code{AE},
+#' where \code{idx} indicates the cluster index (can be either a name or
+#' a number), and \code{AE} lists the adverse event names. See the
+#' \code{AE_idx} for \code{statin49} data as an example.
+#' @param rho A numeric value indicating the correlation of the AEs within
+#' each cluster. Default is 0.5.
+#' @param signal_mat A data matrix of the same dimension as the contingency
+#' table with entries representing the signal strength. The values should
+#' be greater or equal to 1, where 1 indicates no signal, and values
+#' greater than 1 indicate signal.
+#'
+#' @return A list of \code{n_rep} simulated contingency tables.
+#' @importFrom stats rnorm
 #' @importFrom MASS mvrnorm
 #' @importFrom MixMatrix CSgenerate
 #' @export
@@ -17,27 +32,28 @@
 #' data(statin49)
 #' data(AE_idx)
 #'
-#' # first prepare a matrix of signal strength with same dimension as statin49
-#' # where 1 indicates non signal, values > 1 indicate signal
+#' # Prepare a matrix of signal strength with the same dimension as
+#' # statin49, where 1 indicates no signal and values > 1 indicate
+#' # signal
 #' lambda_matrix <- matrix(1, nrow = nrow(statin49), ncol = ncol(statin49))
 #'
-#' # assign the cell (45,1) with signal strength 4
-#' lambda_matrix[45,1] <- 4
+#' # Assign the cell (45,1) with signal strength 4
+#' lambda_matrix[45, 1] <- 4
 #'
-#' # generate 5 simulated table
+#' # Generate 5 simulated tables
 #' set.seed(123)
-#' simulated_tables <- generate_contin_table_with_clustered_AE(contin_table = statin49,
-#'                                                    n_rep = 5,
-#'                                                    AE_idx = AE_idx,
-#'                                                    rho = 0.5,
-#'                                                    signal_mat = lambda_matrix)
-
+#' simulated_tables <- generate_contin_table_with_clustered_AE(
+#'   contin_table = statin49,
+#'   n_rep = 5,
+#'   AE_idx = AE_idx,
+#'   rho = 0.5,
+#'   signal_mat = lambda_matrix
+#' )
 generate_contin_table_with_clustered_AE <- function(contin_table,
-                                            n_rep = 1,
-                                            AE_idx,
-                                            rho = 0.5,
-                                            signal_mat){
-
+                                                    n_rep = 1,
+                                                    AE_idx,
+                                                    rho = 0.5,
+                                                    signal_mat) {
   set.seed(42)
 
   n_row <- nrow(contin_table)
@@ -56,28 +72,35 @@ generate_contin_table_with_clustered_AE <- function(contin_table,
   E_ij_mat <- n_i_dot %*% t(n_dot_j) / n_dot_dot
 
   group_s <- unique(AE_idx$idx)
-  n_group_s <- unlist(lapply(1:length(group_s), function(a) sum(AE_idx$idx==group_s[a])))
+  n_group_s <- unlist(lapply(
+    seq_len(length(group_s)),
+    function(a) sum(AE_idx$idx == group_s[a])
+  ))
 
-  get_new_contin_table <- function(a){
-
+  get_new_contin_table <- function(a) {
     Z_ij_mat <- matrix(NA, nrow = n_row, ncol = n_col)
 
-    for (i in 1:length(group_s)) {
-
-      if (n_group_s[i]>1) {
-        Z_ij_mat[which(row.names(contin_table) %in% AE_idx$AE[which(AE_idx$idx == group_s[i])]),] <-
-          t(MASS::mvrnorm(n = n_col,
-                    mu = rep(0, n_group_s[i]),
-                    Sigma = MixMatrix::CSgenerate(n_group_s[i], rho)))
+    for (i in seq_len(length(group_s))) {
+      if (n_group_s[i] > 1) {
+        Z_ij_mat[which(row.names(contin_table) %in%
+          AE_idx$AE[which(AE_idx$idx == group_s[i])]), ] <-
+          t(MASS::mvrnorm(
+            n = n_col,
+            mu = rep(0, n_group_s[i]),
+            Sigma = MixMatrix::CSgenerate(n_group_s[i], rho)
+          ))
       } else {
-        Z_ij_mat[which(row_names %in% AE_idx$AE[which(AE_idx$idx == group_s[i])]),] <- rnorm(n_col)
-
+        Z_ij_mat[which(row_names %in% AE_idx$AE[which(AE_idx$idx ==
+          group_s[i])]), ] <-
+          rnorm(n_col)
       }
-
     }
 
-    new_contin_table <- round(Z_ij_mat*sqrt(E_ij_mat*signal_mat* ((1 - p_i_dot) %*% t((1 - p_dot_j)))) + E_ij_mat*signal_mat)
-    new_contin_table[which(new_contin_table<0)] <- 0
+    new_contin_table <- round(Z_ij_mat * sqrt(E_ij_mat * signal_mat *
+      ((1 - p_i_dot) %*%
+        t((1 - p_dot_j)))) +
+      E_ij_mat * signal_mat)
+    new_contin_table[which(new_contin_table < 0)] <- 0
 
     rownames(new_contin_table) <- row_names
     colnames(new_contin_table) <- col_names
@@ -85,5 +108,5 @@ generate_contin_table_with_clustered_AE <- function(contin_table,
     return(new_contin_table)
   }
 
-  return(lapply(1:n_rep, get_new_contin_table))
+  return(lapply(seq_len(n_rep), get_new_contin_table))
 }
