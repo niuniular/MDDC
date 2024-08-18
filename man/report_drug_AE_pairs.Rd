@@ -7,9 +7,16 @@
 report_drug_AE_pairs(contin_table, contin_table_signal)
 }
 \arguments{
-\item{contin_table}{A data matrix of an \eqn{I} x \eqn{J} contingency table with row (adverse event) and column (drug) names. Please first check the input contingency table using the function \code{check_and_fix_contin_table()}.}
+\item{contin_table}{A data matrix of an \eqn{I} x \eqn{J} contingency
+table with row (adverse event) and column (drug) names. Please first
+check the input contingency table using the function
+\code{check_and_fix_contin_table()}.}
 
-\item{contin_table_signal}{A data matrix has the same dimension and row and column names as \code{contin_table}, with entries either 1 (indicating signal) or 0 (indicating non signal). This data matrix can be obtained via applying the function \code{mddc_boxplot} or \code{mddc_mc}.}
+\item{contin_table_signal}{A data matrix with the same dimension and row
+and column names as \code{contin_table}, with entries either 1
+(indicating signal) or 0 (indicating non-signal). This data matrix can
+be obtained via applying the function \code{mddc_boxplot} or
+\code{mddc_mc}.}
 }
 \value{
 A data frame with five variables:

@@ -1,7 +1,14 @@
 #' Report the potential adverse events for drugs from contingency table
 #'
-#' @param contin_table A data matrix of an \eqn{I} x \eqn{J} contingency table with row (adverse event) and column (drug) names. Please first check the input contingency table using the function \code{check_and_fix_contin_table()}.
-#' @param contin_table_signal A data matrix has the same dimension and row and column names as \code{contin_table}, with entries either 1 (indicating signal) or 0 (indicating non signal). This data matrix can be obtained via applying the function \code{mddc_boxplot} or \code{mddc_mc}.
+#' @param contin_table A data matrix of an \eqn{I} x \eqn{J} contingency
+#' table with row (adverse event) and column (drug) names. Please first
+#' check the input contingency table using the function
+#' \code{check_and_fix_contin_table()}.
+#' @param contin_table_signal A data matrix with the same dimension and row
+#' and column names as \code{contin_table}, with entries either 1
+#' (indicating signal) or 0 (indicating non-signal). This data matrix can
+#' be obtained via applying the function \code{mddc_boxplot} or
+#' \code{mddc_mc}.
 #' @return A data frame with five variables:
 #' \itemize{
 #' \item \code{drug} the drug name.
@@ -46,7 +53,10 @@ report_drug_AE_pairs <- function(contin_table, contin_table_signal) {
 
   # Check if the dimensions match
   if (!all(dim(contin_table) == dim(contin_table_signal))) {
-    stop("The dimensions of contin_table and contin_table_signal must be the same.")
+    stop(paste(
+      "The dimensions of contin_table and contin_table_signal",
+      "must be the same."
+    ))
   }
 
   # Check if the row and column names match
@@ -71,21 +81,22 @@ report_drug_AE_pairs <- function(contin_table, contin_table_signal) {
 
   for (j in seq_len(ncol(contin_table_signal))) {
     for (i in seq_len(nrow(contin_table_signal))) {
-      if (contin_table_signal[i, j] == 1 && contin_table[i, j] != 0) {
-        pairs <- c(pairs, list(c(
-          col_names[j],
-          row_names[i],
-          contin_table[i, j],
-          mat_expected_count[i, j],
-          mat_std_res[i, j]
-        )))
+      if (contin_table_signal[i, j] == 1 && contin_table[i, j] !=
+        0) {
+        pairs <- c(pairs, list(c(col_names[j], row_names[i], contin_table[
+          i,
+          j
+        ], mat_expected_count[i, j], mat_std_res[i, j])))
       }
     }
   }
 
   if (length(pairs) > 0) {
     pairs_df <- do.call(rbind, pairs)
-    colnames(pairs_df) <- c("drug", "AE", "observed_num", "expected_num", "std_pearson_res")
+    colnames(pairs_df) <- c(
+      "drug", "AE", "observed_num", "expected_num",
+      "std_pearson_res"
+    )
     return(as.data.frame(pairs_df))
   } else {
     return(data.frame(Column = character(0), Row = character(0)))

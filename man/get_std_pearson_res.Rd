@@ -2,7 +2,8 @@
 % Please edit documentation in R/get_std_pearson_res.R
 \name{get_std_pearson_res}
 \alias{get_std_pearson_res}
-\title{Computing the standardized Pearson residuals for a given \eqn{I} by \eqn{J} contingency table}
+\title{Computing the standardized Pearson residuals for a given \eqn{I} 
+by \eqn{J} contingency table}
 \usage{
 get_std_pearson_res(contin_table)
 }
@@ -10,22 +11,24 @@ get_std_pearson_res(contin_table)
 \item{contin_table}{A matrix of an \eqn{I} by \eqn{J} contingency table.}
 }
 \value{
-A matrix of the standardized Pearson residuals of the input contingency table.
+A matrix of the standardized Pearson residuals of the input
+contingency table.
 }
 \description{
-Compute the standardized Pearson residuals for a given \eqn{I \times J} contingency table.
+Compute the standardized Pearson residuals for a given
+\eqn{I \times J} contingency table.
 }
 \examples{
-# create a 6 by 4 data matrix
+# Create a 6 by 4 data matrix
 set.seed(42)
 dat_mat <- matrix(rpois(6 * 4, 20), nrow = 6)
 dat_mat
 
-# check the format of the data matrix
-# and assign row and column names to the data matrix
+# Check the format of the data matrix and assign row and column names
+# to the data matrix
 contin_table <- check_and_fix_contin_table(dat_mat)
 contin_table
 
-# compute the standardized Pearson residuals
+# Compute the standardized Pearson residuals
 get_std_pearson_res(contin_table)
 }

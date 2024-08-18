@@ -7,16 +7,22 @@
 get_expected_counts(continTable)
 }
 \arguments{
-\item{continTable}{A numeric matrix representing the \eqn{I \times J} contingency table.}
+\item{continTable}{A numeric matrix representing the \eqn{I \times J}
+contingency table.}
 }
 \value{
-A numeric matrix of the same dimension as \code{continTable}, containing the expected counts for each cell \eqn{(i, j)} of the contingency table.
-The expected counts are based on the row and column marginal sums of the contingency table.
+A numeric matrix of the same dimension as \code{continTable},
+containing the expected counts for each cell \eqn{(i, j)} of the
+contingency table. The expected counts are based on the row and column
+marginal sums of the contingency table.
 }
 \description{
-This function computes the expected counts matrix \eqn{E_{ij}} from a given \eqn{I \times J} contingency table using the formula:
+This function computes the expected counts matrix \eqn{E_{ij}} from a
+given \eqn{I \times J} contingency table using the formula:
 \deqn{E_{ij} = \frac{n_{i.} n_{.j}}{n_{..}}}
-where \eqn{n_{i.}} is the sum of the \eqn{i}-th row, \eqn{n_{.j}} is the sum of the \eqn{j}-th column, and \eqn{n_{..}} is the total sum of the table.
+where \eqn{n_{i.}} is the sum of the \eqn{i}-th row, \eqn{n_{.j}} is
+the sum of the \eqn{j}-th column, and \eqn{n_{..}} is the total sum
+of the table.
 }
 \examples{
 # Create a 6 by 4 contingency table
@@ -30,6 +36,5 @@ contin_table
 
 # Compute the expected counts of the contingency table
 get_expected_counts(contin_table)
-
 
 }

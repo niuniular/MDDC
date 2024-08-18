@@ -23,7 +23,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // getZijMat
-Rcpp::List getZijMat(const Eigen::MatrixXd& continTable, bool na);
+Eigen::MatrixXd getZijMat(const Eigen::MatrixXd& continTable, bool na);
 RcppExport SEXP _MDDC_getZijMat(SEXP continTableSEXP, SEXP naSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;

@@ -2,60 +2,105 @@
 % Please edit documentation in R/mddc_mc.R
 \name{mddc_mc}
 \alias{mddc_mc}
-\title{Modified Detecting Deviating Cells (MDDC) algorithm for adverse event signal identification with Monte Carlo (MC) method for cutoff selection.}
+\title{Modified Detecting Deviating Cells (MDDC) algorithm for adverse event signal
+identification with Monte Carlo (MC) method for cutoff selection.}
 \usage{
 mddc_mc(
   contin_table,
-  quantile_mc = 0.95,
-  mc_num = 10000,
+  quantile = 0.95,
+  rep = 10000,
   exclude_same_drug_class = TRUE,
   col_specific_cutoff = TRUE,
   separate = TRUE,
   if_col_cor = FALSE,
-  cor_lim = 0.8
+  cor_lim = 0.8,
+  num_cores = 2,
+  seed = NULL
 )
 }
 \arguments{
-\item{contin_table}{A data matrix of an \eqn{I} x \eqn{J} contingency table with row (adverse event) and column (drug) names. Please first check the input contingency table using the function \code{check_and_fix_contin_table()}.}
+\item{contin_table}{A data matrix of an \eqn{I} x \eqn{J} contingency table
+with row (adverse event) and column (drug) names. Please first check the
+input contingency table using the function
+\code{check_and_fix_contin_table()}.}
 
-\item{quantile_mc}{In the step 2 of the algorithm, the quantile of the null distribution obtained via MC method to use as a threshold for identify cells with high value of the standardized Pearson residuals. Default is 0.95.}
+\item{quantile}{In the step 2 of the algorithm, the quantile of the null
+distribution obtained via MC method to use as a threshold for identifying
+cells with high value of the standardized Pearson residuals. Default is 0.95.}
 
-\item{mc_num}{In the step 2, the number of Monte Carlo replications in the MC method. Default is 10000.}
+\item{rep}{In the step 2, the number of Monte Carlo replications in the MC
+method. Default is 10000.}
 
-\item{exclude_same_drug_class}{In the step 2, when applying Fisher's exact test to cells with a count less than six, a 2 by 2 contingency table is needed to be constructed. Does the construction exclude other drugs in the same class as the drug of interest? Default is \code{TRUE}.}
+\item{exclude_same_drug_class}{In the step 2, when applying Fisher's exact
+test to cells with a count less than six, a 2 by 2 contingency table needs
+to be constructed. Does the construction exclude other drugs in the same
+class as the drug of interest? Default is \code{TRUE}.}
 
-\item{col_specific_cutoff}{Logical. In the step 2 of the algorithm, whether to apply MC method to the standardized Pearson residuals of the entire table, or within each drug column. Default is \code{TRUE}, that is within each drug column (column specific cutoff). \code{FALSE} indicates applying MC method on residuals of the entire table.}
+\item{col_specific_cutoff}{Logical. In the step 2 of the algorithm,
+whether to apply MC method to the standardized Pearson residuals
+of the entire table, or within each drug column.
+Default is \code{TRUE}, that is within each drug
+column (column specific cutoff). \code{FALSE} indicates applying MC method
+on residuals of the entire table.}
 
-\item{separate}{Logical. In the step 2 of the algorithm, whether to separate the standardized Pearson residuals for the zero cells and non zero cells and apply MC method separately or together. Default is \code{TRUE}.}
+\item{separate}{Logical. In the step 2 of the algorithm, whether to separate
+the standardized Pearson residuals for the zero cells and non zero cells and
+apply MC method separately or together. Default is \code{TRUE}.}
 
-\item{if_col_cor}{Logical. In the step 3 of the algorithm, whether to use column (drug) correlation or row (adverse event) correlation. Default is \code{FALSE}, that is using the adverse event correlation. \code{TRUE} indicate using drug correlation.}
+\item{if_col_cor}{Logical. In the step 3 of the algorithm, whether to use
+column (drug) correlation or row (adverse event) correlation. Default is
+\code{FALSE}, that is using the adverse event correlation. \code{TRUE}
+indicates using drug correlation.}
 
-\item{cor_lim}{A numeric value between (0, 1). In the step 3, what correlation threshold should be used to select ``connected'' adverse events. Default is 0.8.}
+\item{cor_lim}{A numeric value between (0, 1).
+In the step 3, what correlation threshold should be used to
+select ``connected'' adverse events. Default is 0.8.}
+
+\item{num_cores}{Number of cores used to parallelize the
+MDDC Boxplot algorithm. Default is 2.}
+
+\item{seed}{An optional integer to set the seed for reproducibility.
+If NULL, no seed is set.}
 }
 \value{
 A list with the following components:
 \itemize{
-\item \code{mc_pval} returns the p values for each cell in the step 2. For cells with count greater than five, the p values are obtained via MC method. For cells with count less than or equal to five, the p values are obtained via Fisher's exact tests.
-\item \code{mc_signal} returns the signals with a count greater than five and identified in the step 2 by MC method. 1 indicates signals, 0 for non signal.
-\item \code{fisher_signal} returns the signals with a count less than or equal to five and identified in the step 2 by Fisher's exact tests. 1 indicates signals, 0 for non signal.
-\item \code{corr_signal_pval} returns the p values for each cell in the contingency table in the step 5, when the \eqn{r_{ij}} values are mapped back to the standard normal distribution.
-\item \code{corr_signal_adj_pval} returns the Benjamini-Hochberg adjusted p values for each cell in the step 5. We leave here an option for the user to decide whether to use \code{corr_signal_pval} or \code{corr_signal_adj_pval}, and what threshold for p values should be used (for example, 0.05). Please see the example below.
+\item \code{mc_pval} returns the p values for each cell in the step 2. For
+cells with a count greater than five, the p values are obtained
+via MC method. For cells with a count less than or equal to five,
+the p values are obtained via Fisher's exact tests.
+\item \code{mc_signal} returns the signals with a count greater than five and
+identified in the step 2 by MC method. 1 indicates signals, 0 for non signal.
+\item \code{fisher_signal} returns the signals with a count
+less than or equal to five and identified in the step 2 by
+Fisher's exact tests. 1 indicates signals, 0 for non signal.
+\item \code{corr_signal_pval} returns the p values for each cell in the
+contingency table in the step 5, when the \eqn{r_{ij}} values are mapped back
+to the standard normal distribution.
+\item \code{corr_signal_adj_pval} returns the Benjamini-Hochberg adjusted p
+values for each cell in the step 5. We leave here an option for the user to
+decide whether to use \code{corr_signal_pval} or
+\code{corr_signal_adj_pval}, and what threshold for p values should be used
+(for example, 0.05). Please see the example below.
 }
 }
 \description{
-Modified Detecting Deviating Cells (MDDC) algorithm for adverse event signal identification. Monte Carlo (MC) method is used for cutoff selection in step 2 of the algorithm.
+Modified Detecting Deviating Cells (MDDC) algorithm for adverse
+event signal identification. Monte Carlo (MC) method is used for cutoff
+selection in step 2 of the algorithm.
 }
 \examples{
 # using statin49 data set as an example
 data(statin49)
 
 # apply the mddc_mc
-eg2 <- mddc_boxplot(statin49)
+mc_res <- mddc_boxplot(statin49)
 
 # signals identified in step 2 using MC method
-signal_step2 <- eg2$mc_signal
+signal_step2 <- mc_res$mc_signal
 
 # signals identified in step 5 by considering AE correlations
-# In this example, cells with p values less than 0.05 are identified as signals
-signal_step5 <- (eg2$corr_signal_pval < 0.05) * 1
+# In this example, cells with p values less than 0.05 are
+# identified as signals
+signal_step5 <- (mc_res$corr_signal_pval < 0.05) * 1
 }

@@ -5,19 +5,24 @@
 #include <algorithm>
 #include <Eigen/Dense>
 
-
 // [[Rcpp::depends(RcppEigen)]]
 //'
 //' Compute the Expected Count Matrix from a Contingency Table
 //'
-//' This function computes the expected counts matrix \eqn{E_{ij}} from a given \eqn{I \times J} contingency table using the formula:
+//' This function computes the expected counts matrix \eqn{E_{ij}} from a
+//' given \eqn{I \times J} contingency table using the formula:
 //' \deqn{E_{ij} = \frac{n_{i.} n_{.j}}{n_{..}}}
-//' where \eqn{n_{i.}} is the sum of the \eqn{i}-th row, \eqn{n_{.j}} is the sum of the \eqn{j}-th column, and \eqn{n_{..}} is the total sum of the table.
+//' where \eqn{n_{i.}} is the sum of the \eqn{i}-th row, \eqn{n_{.j}} is
+//' the sum of the \eqn{j}-th column, and \eqn{n_{..}} is the total sum
+//' of the table.
 //'
-//' @param continTable A numeric matrix representing the \eqn{I \times J} contingency table.
+//' @param continTable A numeric matrix representing the \eqn{I \times J}
+//' contingency table.
 //'
-//' @return A numeric matrix of the same dimension as \code{continTable}, containing the expected counts for each cell \eqn{(i, j)} of the contingency table.
-//' The expected counts are based on the row and column marginal sums of the contingency table.
+//' @return A numeric matrix of the same dimension as \code{continTable},
+//' containing the expected counts for each cell \eqn{(i, j)} of the
+//' contingency table. The expected counts are based on the row and column
+//' marginal sums of the contingency table.
 //'
 //' @examples
 //' # Create a 6 by 4 contingency table
@@ -31,7 +36,6 @@
 //'
 //' # Compute the expected counts of the contingency table
 //' get_expected_counts(contin_table)
-//'
 //'
 //' @useDynLib MDDC
 //' @rdname get_expected_counts
@@ -60,12 +64,17 @@ Eigen::MatrixXd get_expected_counts(const Eigen::MatrixXd &continTable)
 //'
 //' Standardized Pearson Residuals for Contingency Tables
 //'
-//' Compute the standardized Pearson residuals \eqn{Z_{ij}} for a given \eqn{I \times J} contingency table.
-//' Standardized Pearson residuals are calculated as \eqn{Z_{ij} = \frac{(O_{ij} - E_{ij})}{\sqrt{E_{ij} (1 - p_{i.}) (1 - p_{.j})}}}
-//' where \eqn{O_{ij}} is the observed count, \eqn{E_{ij}} is the expected count, and \eqn{p_{i.}} and \eqn{p_{.j}} are the row and column marginal probabilities, respectively.
+//' Compute the standardized Pearson residuals \eqn{Z_{ij}} for a given
+//' \eqn{I \times J} contingency table. Standardized Pearson residuals
+//' are calculated as \eqn{Z_{ij} = \frac{(O_{ij} - E_{ij})}{\sqrt{E_{ij}
+//' (1 - p_{i.}) (1 - p_{.j})}}} where \eqn{O_{ij}} is the observed count,
+//' \eqn{E_{ij}} is the expected count, and \eqn{p_{i.}} and \eqn{p_{.j}}
+//' are the row and column marginal probabilities, respectively.
 //'
-//' @param continTable A numeric matrix representing the \eqn{I \times J} contingency table.
-//' @param na A boolean flag (default is \code{TRUE}) to replace cells with observed counts less than 6 with \code{NA} values.
+//' @param continTable A numeric matrix representing the \eqn{I \times J}
+//' contingency table.
+//' @param na A boolean flag (default is \code{TRUE}) to replace cells with
+//' observed counts less than 6 with \code{NA} values.
 //'
 //' @return A matrix containing:
 //' \itemize{
@@ -81,7 +90,7 @@ Eigen::MatrixXd get_expected_counts(const Eigen::MatrixXd &continTable)
 //'
 //' @noRd
 // [[Rcpp::export]]
-Rcpp::List getZijMat(const Eigen::MatrixXd &continTable, bool na = true)
+Eigen::MatrixXd getZijMat(const Eigen::MatrixXd &continTable, bool na = true)
 {
     // This calculates the standardized Pearson residuals Zij
     int nRow = continTable.rows();
@@ -105,31 +114,27 @@ Rcpp::List getZijMat(const Eigen::MatrixXd &continTable, bool na = true)
         ZijMat = (continTable.array() < 6).select(std::numeric_limits<double>::quiet_NaN(), ZijMat);
     }
 
-    // Convert Eigen types to Rcpp types
-    Rcpp::NumericMatrix EijMat_rcpp = Rcpp::wrap(EijMat);
-    Rcpp::NumericVector piDot_rcpp = Rcpp::wrap(piDot);
-    Rcpp::NumericVector pDotj_rcpp = Rcpp::wrap(pDotj);
-    Rcpp::NumericMatrix ZijMat_rcpp = Rcpp::wrap(ZijMat);
-
-    // Return as a list
-    return Rcpp::List::create(
-        Rcpp::Named("ZijMat") = ZijMat_rcpp,
-        Rcpp::Named("nDotDot") = nDotDot,
-        Rcpp::Named("piDot") = piDot_rcpp,
-        Rcpp::Named("pDotj") = pDotj_rcpp);
+    return ZijMat;
 }
 
 // [[Rcpp::depends(RcppEigen)]]
 //'
 //' Compute P-values Based on an Empirical Distribution
 //'
-//' This function calculates the p-values for each observation in a vector \code{obs} based on a sorted empirical distribution vector \code{dist}. The p-value is calculated as the proportion of values in \code{dist} that are greater than the observation, adjusted for ranking. If an observation is \code{NaN}, the corresponding p-value will be \code{NaN}.
+//' This function calculates the p-values for each observation in a vector
+//' \code{obs} based on a sorted empirical distribution vector \code{dist}.
+//' The p-value is calculated as the proportion of values in \code{dist} that
+//' are greater than the observation, adjusted for ranking. If an observation
+//' is \code{NaN}, the corresponding p-value will be \code{NaN}.
 //'
-//' @param obs A numeric vector (Eigen::VectorXd) containing the observations for which p-values are to be computed.
-//' @param dist A numeric vector (Eigen::VectorXd) representing the empirical distribution from which the p-values will be calculated.
+//' @param obs A numeric vector (Eigen::VectorXd) containing the observations
+//' for which p-values are to be computed.
+//' @param dist A numeric vector (Eigen::VectorXd) representing the empirical
+//' distribution from which the p-values will be calculated.
 //'
-//' @return A numeric vector (Eigen::VectorXd) of p-values corresponding to each observation in \code{obs}.
-//' The p-values are based on the number of elements in \code{dist} greater than each observation.
+//' @return A numeric vector (Eigen::VectorXd) of p-values corresponding to
+//' each observation in \code{obs}. The p-values are based on the number of
+//' elements in \code{dist} greater than each observation.
 //'
 //' @useDynLib MDDC
 //' @rdname getPVal
@@ -170,14 +175,24 @@ Eigen::VectorXd getPVal(const Eigen::VectorXd &obs, const Eigen::VectorXd &dist)
 //'
 //' Generate Contingency Table for Fisher's Exact Test
 //'
-//' This function constructs a 2x2 contingency table used for performing Fisher's Exact Test. The table is derived from the given contingency matrix \code{continTable} based on the specified row and column indices. The user has the option to exclude data from the same drug class by adjusting the calculations for the contingency table.
+//' This function constructs a 2x2 contingency table used for performing
+//' Fisher's Exact Test. The table is derived from the given contingency
+//' matrix \code{continTable} based on the specified row and column indices.
+//' The user has the option to exclude data from the same drug class by
+//' adjusting the calculations for the contingency table.
 //'
-//' @param continTable A numeric matrix (Eigen::MatrixXd) representing the contingency table from which the 2x2 table will be constructed.
-//' @param rowIdx An integer representing the row index of the element to be used in the contingency table.
-//' @param colIdx An integer representing the column index of the element to be used in the contingency table.
-//' @param excludeSameDrugClass A boolean value indicating whether to exclude the same drug class in the calculations. If \code{true}, the function will adjust the calculations by excluding the same drug class.
+//' @param continTable A numeric matrix (Eigen::MatrixXd) representing the
+//' contingency table from which the 2x2 table will be constructed.
+//' @param rowIdx An integer representing the row index of the element to be
+//' used in the contingency table.
+//' @param colIdx An integer representing the column index of the element to
+//' be used in the contingency table.
+//' @param excludeSameDrugClass A boolean value indicating whether to exclude
+//' the same drug class in the calculations. If \code{true}, the function
+//' will adjust the calculations by excluding the same drug class.
 //'
-//' @return A 2x2 numeric matrix (Eigen::MatrixXd) representing the contingency table for Fisher's Exact Test.
+//' @return A 2x2 numeric matrix (Eigen::MatrixXd) representing the contingency
+//' table for Fisher's Exact Test.
 //'
 //' @useDynLib MDDC
 //' @rdname getFisherExactTestTable
