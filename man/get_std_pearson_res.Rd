@@ -18,7 +18,7 @@ Compute the standardized Pearson residuals for a given \eqn{I \times J} continge
 \examples{
 # create a 6 by 4 data matrix
 set.seed(42)
-dat_mat <- matrix(rpois(6*4, 20), nrow=6)
+dat_mat <- matrix(rpois(6 * 4, 20), nrow = 6)
 dat_mat
 
 # check the format of the data matrix

@@ -38,12 +38,16 @@ contin_table_signal <- test1$boxplot_signal
 contin_table_signal_corr <- test1$corr_signal_pval < 0.05
 
 # identify the (drug, AE) signals for step 2
-result_1 <- report_drug_AE_pairs(contin_table = statin49,
-                                 contin_table_signal = contin_table_signal)
+result_1 <- report_drug_AE_pairs(
+  contin_table = statin49,
+  contin_table_signal = contin_table_signal
+)
 result_1
 
 # identify the (drug, AE) signals for step 5
-result_2 <- report_drug_AE_pairs(contin_table = statin49,
-                                 contin_table_signal = contin_table_signal_corr)
+result_2 <- report_drug_AE_pairs(
+  contin_table = statin49,
+  contin_table_signal = contin_table_signal_corr
+)
 result_2
 }

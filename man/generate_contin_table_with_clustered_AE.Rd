@@ -2,7 +2,8 @@
 % Please edit documentation in R/generate_contin_table_with_clustered_AE.R
 \name{generate_contin_table_with_clustered_AE}
 \alias{generate_contin_table_with_clustered_AE}
-\title{Generate simulated contingency tables with option of incorporating adverse event correlation within clusters}
+\title{Generate simulated contingency tables with option of incorporating
+adverse event correlation within clusters.}
 \usage{
 generate_contin_table_with_clustered_AE(
   contin_table,
@@ -13,39 +14,54 @@ generate_contin_table_with_clustered_AE(
 )
 }
 \arguments{
-\item{contin_table}{A data matrix of an \eqn{I} x \eqn{J} contingency table with row (adverse event) and column (drug) names, of which the row and column marginals are used to generated the simulated data. Please first check the input contingency table using the function \code{check_and_fix_contin_table()}.}
+\item{contin_table}{A data matrix of an \eqn{I} x \eqn{J} contingency
+table with row (adverse event) and column (drug) names, of which the
+row and column marginals are used to generate the simulated data.
+Please first check the input contingency table using the function
+\code{check_and_fix_contin_table()}.}
 
-\item{n_rep}{Number of contingency tables are generated.}
+\item{n_rep}{Number of contingency tables to be generated.}
 
-\item{AE_idx}{A data frame with two variables \code{idx} and \code{AE}, where \code{idx} indicates the cluster index (can be either a name or a number), \code{AE} list the adverse event names. See the \code{AE_idx} for \code{statin49} data as an example.}
+\item{AE_idx}{A data frame with two variables \code{idx} and \code{AE},
+where \code{idx} indicates the cluster index (can be either a name or
+a number), and \code{AE} lists the adverse event names. See the
+\code{AE_idx} for \code{statin49} data as an example.}
 
-\item{rho}{A numeric value. The correlation of the AEs within each cluster. Default is 0.5.}
+\item{rho}{A numeric value indicating the correlation of the AEs within
+each cluster. Default is 0.5.}
 
-\item{signal_mat}{A data matrix of the same dimension as the contingency table with entries the signal strength. The values should be greater or equal to 1, where 1 indicate non signal, values greater than 1 indicate signal.}
+\item{signal_mat}{A data matrix of the same dimension as the contingency
+table with entries representing the signal strength. The values should
+be greater or equal to 1, where 1 indicates no signal, and values
+greater than 1 indicate signal.}
 }
 \value{
-A list of \code{n_rep} of simulated contingency table.
+A list of \code{n_rep} simulated contingency tables.
 }
 \description{
-Generate simulated contingency tables with option of incorporating adverse event correlation within clusters.
+Generate simulated contingency tables with option of
+incorporating adverse event correlation within clusters.
 }
 \examples{
 # using statin49 as an example
 data(statin49)
 data(AE_idx)
 
-# first prepare a matrix of signal strength with same dimension as statin49
-# where 1 indicates non signal, values > 1 indicate signal
+# Prepare a matrix of signal strength with the same dimension as
+# statin49, where 1 indicates no signal and values > 1 indicate
+# signal
 lambda_matrix <- matrix(1, nrow = nrow(statin49), ncol = ncol(statin49))
 
-# assign the cell (45,1) with signal strength 4
-lambda_matrix[45,1] <- 4
+# Assign the cell (45,1) with signal strength 4
+lambda_matrix[45, 1] <- 4
 
-# generate 5 simulated table
+# Generate 5 simulated tables
 set.seed(123)
-simulated_tables <- generate_contin_table_with_clustered_AE(contin_table = statin49,
-                                                   n_rep = 5,
-                                                   AE_idx = AE_idx,
-                                                   rho = 0.5,
-                                                   signal_mat = lambda_matrix)
+simulated_tables <- generate_contin_table_with_clustered_AE(
+  contin_table = statin49,
+  n_rep = 5,
+  AE_idx = AE_idx,
+  rho = 0.5,
+  signal_mat = lambda_matrix
+)
 }

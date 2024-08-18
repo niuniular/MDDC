@@ -7,22 +7,25 @@
 check_and_fix_contin_table(contin_table)
 }
 \arguments{
-\item{contin_table}{A data matrix or a data frame of an \eqn{I} by \eqn{J} contingency table with or without prespecified row and column names.}
+\item{contin_table}{A data matrix or a data frame of an \eqn{I} by \eqn{J}
+contingency table with or without prespecified row and column names.}
 }
 \value{
-A data matrix of an \eqn{I} by \eqn{J} contingency table with row and column names.
+A data matrix of an \eqn{I} by \eqn{J} contingency table with row
+and column names.
 }
 \description{
-Verify and correct the input \eqn{I} by \eqn{J} contingency table to ensures the input \eqn{I} by \eqn{J} contingency table is properly formatted as a data matrix with row (adverse event) and column (drug) names.
+Verify and correct the input \eqn{I} by \eqn{J} contingency
+table to ensure it is properly formatted as a data matrix with row
+(adverse event) and column (drug) names.
 }
 \examples{
-# create a 6 by 4 data matrix
+# Create a 6 by 4 data matrix
 set.seed(42)
-dat_mat <- matrix(rpois(6*4, 20), nrow=6)
+dat_mat <- matrix(rpois(6 * 4, 20), nrow = 6)
 dat_mat
 
-# check the format of the data matrix
-# and assign row and column names to the data matrix
+# Check the format of the data matrix and assign row and column names
 contin_table <- check_and_fix_contin_table(dat_mat)
 contin_table
 }

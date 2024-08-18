@@ -9,7 +9,8 @@ mddc_boxplot(
   col_specific_cutoff = TRUE,
   separate = TRUE,
   if_col_cor = FALSE,
-  cor_lim = 0.8
+  cor_lim = 0.8,
+  num_cores = 4
 )
 }
 \arguments{
@@ -22,6 +23,8 @@ mddc_boxplot(
 \item{if_col_cor}{Logical. In the step 3 of the algorithm, whether to use column (drug) correlation or row (adverse event) correlation. Default is \code{FALSE}, that is using the adverse event correlation. \code{TRUE} indicate using drug correlation.}
 
 \item{cor_lim}{A numeric value between (0, 1). In the step 3, what correlation threshold should be used to select ``connected'' adverse events. Default is 0.8.}
+
+\item{num_cores}{Number of cores used to parallelize the MDDC Boxplot algorithm (default:4).}
 }
 \value{
 A list with the following components:
@@ -46,5 +49,5 @@ signal_step2 <- eg1$boxplot_signal
 
 # signals identified in step 5 by considering AE correlations
 # In this example, cells with p values less than 0.05 are identified as signals
-signal_step5 <- (eg1$corr_signal_pval < 0.05)*1
+signal_step5 <- (eg1$corr_signal_pval < 0.05) * 1
 }

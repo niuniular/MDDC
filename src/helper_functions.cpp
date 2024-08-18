@@ -32,6 +32,10 @@
 //' # Compute the expected counts of the contingency table
 //' get_expected_counts(contin_table)
 //'
+//'
+//' @useDynLib MDDC
+//' @rdname get_expected_counts
+//'
 //' @export
 // [[Rcpp::export]]
 Eigen::MatrixXd get_expected_counts(const Eigen::MatrixXd &continTable)

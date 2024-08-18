@@ -26,6 +26,10 @@
 #' # Compute the expected counts of the contingency table
 #' get_expected_counts(contin_table)
 #'
+#'
+#' @useDynLib MDDC
+#' @rdname get_expected_counts
+#'
 #' @export
 get_expected_counts <- function(continTable) {
     .Call('_MDDC_get_expected_counts', PACKAGE = 'MDDC', continTable)

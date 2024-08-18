@@ -31,4 +31,5 @@ contin_table
 # Compute the expected counts of the contingency table
 get_expected_counts(contin_table)
 
+
 }

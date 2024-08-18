@@ -6,6 +6,7 @@
 #' @param separate Logical. In the step 2 of the algorithm, whether to separate the standardized Pearson residuals for the zero cells and non zero cells and apply boxplot method separately or together. Default is \code{TRUE}.
 #' @param if_col_cor Logical. In the step 3 of the algorithm, whether to use column (drug) correlation or row (adverse event) correlation. Default is \code{FALSE}, that is using the adverse event correlation. \code{TRUE} indicate using drug correlation.
 #' @param cor_lim A numeric value between (0, 1). In the step 3, what correlation threshold should be used to select ``connected'' adverse events. Default is 0.8.
+#' @param num_cores Number of cores used to parallelize the MDDC Boxplot algorithm (default:4).
 #'
 #'
 #' @return A list with the following components:
@@ -36,13 +37,16 @@
 #' @importFrom stats pnorm
 #' @importFrom stats p.adjust
 #' @importFrom stats lm
+#' @import foreach
+#' @import doParallel
+
 
 mddc_boxplot <- function(contin_table,
                          col_specific_cutoff = TRUE,
                          separate = TRUE,
-                         if_col_cor = FALSE, # if consider column correlations? set it to F since we are using row correlations (AE correlations)
-                         cor_lim = 0.8 # c_corr in step 3
-) {
+                         if_col_cor = FALSE, # if consider column correlations? set it to FALSE since we are using row correlations (AE correlations)
+                         cor_lim = 0.8, # c_corr in step 3
+                         num_cores = 4) {
   # Step 0: initialization and preparation
 
   n_row <- nrow(contin_table)
@@ -51,18 +55,25 @@ mddc_boxplot <- function(contin_table,
   row_names <- row.names(contin_table)
   col_names <- colnames(contin_table)
 
-  n_i_dot <- rowSums(contin_table)
-  n_dot_j <- colSums(contin_table)
-  n_dot_dot <- sum(contin_table)
-
-  p_i_dot <- n_i_dot / n_dot_dot
-  p_dot_j <- n_dot_j / n_dot_dot
-
   # Step 1: for each cell compute the standardized Pearson residual
 
-  E_ij_mat <- n_i_dot %*% t(n_dot_j) / n_dot_dot
-  Z_ij_mat <-
-    (contin_table - E_ij_mat) / sqrt(E_ij_mat * ((1 - p_i_dot) %*% t((1 - p_dot_j))))
+  output_list <- getZijMat(continTable = contin_table, na = FALSE)
+
+  Z_ij_mat <- output_list$ZijMat
+  n_dot_dot <- output_list$nDotDot
+  p_i_dot <- output_list$piDot
+  p_dot_j <- output_list$p_dot_j
+
+  # n_i_dot <- rowSums(contin_table)
+  # n_dot_j <- colSums(contin_table)
+  # n_dot_dot <- sum(contin_table)
+
+  # p_i_dot <- n_i_dot / n_dot_dot
+  # p_dot_j <- n_dot_j / n_dot_dot
+
+  # E_ij_mat <- n_i_dot %*% t(n_dot_j) / n_dot_dot
+  # Z_ij_mat <-
+  #   (contin_table - E_ij_mat) / sqrt(E_ij_mat * ((1 - p_i_dot) %*% t((1 - p_dot_j))))
 
   res_all <- as.vector(Z_ij_mat)
   res_nonzero <- as.vector(Z_ij_mat[which(contin_table != 0)])
@@ -106,9 +117,9 @@ mddc_boxplot <- function(contin_table,
 
   # Step 3 & 4: consider the bivariate relations between AEs and predict values based on the connected AEs
 
-  cor_with_NA <- function(mat, if_col_corr) {
+  cor_with_NA <- function(mat, if_col_cor) {
     # this function can be replaced by cor(mat, use = "pairwise.complete.obs")
-    if (if_col_corr == FALSE) {
+    if (if_col_cor == FALSE) {
       mat <- t(mat)
     }
 
@@ -127,111 +138,99 @@ mddc_boxplot <- function(contin_table,
     return(cor_mat)
   }
 
-  cor_orig <-
-    cor(t(contin_table)) # correlation between original cell counts
-  cor_Z <-
-    cor(t(Z_ij_mat)) # correlation between the standardized Pearson residuals
+  # cor_orig <-
+  #   cor(t(contin_table)) # correlation between original cell counts
+  # cor_Z <-
+  #   cor(t(Z_ij_mat)) # correlation between the standardized Pearson residuals
   cor_U <-
     cor_with_NA(U_ij_mat, if_col_cor) # correlation between the standardized Pearson residuals without the outlying cells
   # cor_U <- cor(t(U_ij_mat), use = "pairwise.complete.obs")
 
+
   if (if_col_cor == TRUE) {
-    cor_list <- list()
-    weight_list <- list()
-    fitted_value_list <- list()
-    Z_ij_hat_mat <- matrix(NA, n_row, n_col)
-    coef_list <- list()
-
-    for (i in seq_len(n_col)) {
-      idx <-
-        which(abs(cor_U[i, ]) >= cor_lim)
-      cor_list[[i]] <- idx[!idx %in% i]
-      weight_list[[i]] <- abs(cor_U[i, cor_list[[i]]])
-
-      if (length(cor_list[[i]]) == 0) {
-        fitted_value_list[[i]] <- NA
-      } else {
-        mat <- matrix(NA, n_row, length(cor_list[[i]]))
-        row.names(mat) <- row_names
-        colnames(mat) <- col_names[cor_list[[i]]]
-
-        for (j in seq_len(length(cor_list[[i]]))) {
-          coeff <-
-            lm(U_ij_mat[, i] ~ U_ij_mat[, cor_list[[i]][j]])$coefficient
-          fit_values <-
-            U_ij_mat[, cor_list[[i]][j]] * coeff[2] + coeff[1]
-          mat[which(row_names %in% names(fit_values)), j] <-
-            fit_values
-          coef_list <- append(coef_list, coeff)
-        }
-
-        fitted_value_list <- append(fitted_value_list, list(mat))
-      }
-
-      if (length(weight_list[[i]]) == 0) {
-
-      } else {
-        Z_ij_hat_mat[, i] <- apply(
-          fitted_value_list[[i]], 1,
-          function(a) {
-            weighted.mean(
-              x = a,
-              w = weight_list[[i]],
-              na.rm = TRUE
-            )
-          }
-        )
-      }
-    }
+    iter_over <- n_col
   } else {
-    cor_list <- list()
-    weight_list <- list()
-    fitted_value_list <- list()
-    Z_ij_hat_mat <- matrix(NA, n_row, n_col)
-    coef_list <- list()
-
-    for (i in seq_len(n_row)) {
-      idx <- which(abs(cor_U[i, ]) >= cor_lim)
-      cor_list[[i]] <- idx[!idx %in% i]
-      weight_list[[i]] <- abs(cor_U[i, cor_list[[i]]])
-
-      if (length(cor_list[[i]]) == 0) {
-        fitted_value_list[[i]] <- NA
-      } else {
-        mat <- matrix(NA, length(cor_list[[i]]), n_col)
-        row.names(mat) <- row_names[cor_list[[i]]]
-        colnames(mat) <- col_names
-
-        for (j in seq_len(length(cor_list[[i]]))) {
-          coeff <-
-            lm(U_ij_mat[i, ] ~ U_ij_mat[cor_list[[i]][j], ])$coefficient
-          fit_values <-
-            U_ij_mat[cor_list[[i]][j], ] * coeff[2] + coeff[1]
-          mat[j, which(col_names %in% names(fit_values))] <-
-            fit_values
-          coef_list <- append(coef_list, coeff)
-        }
-
-        fitted_value_list <- append(fitted_value_list, list(mat))
-      }
-
-      if (length(weight_list[[i]]) == 0) {
-
-      } else {
-        Z_ij_hat_mat[i, ] <- apply(
-          fitted_value_list[[i]], 2,
-          function(a) {
-            weighted.mean(
-              x = a,
-              w = weight_list[[i]],
-              na.rm = TRUE
-            )
-          }
-        )
-      }
-    }
+    iter_over <- n_row
   }
 
+  num_cores <- as.numeric(num_cores)
+  registerDoParallel(num_cores)
+
+  # Parallelized computation
+  results <- foreach(i = seq_len(iter_over), .packages = c("stats")) %dopar% {
+    idx <- which(abs(cor_U[i, ]) >= cor_lim)
+    cor_list_i <- idx[!idx %in% i]
+    weight_list_i <- abs(cor_U[i, cor_list_i])
+
+    if (length(cor_list_i) == 0) {
+      fitted_value_i <- NA
+    } else {
+      if (if_col_cor == TRUE) {
+        mat <- matrix(NA, n_row, length(cor_list_i))
+        row.names(mat) <- row_names
+        colnames(mat) <- col_names[cor_list_i]
+      } else {
+        mat <- matrix(NA, length(cor_list_i), n_col)
+        row.names(mat) <- row_names[cor_list_i]
+        colnames(mat) <- col_names
+      }
+
+      coef_list <- list()
+      for (j in seq_len(length(cor_list_i))) {
+        if (if_col_cor == TRUE) {
+          coeff <- lm(U_ij_mat[, i] ~ U_ij_mat[, cor_list_i[j]])$coefficients
+          fit_values <- U_ij_mat[, cor_list_i[j]] * coeff[2] + coeff[1]
+          mat[which(row_names %in% names(fit_values)), j] <- fit_values
+        } else {
+          coeff <- lm(U_ij_mat[i, ] ~ U_ij_mat[cor_list_i[j], ])$coefficients
+          fit_values <- U_ij_mat[cor_list_i[j], ] * coeff[2] + coeff[1]
+          mat[j, which(col_names %in% names(fit_values))] <- fit_values
+        }
+        coef_list <- append(coef_list, list(coeff))
+      }
+
+      fitted_value_i <- mat
+    }
+
+    if (length(weight_list_i) > 0) {
+      if (if_col_cor == TRUE) {
+        Z_ij_hat_i <- apply(
+          fitted_value_i, 1,
+          function(a) {
+            weighted.mean(
+              x = a,
+              w = weight_list_i,
+              na.rm = TRUE
+            )
+          }
+        )
+      } else {
+        Z_ij_hat_i <- apply(
+          fitted_value_i, 2,
+          function(a) {
+            weighted.mean(
+              x = a,
+              w = weight_list_i,
+              na.rm = TRUE
+            )
+          }
+        )
+      }
+    } else {
+      Z_ij_hat_i <- NA
+    }
+
+    list(fitted_value = fitted_value_i, Z_ij_hat = Z_ij_hat_i)
+  }
+
+  # Stop the cluster
+  stopImplicitCluster()
+
+  if (if_col_cor == TRUE) {
+    Z_ij_hat_mat <- do.call(cbind, lapply(results, `[[`, "Z_ij_hat"))
+  } else {
+    Z_ij_hat_mat <- do.call(rbind, lapply(results, `[[`, "Z_ij_hat"))
+  }
 
   # Step 5: standardize the residuals within each drug column and flag outliers
 
