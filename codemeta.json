@@ -1,0 +1,108 @@
+{
+  "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
+  "@type": "SoftwareSourceCode",
+  "identifier": "MDDC",
+  "description": "Methods for detecting signals related to (adverse event, drug) pairs, a data generation function for simulating pharmacovigilance datasets, and various utility functions.",
+  "name": "MDDC: Modified Detecting Deviating Cells (MDDC) Algorithm for Adverse Event Identification in Pharmacovigilance",
+  "codeRepository": "https://github.com/niuniular/MDDC",
+  "issueTracker": "https://github.com/niuniular/MDDC/issues",
+  "license": "https://spdx.org/licenses/GPL-3.0",
+  "version": "1.0.0",
+  "programmingLanguage": {
+    "@type": "ComputerLanguage",
+    "name": "R",
+    "url": "https://r-project.org"
+  },
+  "runtimePlatform": "R version 4.4.0 (2024-04-24)",
+  "author": [
+    {
+      "@type": "Person",
+      "givenName": "Anran",
+      "familyName": "Liu",
+      "email": "anranliu@buffalo.edu"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Raktim",
+      "familyName": "Mukhopadhyay",
+      "email": "raktimmu@buffalo.edu"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Marianthi",
+      "familyName": "Markatou",
+      "email": "markatou@buffalo.edu"
+    }
+  ],
+  "maintainer": [
+    {
+      "@type": "Person",
+      "givenName": "Anran",
+      "familyName": "Liu",
+      "email": "anranliu@buffalo.edu"
+    }
+  ],
+  "softwareRequirements": {
+    "1": {
+      "@type": "SoftwareApplication",
+      "identifier": "stats",
+      "name": "stats"
+    },
+    "2": {
+      "@type": "SoftwareApplication",
+      "identifier": "MASS",
+      "name": "MASS",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=MASS"
+    },
+    "3": {
+      "@type": "SoftwareApplication",
+      "identifier": "Rcpp",
+      "name": "Rcpp",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=Rcpp"
+    },
+    "4": {
+      "@type": "SoftwareApplication",
+      "identifier": "foreach",
+      "name": "foreach",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=foreach"
+    },
+    "5": {
+      "@type": "SoftwareApplication",
+      "identifier": "doParallel",
+      "name": "doParallel",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=doParallel"
+    },
+    "6": {
+      "@type": "SoftwareApplication",
+      "identifier": "R",
+      "name": "R",
+      "version": ">= 3.5.0"
+    },
+    "SystemRequirements": null
+  },
+  "fileSize": "4190.421KB"
+}

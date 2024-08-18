@@ -1,0 +1,82 @@
+# Contributing to MDDC
+
+This CONTRIBUTING.md is adapted from [Peter Desmet's guide](https://gist.github.com/peterdesmet/e90a1b0dc17af6c12daf6e8b2f044e7c).
+
+First of all, thanks for considering contributing to MDDC!
+
+- [Repository](https://github.com/niuniular/MDDC)
+- [Issues](https://github.com/niuniular/MDDC/issues)
+- [New Issue](https://github.com/niuniular/MDDC/issues/new)
+- [Website](https://mddc.readthedocs.io/en/latest/)
+- [Code of Conduct](https://github.com/rmj3197/MDDC/blob/main/docs/source/development/CODE_OF_CONDUCT.rst)
+- [Bug Report](https://github.com/niuniular/MDDC/issues/new)
+- [Documentation Improvement](https://github.com/niuniular/MDDC/issues/new)
+- [Email](mailto:raktimmu@buffalo.edu)
+
+## Code of Conduct
+
+Please note that this project is released with a [Contributor Code of Conduct](conduct_). By participating in this project you agree to abide by its terms.
+
+## How You Can Contribute
+
+There are several ways you can contribute to this project.
+
+### Share the Love ❤️
+
+Think MDDC is useful? Let others discover it, by telling them in person, via Twitter, ResearchGate, or a blog post.
+
+Using MDDC for a paper you are writing? Consider [citing it](citation_).
+
+### Ask a Question ⁉️
+
+Using MDDC and got stuck? Browse the [documentation](website_) to see if you can find a solution. Still stuck? Post your question as an [issue on GitHub](new_issue). While we cannot offer user support, we'll try to do our best to address it, as questions often lead to better documentation or the discovery of bugs.
+
+Want to ask a question in private? Contact the package maintainer by [mail](email_).
+
+### Propose an Idea 💡
+
+Have an idea for a new MDDC feature? Take a look at the [documentation](website_) and [issue list](issues_) to see if it isn't included or suggested yet. If not, suggest your idea as an [issue on GitHub](new_issue). While we can't promise to implement your idea, it helps to:
+
+- Explain in detail how it would work.
+- Keep the scope as narrow as possible.
+
+See below if you want to contribute code for your idea as well.
+
+### Report a Bug 🐛
+
+Using MDDC and discovered a bug? That's annoying! Don't let others have the same experience and report it as an [issue on GitHub](new_issue_) so we can fix it. A good bug report makes it easier for us to do so, please try to give as much detail as possible at [Bug Report](bug_report_).
+
+### Improve the Documentation 📖
+
+Noticed a typo on the website? Think a function could use a better example? Good documentation makes all the difference, so your help to improve it is very welcome! Submit an issue here [Documentation Improvement](doc_improvement_).
+
+## API Documentation
+
+The API documentation is built automatically from the docstrings of classes, functions, etc. in the source files. The docs are built with Sphinx and use the "sphinx_book_theme" theme. If you have the dependencies installed (tool.poetry.group.doc.dependencies inside pyproject.toml) you can build the documentation locally with `make html` in the `/doc` directory. Opening the `/doc/build/index.html` file with a browser will then allow you to browse the documentation and check your contributions locally.
+
+- Go to the `MDDC/` directory in the [code repository](repo).
+- Look for the file with the name of the function.
+- [Propose a file change](https://help.github.com/articles/editing-files-in-another-user-s-repository/) to update the function documentation in the Roxygen comments (starting with `#'`).
+
+## Contribute Code 📝
+
+Care to fix bugs or implement new functionality for MDDC? Awesome! 👏 Have a look at the [issue list](issues_) and leave a comment on the things you want to work on. See also the development guidelines below.
+
+## Development Guidelines
+
+We try to follow the [GitHub flow](https://guides.github.com/introduction/flow/) for development.
+
+1. Fork [this repo](repo) and clone it to your computer. To learn more about this process, see [this guide](https://guides.github.com/activities/forking/).
+2. If you have forked and cloned the project before and it has been a while since you worked on it, [pull changes from the original repo](https://help.github.com/articles/merging-an-upstream-repository-into-your-fork/) to your clone by using `git pull upstream master`.
+3. Open the folder on your local machine using any code editor.
+4. Make your changes:
+   - Write your code.
+   - Test your code (bonus points for adding unit tests).
+   - Document your code (see function documentation above).
+   - Check your code with `pytest`.
+5. Commit and push your changes.
+6. Submit a [pull request](https://guides.github.com/activities/forking/#making-a-pull-request).
+
+## Future Developments
+
+Regular updates and bug fixes are planned to continually enhance the package's functionality and user experience. One of our primary goals is to make MDDC increasingly user-friendly, with improvements to the user experience and the layout of the outputs. User feedback is highly valued and will be a key driver of future development. This Life Cycle Statement is subject to periodic review and will be updated to reflect the evolving nature of MDDC.

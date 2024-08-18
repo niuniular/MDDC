@@ -28,40 +28,15 @@
 
 ## Maintainer
 
+- **Anran Liu** 
+  Email: [anranliu@buffalo.edu](mailto:anranliu@buffalo.edu) 
+
 **Raktim Mukhopadhyay**  
 Email: [raktimmu@buffalo.edu](mailto:raktimmu@buffalo.edu)
 
 ## Documentation
 
 The documentation is hosted on `Read the Docs` at - https://mddc.readthedocs.io/en/latest/
-
-## Installation using `pip`
-
-``pip install MDDC``
-
-## Community
-
-For installing the development version, please download the code files from the master branch of the Github repository.
-Please note that installation from Github might be buggy, for the latest stable release please download using `pip`.
-For downloading from Github, use the following instructions:
-
-```bash
-git clone https://github.com/rmj3197/MDDC.git
-cd MDDC
-pip install -e .
-```
-
-### Contributing Guide
-
-Please refer to the [Contributing Guide](https://mddc.readthedocs.io/en/latest/development/CONTRIBUTING.html).
-
-### Code of Conduct
-
-The code of conduct can be found at [Code of Conduct](https://mddc.readthedocs.io/en/latest/development/CODE_OF_CONDUCT.html).
-
-## License
-
-This project uses the [GPL-3.0 license](https://github.com/rmj3197/MDDC/blob/main/LICENSE), with a full version of the license included in the repository.
 
 ## Funding Information
 The work has been supported by Kaleida Health Foundation, Food and Drug Administration, and Department of Biostatistics, University at Buffalo.
