@@ -74,7 +74,7 @@ signal_step2 <- boxplot_res$boxplot_signal
 
 # signals identified in step 5 by considering AE correlations
 # In this example, cells with p values less than 0.05 are 
-identified as signals
+# identified as signals
 signal_step5 <- (boxplot_res$corr_signal_pval < 0.05) * 1
 
 }

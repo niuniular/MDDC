@@ -27,6 +27,8 @@
 #' # Compute the standardized Pearson residuals
 #' get_std_pearson_res(contin_table)
 #' @useDynLib MDDC
+#' @import RcppEigen
+
 get_std_pearson_res <- function(contin_table) {
   return(getZijMat(contin_table, FALSE))
 }

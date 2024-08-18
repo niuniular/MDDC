@@ -1,6 +1,5 @@
-QuadratiK 1.0.0
-=============================
+# MDDC 1.0.0
 
-### NEW FEATURES
+## New features
 
-  * Currently in progress
+* Currently in progress

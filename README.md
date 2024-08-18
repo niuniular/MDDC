@@ -31,8 +31,8 @@
 - **Anran Liu** 
   Email: [anranliu@buffalo.edu](mailto:anranliu@buffalo.edu) 
 
-**Raktim Mukhopadhyay**  
-Email: [raktimmu@buffalo.edu](mailto:raktimmu@buffalo.edu)
+- **Raktim Mukhopadhyay**  
+  Email: [raktimmu@buffalo.edu](mailto:raktimmu@buffalo.edu)
 
 ## Documentation
 
