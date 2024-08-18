@@ -22,9 +22,10 @@
 #' greater than 1 indicate signal.
 #'
 #' @return A list of \code{n_rep} simulated contingency tables.
+#' 
+#' @useDynLib MDDC
 #' @importFrom stats rnorm
 #' @importFrom MASS mvrnorm
-#' @importFrom MixMatrix CSgenerate
 #' @export
 #'
 #' @examples
@@ -87,7 +88,7 @@ generate_contin_table_with_clustered_AE <- function(contin_table,
           t(MASS::mvrnorm(
             n = n_col,
             mu = rep(0, n_group_s[i]),
-            Sigma = MixMatrix::CSgenerate(n_group_s[i], rho)
+            Sigma = correlation_matrix(n_group_s[i], rho)
           ))
       } else {
         Z_ij_mat[which(row_names %in% AE_idx$AE[which(AE_idx$idx ==

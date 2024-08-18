@@ -163,3 +163,27 @@ get_fisher <- function(
     )
     return(fisher.test(tabl)$p.value)
 }
+
+
+#' Create a Correlation Matrix
+#'
+#' This function generates an n x n matrix where the diagonal elements are 1 
+#' and all off-diagonal elements are set to a given correlation coefficient \code{rho}.
+#'
+#' @param n Integer. The number of rows and columns of the matrix.
+#' @param rho Numeric. The correlation coefficient for the off-diagonal elements.
+#' @return A numeric matrix of size n x n with 1 on the diagonal and \code{rho} on the off-diagonal.
+#' @examples
+#' correlation_matrix(3, 0.5)
+#' correlation_matrix(4, 0.8)
+#' @useDynLib MDDC
+#' @noRd
+correlation_matrix <- function(n, rho) {
+  # Create an n x n matrix filled with rho
+  mat <- matrix(rho, nrow = n, ncol = n)
+  
+  # Set the diagonal elements to 1
+  diag(mat) <- 1
+  
+  return(mat)
+}

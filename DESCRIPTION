@@ -3,7 +3,7 @@ Type: Package
 Title: Modified Detecting Deviating Cells (MDDC) Algorithm for Adverse Event Identification in Pharmacovigilance
 Version: 1.0.0
 Authors@R: c(person(given = "Anran", family = "Liu", role = c("aut", "cre"),  email = "anranliu@buffalo.edu"),person(given = "Raktim", family = "Mukhopadhyay",   role = "aut",  email = "raktimmu@buffalo.edu"),person(given = "Marianthi",  family = "Markatou",  role = "aut", email = "markatou@buffalo.edu"))
-Maintainer: Raktim Mukhopadhyay <raktimmu@buffalo.edu>
+Maintainer: Anran Liu <anranliu@buffalo.edu>, Raktim Mukhopadhyay <raktimmu@buffalo.edu>
 Description: Methods for detecting signals related to (adverse event, drug) pairs, a data generation function for simulating pharmacovigilance datasets, and various utility functions.
 URL: https://github.com/niuniular/MDDC
 BugReports: https://github.com/niuniular/MDDC/issues
@@ -11,7 +11,7 @@ License: GPL-3
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.3.1
-Imports: stats, MASS, MixMatrix, foreach, doParallel
+Imports: stats, MASS, Rcpp, foreach, doParallel
 LinkingTo: 
     Rcpp,
     RcppEigen
