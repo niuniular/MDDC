@@ -37,9 +37,10 @@
 #' @importFrom stats pnorm
 #' @importFrom stats p.adjust
 #' @importFrom stats lm
-#' @import foreach
-#' @import doParallel
-
+#' @importFrom foreach foreach
+#' @importFrom foreach %dopar%
+#' @importFrom doParallel registerDoParallel
+#' @importFrom doParallel stopImplicitCluster
 
 mddc_boxplot <- function(contin_table,
                          col_specific_cutoff = TRUE,
@@ -63,17 +64,6 @@ mddc_boxplot <- function(contin_table,
   n_dot_dot <- output_list$nDotDot
   p_i_dot <- output_list$piDot
   p_dot_j <- output_list$p_dot_j
-
-  # n_i_dot <- rowSums(contin_table)
-  # n_dot_j <- colSums(contin_table)
-  # n_dot_dot <- sum(contin_table)
-
-  # p_i_dot <- n_i_dot / n_dot_dot
-  # p_dot_j <- n_dot_j / n_dot_dot
-
-  # E_ij_mat <- n_i_dot %*% t(n_dot_j) / n_dot_dot
-  # Z_ij_mat <-
-  #   (contin_table - E_ij_mat) / sqrt(E_ij_mat * ((1 - p_i_dot) %*% t((1 - p_dot_j))))
 
   res_all <- as.vector(Z_ij_mat)
   res_nonzero <- as.vector(Z_ij_mat[which(contin_table != 0)])
@@ -138,14 +128,7 @@ mddc_boxplot <- function(contin_table,
     return(cor_mat)
   }
 
-  # cor_orig <-
-  #   cor(t(contin_table)) # correlation between original cell counts
-  # cor_Z <-
-  #   cor(t(Z_ij_mat)) # correlation between the standardized Pearson residuals
-  cor_U <-
-    cor_with_NA(U_ij_mat, if_col_cor) # correlation between the standardized Pearson residuals without the outlying cells
-  # cor_U <- cor(t(U_ij_mat), use = "pairwise.complete.obs")
-
+  cor_U <- cor_with_NA(U_ij_mat, if_col_cor) # correlation between the standardized Pearson residuals without the outlying cells
 
   if (if_col_cor == TRUE) {
     iter_over <- n_col
@@ -220,20 +203,26 @@ mddc_boxplot <- function(contin_table,
       Z_ij_hat_i <- NA
     }
 
-    list(fitted_value = fitted_value_i, Z_ij_hat = Z_ij_hat_i)
+    list(Z_ij_hat = Z_ij_hat_i)
   }
 
   # Stop the cluster
   stopImplicitCluster()
 
-  if (if_col_cor == TRUE) {
-    Z_ij_hat_mat <- do.call(cbind, lapply(results, `[[`, "Z_ij_hat"))
-  } else {
-    Z_ij_hat_mat <- do.call(rbind, lapply(results, `[[`, "Z_ij_hat"))
+  Z_ij_hat_mat <- matrix(NA, n_row, n_col)
+
+  for (i in seq_len(iter_over)) {
+    result <- results[[i]]
+    if (!is.null(result)) {
+      if (if_col_cor) {
+        Z_ij_hat_mat[, i] <- result$Z_ij_hat
+      } else {
+        Z_ij_hat_mat[i, ] <- result$Z_ij_hat
+      }
+    }
   }
 
   # Step 5: standardize the residuals within each drug column and flag outliers
-
   R_ij_mat <- Z_ij_mat - Z_ij_hat_mat
 
   r_ij_mat <-
