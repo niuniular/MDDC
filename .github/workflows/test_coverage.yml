@@ -26,7 +26,7 @@ jobs:
           extra-packages: covr
 
       - name: Test coverage
-        run: Rscript -e 'covr::report()'
+        run: Rscript -e 'covr::codecov()'
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3.1.6
