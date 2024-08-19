@@ -71,7 +71,7 @@ Please first check the input contingency table using the function
 <dd><p>A data frame with two variables <code>idx</code> and <code>AE</code>,
 where <code>idx</code> indicates the cluster index (can be either a name or
 a number), and <code>AE</code> lists the adverse event names. See the
-<code>AE_idx</code> for <code>statin49</code> data as an example.</p></dd>
+<code>statin49_AE_idx</code> for <code>statin49</code> data as an example.</p></dd>
 
 
 <dt id="arg-rho">rho<a class="anchor" aria-label="anchor" href="#arg-rho"></a></dt>
@@ -95,7 +95,7 @@ greater than 1 indicate signal.</p></dd>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># using statin49 as an example</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">statin49</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">AE_idx</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">statin49_AE_idx</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Prepare a matrix of signal strength with the same dimension as</span></span></span>
 <span class="r-in"><span><span class="co"># statin49, where 1 indicates no signal and values &gt; 1 indicate</span></span></span>
@@ -110,7 +110,7 @@ greater than 1 indicate signal.</p></dd>
 <span class="r-in"><span><span class="va">simulated_tables</span> <span class="op">&lt;-</span> <span class="fu">generate_contin_table_with_clustered_AE</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  contin_table <span class="op">=</span> <span class="va">statin49</span>,</span></span>
 <span class="r-in"><span>  n_rep <span class="op">=</span> <span class="fl">5</span>,</span></span>
-<span class="r-in"><span>  AE_idx <span class="op">=</span> <span class="va">AE_idx</span>,</span></span>
+<span class="r-in"><span>  AE_idx <span class="op">=</span> <span class="va">statin49_AE_idx</span>,</span></span>
 <span class="r-in"><span>  rho <span class="op">=</span> <span class="fl">0.5</span>,</span></span>
 <span class="r-in"><span>  signal_mat <span class="op">=</span> <span class="va">lambda_matrix</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>

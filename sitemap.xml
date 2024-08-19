@@ -6,7 +6,6 @@
 <url><loc>/authors.html</loc></url>
 <url><loc>/index.html</loc></url>
 <url><loc>/news/index.html</loc></url>
-<url><loc>/reference/AE_idx.html</loc></url>
 <url><loc>/reference/anaphylaxis.html</loc></url>
 <url><loc>/reference/check_and_fix_contin_table.html</loc></url>
 <url><loc>/reference/generate_contin_table_with_clustered_AE.html</loc></url>
@@ -18,5 +17,6 @@
 <url><loc>/reference/plot_heatmap.html</loc></url>
 <url><loc>/reference/report_drug_AE_pairs.html</loc></url>
 <url><loc>/reference/statin49.html</loc></url>
+<url><loc>/reference/statin49_AE_idx.html</loc></url>
 </urlset>
 
