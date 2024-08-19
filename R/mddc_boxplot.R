@@ -158,6 +158,7 @@ mddc_boxplot <- function(
   registerDoParallel(num_cores)
 
   results <- foreach(i = seq_len(iter_over), .packages = c("stats")) %dopar% {
+    # nocov start
     idx <- which(abs(cor_U[i, ]) >= cor_lim)
     cor_list_i <- idx[!idx %in% i]
     weight_list_i <- abs(cor_U[i, cor_list_i])
@@ -209,7 +210,7 @@ mddc_boxplot <- function(
     }
 
     list(Z_ij_hat = Z_ij_hat_i)
-  }
+  } # nocov end
 
   stopImplicitCluster()
 

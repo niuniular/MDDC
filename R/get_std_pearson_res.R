@@ -1,5 +1,5 @@
-#' Computing the standardized Pearson residuals for a given \eqn{I} 
-#' by \eqn{J} contingency table
+#' Computing the standardized Pearson residuals for a given 
+#' \eqn{I \times J} contingency table
 #'
 #' @description Compute the standardized Pearson residuals for a given
 #' \eqn{I \times J} contingency table.
@@ -7,7 +7,7 @@
 #' @usage
 #' get_std_pearson_res(contin_table)
 #'
-#' @param contin_table A matrix of an \eqn{I} by \eqn{J} contingency table.
+#' @param contin_table A matrix of an \eqn{I \times J} contingency table.
 #'
 #' @return A matrix of the standardized Pearson residuals of the input
 #' contingency table.
