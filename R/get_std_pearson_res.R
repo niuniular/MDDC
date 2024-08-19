@@ -30,5 +30,8 @@
 #' @import RcppEigen
 
 get_std_pearson_res <- function(contin_table) {
-  return(getZijMat(contin_table, FALSE))
+  std_pearson_res <- getZijMat(contin_table, FALSE)
+  rownames(std_pearson_res) <- row.names(contin_table)
+  colnames(std_pearson_res) <- colnames(contin_table)
+  return(std_pearson_res)
 }
