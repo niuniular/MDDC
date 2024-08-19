@@ -11,7 +11,7 @@
 #'
 #' The 49 rows represent important adverse events associated with statins,
 #' with the final row aggregating the remaining 5,990 events. The 49 AEs are
-#' classified into three clusters (see \code{AE_idx} for cluster indices):
+#' classified into three clusters (see \code{statin49_AE_idx} for cluster indices):
 #'
 #' 1) AEs associated with muscle injury signs and symptoms, 2) AEs associated
 #' with muscle injury lab tests, and 3) AEs associated with kidney injury and

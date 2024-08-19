@@ -15,6 +15,6 @@
 #' tests for muscle injury, and 3) AEs associated with kidney injury and
 #' its laboratory diagnosis and treatment.
 #' @examples
-#' data(AE_idx)
-#' head(AE_idx)
-"AE_idx"
+#' data(statin49_AE_idx)
+#' head(statin49_AE_idx)
+"statin49_AE_idx"

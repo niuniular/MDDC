@@ -25,7 +25,7 @@ Please first check the input contingency table using the function
 \item{AE_idx}{A data frame with two variables \code{idx} and \code{AE},
 where \code{idx} indicates the cluster index (can be either a name or
 a number), and \code{AE} lists the adverse event names. See the
-\code{AE_idx} for \code{statin49} data as an example.}
+\code{statin49_AE_idx} for \code{statin49} data as an example.}
 
 \item{rho}{A numeric value indicating the correlation of the AEs within
 each cluster. Default is 0.5.}
@@ -45,7 +45,7 @@ incorporating adverse event correlation within clusters.
 \examples{
 # using statin49 as an example
 data(statin49)
-data(AE_idx)
+data(statin49_AE_idx)
 
 # Prepare a matrix of signal strength with the same dimension as
 # statin49, where 1 indicates no signal and values > 1 indicate
@@ -60,7 +60,7 @@ set.seed(123)
 simulated_tables <- generate_contin_table_with_clustered_AE(
   contin_table = statin49,
   n_rep = 5,
-  AE_idx = AE_idx,
+  AE_idx = statin49_AE_idx,
   rho = 0.5,
   signal_mat = lambda_matrix
 )
