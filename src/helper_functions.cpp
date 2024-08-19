@@ -38,6 +38,7 @@
 //' get_expected_counts(contin_table)
 //'
 //' @useDynLib MDDC
+//' @importFrom Rcpp evalCpp
 //' @rdname get_expected_counts
 //'
 //' @export
