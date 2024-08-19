@@ -18,3 +18,4 @@ data/.DS_Store
 ^docs$
 ^pkgdown$
 ^CODE_OF_CONDUCT\.md$
+^NEWS\.md$
