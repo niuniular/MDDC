@@ -2,13 +2,13 @@
 % Please edit documentation in R/get_std_pearson_res.R
 \name{get_std_pearson_res}
 \alias{get_std_pearson_res}
-\title{Computing the standardized Pearson residuals for a given \eqn{I} 
-by \eqn{J} contingency table}
+\title{Computing the standardized Pearson residuals for a given 
+\eqn{I \times J} contingency table}
 \usage{
 get_std_pearson_res(contin_table)
 }
 \arguments{
-\item{contin_table}{A matrix of an \eqn{I} by \eqn{J} contingency table.}
+\item{contin_table}{A matrix of an \eqn{I \times J} contingency table.}
 }
 \value{
 A matrix of the standardized Pearson residuals of the input
