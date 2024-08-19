@@ -26,17 +26,15 @@
 - **Marianthi Markatou** 
   Email: [markatou@buffalo.edu](mailto:markatou@buffalo.edu)  
 
-## Maintainer
+## Maintainers
 
-- **Anran Liu** 
-  Email: [anranliu@buffalo.edu](mailto:anranliu@buffalo.edu) 
+- **Anran Liu** Email: [anranliu@buffalo.edu](mailto:anranliu@buffalo.edu) 
 
-- **Raktim Mukhopadhyay**  
-  Email: [raktimmu@buffalo.edu](mailto:raktimmu@buffalo.edu)
+- **Raktim Mukhopadhyay** Email: [raktimmu@buffalo.edu](mailto:raktimmu@buffalo.edu)
 
 ## Documentation
 
-The documentation is hosted on `Read the Docs` at - https://mddc.readthedocs.io/en/latest/
+The documentation is hosted at - https://niuniular.github.io/MDDC/index.html
 
 ## Funding Information
 The work has been supported by Kaleida Health Foundation, Food and Drug Administration, and Department of Biostatistics, University at Buffalo.
