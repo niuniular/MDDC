@@ -1,0 +1,21 @@
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>/404.html</loc></url>
+<url><loc>/CODE_OF_CONDUCT.html</loc></url>
+<url><loc>/CONTRIBUTING.html</loc></url>
+<url><loc>/LICENSE.html</loc></url>
+<url><loc>/authors.html</loc></url>
+<url><loc>/index.html</loc></url>
+<url><loc>/news/index.html</loc></url>
+<url><loc>/reference/AE_idx.html</loc></url>
+<url><loc>/reference/anaphylaxis.html</loc></url>
+<url><loc>/reference/check_and_fix_contin_table.html</loc></url>
+<url><loc>/reference/generate_contin_table_with_clustered_AE.html</loc></url>
+<url><loc>/reference/get_expected_counts.html</loc></url>
+<url><loc>/reference/get_std_pearson_res.html</loc></url>
+<url><loc>/reference/index.html</loc></url>
+<url><loc>/reference/mddc_boxplot.html</loc></url>
+<url><loc>/reference/mddc_mc.html</loc></url>
+<url><loc>/reference/report_drug_AE_pairs.html</loc></url>
+<url><loc>/reference/statin49.html</loc></url>
+</urlset>
+
