@@ -5,6 +5,6 @@
 ..Rcheck
 .DS_Store
 data/.DS_Store
-.vscode
-.Rproj
+*.vscode
+*.Rproj
 docs/*
