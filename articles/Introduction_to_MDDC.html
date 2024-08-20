@@ -96,11 +96,11 @@ to the fourth quarter of 2020 (Q4 2020). This dataset is a
 contingency table. The first 49 rows represent 49 important adverse
 events (AEs) associated with the statin class, while the final row
 aggregates the remaining 5,990 AEs.</p>
-<p>The dataset <code>AE_idx</code> lists the cluster index of each AE in
-the <code>statin49</code> dataset. The 49 AEs are classified into three
-clusters: 1) AEs associated with signs and symptoms of muscle injury, 2)
-AEs associated with laboratory tests for muscle injury, and 3) AEs
-associated with kidney injury and its laboratory diagnosis and
+<p>The dataset <code>statin49_AE_idx</code> lists the cluster index of
+each AE in the <code>statin49</code> dataset. The 49 AEs are classified
+into three clusters: 1) AEs associated with signs and symptoms of muscle
+injury, 2) AEs associated with laboratory tests for muscle injury, and
+3) AEs associated with kidney injury and its laboratory diagnosis and
 treatment.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"statin49"</span><span class="op">)</span></span>
@@ -177,7 +177,7 @@ MDDC Boxplot algorithm. Default is 2.</p></li>
 <span>  separate <span class="op">=</span> <span class="cn">T</span>,</span>
 <span>  if_col_cor <span class="op">=</span> <span class="cn">F</span>,</span>
 <span>  cor_lim <span class="op">=</span> <span class="fl">0.8</span></span>
-<span><span class="op">)</span>  </span></code></pre></div>
+<span><span class="op">)</span></span></code></pre></div>
 <p>The above function outputs a list with three components:</p>
 <ul>
 <li><p><code>boxplot_signal</code>: An
@@ -202,7 +202,7 @@ threshold (for example, 0.05).</p></li>
 of <code>test1</code>. We first check the component
 <code>boxplot_signal</code>:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">test1</span><span class="op">$</span><span class="va">boxplot_signal</span><span class="op">)</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">test1</span><span class="op">$</span><span class="va">boxplot_signal</span><span class="op">)</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span></span>
 <span><span class="co">#&gt;                    Atorvastatin Fluvastatin Lovastatin Pravastatin Rosuvastatin</span></span>
 <span><span class="co">#&gt; Rhabdomyolysis                1           0          0           1            1</span></span>
 <span><span class="co">#&gt; Muscle Disorder               0           0          0           0            1</span></span>
@@ -217,7 +217,7 @@ identified as signals in step 2 of MDDC (boxplot). Now we look at the
 second component <code>corr_signal_pval</code> which shows the p-values
 of all the cells from step 5:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">test1</span><span class="op">$</span><span class="va">corr_signal_pval</span><span class="op">)</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>, digits <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">test1</span><span class="op">$</span><span class="va">corr_signal_pval</span><span class="op">)</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>, digits <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                    Atorvastatin Fluvastatin Lovastatin Pravastatin Rosuvastatin</span></span>
 <span><span class="co">#&gt; Rhabdomyolysis               NA          NA         NA          NA           NA</span></span>
 <span><span class="co">#&gt; Muscle Disorder           0.527       0.974      0.178       0.545        0.000</span></span>
@@ -304,7 +304,7 @@ following code:</p>
 <span>  separate <span class="op">=</span> <span class="cn">T</span>,</span>
 <span>  if_col_cor <span class="op">=</span> <span class="cn">F</span>,</span>
 <span>  cor_lim <span class="op">=</span> <span class="fl">0.8</span></span>
-<span><span class="op">)</span>    </span></code></pre></div>
+<span><span class="op">)</span></span></code></pre></div>
 <p>This function outputs a list with five components:</p>
 <ul>
 <li><p><code>mc_pval</code>: Returns the p-values for each cell in step
@@ -358,7 +358,7 @@ rows:</p>
 <code class="sourceCode R"><span><span class="va">test3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/report_drug_AE_pairs.html">report_drug_AE_pairs</a></span><span class="op">(</span></span>
 <span>  contin_table <span class="op">=</span> <span class="va">statin49</span>,</span>
 <span>  contin_table_signal <span class="op">=</span> <span class="va">test2</span><span class="op">$</span><span class="va">mc_signal</span></span>
-<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">test3</span><span class="op">)</span></span>
 <span><span class="co">#&gt;           drug                 AE observed_num expected_num std_pearson_res</span></span>
@@ -378,7 +378,7 @@ brevity.</p>
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/report_drug_AE_pairs.html">report_drug_AE_pairs</a></span><span class="op">(</span></span>
 <span>  contin_table <span class="op">=</span> <span class="va">statin49</span>,</span>
 <span>  contin_table_signal <span class="op">=</span> <span class="va">test2</span><span class="op">$</span><span class="va">corr_signal_pval</span> <span class="op">&lt;</span> <span class="fl">0.05</span></span>
-<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span>
 <span><span class="co">#&gt;            drug                                        AE observed_num</span></span>
 <span><span class="co">#&gt; 1  Atorvastatin                 Diaphragm Muscle Weakness           14</span></span>
 <span><span class="co">#&gt; 2  Atorvastatin     Blood Creatine Phosphokinase Abnormal           34</span></span>
@@ -433,6 +433,8 @@ the AEs within each cluster. The default is 0.5.</p></li>
 the contingency table with entries indicating the signal strength.
 Values must be greater than or equal to 1, where 1 indicates no signal,
 and values greater than 1 indicate a signal.</p></li>
+<li><p><code>seed</code>: An optional integer to set the seed for
+reproducibility. If NULL, no seed is set.</p></li>
 </ul>
 <p>Now we demonstrate the usage of this function by generating three
 simulated datasets based on the marginals of <code>statin49</code>.
@@ -445,12 +447,13 @@ Atorvastatin) with a strength of 4 to the simulated dataset:</p>
 <span></span>
 <span><span class="co"># create a matrix indicating signal strength</span></span>
 <span><span class="va">sig_mat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fl">1</span>,</span>
-<span>                  nrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">statin49</span><span class="op">)</span>,</span>
-<span>                  ncol <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">statin49</span><span class="op">)</span><span class="op">)</span></span>
+<span>  nrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">statin49</span><span class="op">)</span>,</span>
+<span>  ncol <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">statin49</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># assign (Rhabdomyolysis, Atorvastain) as a signal</span></span>
 <span><span class="co"># with a signal strength 4</span></span>
-<span><span class="va">sig_mat</span><span class="op">[</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">4</span>  </span></code></pre></div>
+<span><span class="va">sig_mat</span><span class="op">[</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">4</span></span></code></pre></div>
 <p>The 49 AEs in <code>statin49</code> can be grouped into three
 clusters, as listed in the <code>statin49_AE_idx</code>: 1) AEs
 associated with signs and symptoms of muscle injury, 2) AEs associated
@@ -487,8 +490,10 @@ first simulated contingency table and extract the identified pairs from
 step 2:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">test5</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mddc_mc.html">mddc_mc</a></span><span class="op">(</span><span class="va">sim_dat</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/report_drug_AE_pairs.html">report_drug_AE_pairs</a></span><span class="op">(</span>contin_table <span class="op">=</span> <span class="va">sim_dat</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>,</span>
-<span>                     contin_table_signal <span class="op">=</span> <span class="va">test5</span><span class="op">$</span><span class="va">mc_signal</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/report_drug_AE_pairs.html">report_drug_AE_pairs</a></span><span class="op">(</span></span>
+<span>  contin_table <span class="op">=</span> <span class="va">sim_dat</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>,</span>
+<span>  contin_table_signal <span class="op">=</span> <span class="va">test5</span><span class="op">$</span><span class="va">mc_signal</span></span>
+<span><span class="op">)</span></span>
 <span><span class="co">#&gt;           drug             AE observed_num expected_num std_pearson_res</span></span>
 <span><span class="co">#&gt; 1 Atorvastatin Rhabdomyolysis          457     113.3853         32.3288</span></span>
 <span><span class="co">#&gt; 2        Other       Other AE     61678634 61678273.228           3.247</span></span></code></pre></div>
@@ -513,7 +518,7 @@ each cell in the heatmap. Default is 1.</p></li>
 <p>The following heatmap shows the visualization of the associated
 p-values of Monte Carlo method in step 2:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_heatmap.html">plot_heatmap</a></span><span class="op">(</span><span class="va">test2</span><span class="op">$</span><span class="va">mc_pval</span><span class="op">[</span>,<span class="op">-</span><span class="fl">7</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_heatmap.html">plot_heatmap</a></span><span class="op">(</span><span class="va">test2</span><span class="op">$</span><span class="va">mc_pval</span><span class="op">[</span>, <span class="op">-</span><span class="fl">7</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Introduction_to_MDDC_files/figure-html/unnamed-chunk-15-1.png" width="576"></p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
