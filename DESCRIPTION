@@ -4,9 +4,12 @@ Title: Modified Detecting Deviating Cells (MDDC) Algorithm for Adverse Event Ide
 Version: 1.0.0
 Authors@R: 
     c(
-      person(given = "Anran", family = "Liu", role = c("aut", "cre"), email = "anranliu@buffalo.edu"),
-      person(given = "Raktim", family = "Mukhopadhyay", role = c("aut"), email = "raktimmu@buffalo.edu"),
-      person(given = "Marianthi", family = "Markatou", role = "aut", email = "markatou@buffalo.edu")
+      person(given = "Anran", family = "Liu", role = c("aut", "cre"), email = "anranliu@buffalo.edu",
+            comment = c(ORCID = "0000-0003-2108-6280")),
+      person(given = "Raktim", family = "Mukhopadhyay", role = c("aut"), email = "raktimmu@buffalo.edu",
+            comment = c(ORCID = "0009-0007-8972-6682")),
+      person(given = "Marianthi", family = "Markatou", role = "aut", email = "markatou@buffalo.edu",
+            comment = c(ORCID = "0000-0002-1453-8229"))
     )
 Maintainer: 
     Anran Liu <anranliu@buffalo.edu>, 
