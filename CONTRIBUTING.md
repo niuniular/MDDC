@@ -1,6 +1,3 @@
-Here’s a revised version of the `CONTRIBUTING.md` with all the links corrected:
-
-```markdown
 # Contributing to MDDC
 
 This CONTRIBUTING.md is adapted from [Peter Desmet's guide](https://gist.github.com/peterdesmet/e90a1b0dc17af6c12daf6e8b2f044e7c).
@@ -83,4 +80,3 @@ We try to follow the [GitHub flow](https://guides.github.com/introduction/flow/)
 ## Future Developments
 
 Regular updates and bug fixes are planned to continually enhance the package's functionality and user experience. One of our primary goals is to make MDDC increasingly user-friendly, with improvements to the user experience and the layout of the outputs. User feedback is highly valued and will be a key driver of future development. This Life Cycle Statement is subject to periodic review and will be updated to reflect the evolving nature of MDDC.
-```
