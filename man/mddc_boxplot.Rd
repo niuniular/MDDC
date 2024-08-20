@@ -35,11 +35,11 @@ column (drug) correlation or row (adverse event) correlation. Default is
 \code{FALSE}, that is using the adverse event correlation. \code{TRUE}
 indicates using drug correlation.}
 
-\item{cor_lim}{A numeric value between (0, 1). In the step 3, 
-what correlation threshold should be used to select ``connected'' 
+\item{cor_lim}{A numeric value between (0, 1). In the step 3,
+what correlation threshold should be used to select ``connected''
 adverse events. Default is 0.8.}
 
-\item{num_cores}{Number of cores used to parallelize the MDDC 
+\item{num_cores}{Number of cores used to parallelize the MDDC
 Boxplot algorithm. Default is 2.}
 }
 \value{
@@ -73,7 +73,7 @@ boxplot_res <- mddc_boxplot(statin49)
 signal_step2 <- boxplot_res$boxplot_signal
 
 # signals identified in step 5 by considering AE correlations
-# In this example, cells with p values less than 0.05 are 
+# In this example, cells with p values less than 0.05 are
 # identified as signals
 signal_step5 <- (boxplot_res$corr_signal_pval < 0.05) * 1
 

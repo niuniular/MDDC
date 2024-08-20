@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_std_pearson_res.R
 \name{get_std_pearson_res}
 \alias{get_std_pearson_res}
-\title{Computing the standardized Pearson residuals for a given 
+\title{Computing the standardized Pearson residuals for a given
 \eqn{I \times J} contingency table}
 \usage{
 get_std_pearson_res(contin_table)

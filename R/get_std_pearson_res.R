@@ -1,4 +1,4 @@
-#' Computing the standardized Pearson residuals for a given 
+#' Computing the standardized Pearson residuals for a given
 #' \eqn{I \times J} contingency table
 #'
 #' @description Compute the standardized Pearson residuals for a given

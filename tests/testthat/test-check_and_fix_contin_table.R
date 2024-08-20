@@ -27,7 +27,7 @@ test_that("Matrix without row and column names", {
   result <- check_and_fix_contin_table(no_names_matrix)
   expected_row_names <- paste0("AE_", seq_len(nrow(no_names_matrix)))
   expected_col_names <- paste0("drug_", seq_len(ncol(no_names_matrix)))
-  
+
   expect_equal(rownames(result), expected_row_names)
   expect_equal(colnames(result), expected_col_names)
 })
@@ -36,12 +36,18 @@ test_that("Matrix with negative values", {
   # Create a matrix with negative values
   negative_matrix <- matrix(c(-1, 2, 3, 4), nrow = 2)
 
-  expect_error(check_and_fix_contin_table(negative_matrix), "Input is not a data matrix with non-negative integers.")
+  expect_error(
+    check_and_fix_contin_table(negative_matrix),
+    "Input is not a data matrix with non-negative integers."
+  )
 })
 
 test_that("Matrix with non-integer values", {
   # Create a matrix with non-integer values
   non_integer_matrix <- matrix(c(1.5, 2, 3, 4), nrow = 2)
 
-  expect_error(check_and_fix_contin_table(non_integer_matrix), "Input is not a data matrix with non-negative integers.")
+  expect_error(
+    check_and_fix_contin_table(non_integer_matrix),
+    "Input is not a data matrix with non-negative integers."
+  )
 })

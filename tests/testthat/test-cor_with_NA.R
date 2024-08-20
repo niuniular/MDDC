@@ -17,4 +17,3 @@ test_that("cor_with_NA computes correlations correctly", {
   result3 <- cor_with_NA(mat3, TRUE)
   expect_equal(result3, expected_cor3)
 })
-

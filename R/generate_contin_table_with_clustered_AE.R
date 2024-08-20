@@ -22,7 +22,7 @@
 #' greater than 1 indicate signal.
 #'
 #' @return A list of \code{n_rep} simulated contingency tables.
-#' 
+#'
 #' @useDynLib MDDC
 #' @importFrom stats rnorm
 #' @importFrom MASS mvrnorm

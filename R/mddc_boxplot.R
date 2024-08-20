@@ -20,10 +20,10 @@
 #' column (drug) correlation or row (adverse event) correlation. Default is
 #' \code{FALSE}, that is using the adverse event correlation. \code{TRUE}
 #' indicates using drug correlation.
-#' @param cor_lim A numeric value between (0, 1). In the step 3, 
-#' what correlation threshold should be used to select ``connected'' 
+#' @param cor_lim A numeric value between (0, 1). In the step 3,
+#' what correlation threshold should be used to select ``connected''
 #' adverse events. Default is 0.8.
-#' @param num_cores Number of cores used to parallelize the MDDC 
+#' @param num_cores Number of cores used to parallelize the MDDC
 #' Boxplot algorithm. Default is 2.
 #'
 #' @return A list with the following components:
@@ -52,10 +52,10 @@
 #' signal_step2 <- boxplot_res$boxplot_signal
 #'
 #' # signals identified in step 5 by considering AE correlations
-#' # In this example, cells with p values less than 0.05 are 
+#' # In this example, cells with p values less than 0.05 are
 #' # identified as signals
 #' signal_step5 <- (boxplot_res$corr_signal_pval < 0.05) * 1
-#' 
+#'
 #' @useDynLib MDDC
 #' @importFrom grDevices boxplot.stats
 #' @importFrom stats cor
@@ -99,9 +99,9 @@ mddc_boxplot <- function(
         ] == 0), a])$stats[[1]]
       }))
     } else {
-      c_univ_drug <- 
+      c_univ_drug <-
         apply(Z_ij_mat, 2, function(a) boxplot.stats(a)$stats[[5]])
-      zero_drug_cutoff <- 
+      zero_drug_cutoff <-
         apply(Z_ij_mat, 2, function(a) boxplot.stats(a)$stats[[1]])
     }
   } else {
@@ -246,7 +246,7 @@ mddc_boxplot <- function(
   rownames(r_adj_pval) <- row_names
 
   rslt_list <- list(high_outlier, r_pval, r_adj_pval)
-  names(rslt_list) <- 
+  names(rslt_list) <-
     c("boxplot_signal", "corr_signal_pval", "corr_signal_adj_pval")
 
   return(rslt_list)

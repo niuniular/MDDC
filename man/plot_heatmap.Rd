@@ -7,17 +7,17 @@
 plot_heatmap(data, cell_width = 1, cell_height = 1, ...)
 }
 \arguments{
-\item{data}{A matrix or data frame to be visualized as a heatmap. 
-The row names and column names of the data will be used for labeling 
+\item{data}{A matrix or data frame to be visualized as a heatmap.
+The row names and column names of the data will be used for labeling
 the heatmap axes.}
 
-\item{cell_width}{Numeric value indicating the width of each cell 
+\item{cell_width}{Numeric value indicating the width of each cell
 in the heatmap. Default is 1.}
 
-\item{cell_height}{Numeric value indicating the height of each cell 
+\item{cell_height}{Numeric value indicating the height of each cell
 in the heatmap. Default is 1.}
 
-\item{...}{Additional arguments to be passed to 
+\item{...}{Additional arguments to be passed to
 \code{\link[ggplot2]{geom_tile}} or other ggplot2 functions.}
 }
 \value{
