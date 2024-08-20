@@ -38,7 +38,7 @@ library(MDDC)
 
 We have included an adverse event dataset curated from FDA Adverse Event Reporting System (FAERS) called ``statin49`` dataset which we will be using for describing the functionalities of MDDC. ``statin49`` was downloaded and processed from the FAERS database, covering the period from the third quarter of 2014 (Q3 2014) to the fourth quarter of 2020 (Q4 2020). This dataset is a $50\times 7$ contingency table. The first 49 rows represent 49 important adverse events (AEs) associated with the statin class, while the final row aggregates the remaining 5,990 AEs. 
 
-The dataset ``AE_idx`` lists the cluster index of each AE in the ``statin49`` dataset. The 49 AEs are classified into three clusters: 1) AEs associated with
+The dataset ``statin49_AE_idx`` lists the cluster index of each AE in the ``statin49`` dataset. The 49 AEs are classified into three clusters: 1) AEs associated with
  signs and symptoms of muscle injury, 2) AEs associated with laboratory
  tests for muscle injury, and 3) AEs associated with kidney injury and
  its laboratory diagnosis and treatment.
@@ -80,7 +80,7 @@ test1 <- mddc_boxplot(
   separate = T,
   if_col_cor = F,
   cor_lim = 0.8
-)  
+)
 ```
 
 The above function outputs a list with three components:
@@ -94,13 +94,13 @@ The above function outputs a list with three components:
 Below, we display the first few rows and columns for each component of ``test1``. We first check the component ``boxplot_signal``:
 
 ```{r}
-head(test1$boxplot_signal)[,1:5]
+head(test1$boxplot_signal)[, 1:5]
 ```
 
 This indicates the pairs (Rhabdomyolysis, Atorvastatin), (Rhabdomyolysis, Pravastatin), (Muscle Rupture, Pravastatin), (Rhabdomyolysis, Rosuvastatin), and (Muscle Disorder, Rosuvastatin) are identified as signals in step 2 of MDDC (boxplot). Now we look at the second component ``corr_signal_pval`` which shows the p-values of all the cells from step 5:
 
 ```{r}
-round(head(test1$corr_signal_pval)[,1:5], digits = 3)
+round(head(test1$corr_signal_pval)[, 1:5], digits = 3)
 ```
 
 In this output, we observe that the first row, corresponding to the adverse event "Rhabdomyolysis", does not have associated p-values. This is because, in step 2 of the algorithm, "Rhabdomyolysis" was already identified as an AE signal for Atorvastatin, Pravastatin, Rosuvastatin, and Simvastatin. Consequently, the standardized Pearson residual values for these four drugs were replaced with NA. With only two residual values remaining in the first row, it was not possible to find connected AEs for "Rhabdomyolysis". Therefore, this adverse event was excluded from the subsequent steps of the analysis. Note that for computing Pearson correlation in step 3, at least three values are required in the matching positions. Applying a p-value threshold of 0.05, we identify the following pairs as signals by considering AE correlations: (Muscle Rupture, Fluvastatin), (Muscle Rupture, Pravastatin), and (Muscle Disorder, Rosuvastatin). 
@@ -144,7 +144,7 @@ test2 <- mddc_mc(
   separate = T,
   if_col_cor = F,
   cor_lim = 0.8
-)    
+)
 ```
 
 This function outputs a list with five components:
@@ -174,7 +174,7 @@ Now we apply this function to the second component ``mc_signal`` we obtained abo
 test3 <- report_drug_AE_pairs(
   contin_table = statin49,
   contin_table_signal = test2$mc_signal
-  )
+)
 
 head(test3)
 ```
@@ -186,7 +186,7 @@ These (AE, drug) pairs are part of the signals identified by the MDDC (MC) metho
 report_drug_AE_pairs(
   contin_table = statin49,
   contin_table_signal = test2$corr_signal_pval < 0.05
-  )
+)
 ```
 
 
@@ -204,6 +204,8 @@ This package offers a data generation function for simulating pharmacovigilance 
 
 - ``signal_mat``: A data matrix of the same dimensions as the contingency table with entries indicating the signal strength. Values must be greater than or equal to 1, where 1 indicates no signal, and values greater than 1 indicate a signal.
 
+- ``seed``: An optional integer to set the seed for reproducibility. If NULL, no seed is set.
+
 Now we demonstrate the usage of this function by generating three simulated datasets based on the marginals of ``statin49``. First, we need to create a data matrix with the same dimensions as ``statin49`` that indicates the signal strength for each (AE, drug) pair. In this example, we assign a signal (Rhabdomyolysis, Atorvastatin) with a strength of 4 to the simulated dataset:
 
 ```{r}
@@ -211,12 +213,13 @@ set.seed(42)
 
 # create a matrix indicating signal strength
 sig_mat <- matrix(1,
-                  nrow = nrow(statin49),
-                  ncol = ncol(statin49))
+  nrow = nrow(statin49),
+  ncol = ncol(statin49)
+)
 
 # assign (Rhabdomyolysis, Atorvastain) as a signal
 # with a signal strength 4
-sig_mat[1, 1] <- 4  
+sig_mat[1, 1] <- 4
 ```
 
 The 49 AEs in ``statin49`` can be grouped into three clusters, as listed in the ``statin49_AE_idx``: 1) AEs associated with signs and symptoms of muscle injury, 2) AEs associated with laboratory tests for muscle injury, 3) AEs associated with kidney injury and its laboratory diagnosis and treatment. Next we take a look at the first few rows of  ``sttain49_AE_idx``, which indicate the group index of each AE in ``statin49``:
@@ -241,8 +244,10 @@ This function returns a list of simulated contingency tables, with the length of
 
 ```{r}
 test5 <- mddc_mc(sim_dat[[1]])
-report_drug_AE_pairs(contin_table = sim_dat[[1]],
-                     contin_table_signal = test5$mc_signal)
+report_drug_AE_pairs(
+  contin_table = sim_dat[[1]],
+  contin_table_signal = test5$mc_signal
+)
 ```
 
 In the output, there is one pair (Rhabdomyolysis, Atorvastatin) identified, which matches what we embedded.
@@ -262,6 +267,6 @@ This function takes the following arguments:
 The following heatmap shows the visualization of the associated p-values of Monte Carlo method in step 2:
 
 ```{r, fig.width=6, fig.height=10}
-plot_heatmap(test2$mc_pval[,-7])
+plot_heatmap(test2$mc_pval[, -7])
 ```
 

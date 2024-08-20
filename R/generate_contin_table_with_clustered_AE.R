@@ -20,6 +20,8 @@
 #' table with entries representing the signal strength. The values should
 #' be greater or equal to 1, where 1 indicates no signal, and values
 #' greater than 1 indicate signal.
+#' @param seed An optional integer to set the seed for reproducibility.
+#' If NULL, no seed is set.
 #'
 #' @return A list of \code{n_rep} simulated contingency tables.
 #'
@@ -54,8 +56,11 @@ generate_contin_table_with_clustered_AE <- function(contin_table,
                                                     n_rep = 1,
                                                     AE_idx,
                                                     rho = 0.5,
-                                                    signal_mat) {
-  set.seed(42)
+                                                    signal_mat,
+                                                    seed = NULL) {
+  if (!is.null(seed)) {
+    set.seed(seed)
+  }
 
   n_row <- nrow(contin_table)
   n_col <- ncol(contin_table)

@@ -5,7 +5,7 @@ Version: 1.0.0
 Authors@R: 
     c(
       person(given = "Anran", family = "Liu", role = c("aut", "cre"), email = "anranliu@buffalo.edu",
-            comment = c(ORCID = "0000-0003-2108-6280")),
+            comment = c(ORCID = "0000-0002-4504-9786")),
       person(given = "Raktim", family = "Mukhopadhyay", role = c("aut"), email = "raktimmu@buffalo.edu",
             comment = c(ORCID = "0009-0007-8972-6682")),
       person(given = "Marianthi", family = "Markatou", role = "aut", email = "markatou@buffalo.edu",
