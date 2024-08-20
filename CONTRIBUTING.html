@@ -79,8 +79,8 @@
 </div>
 <div class="section level2">
 <h2 id="api-documentation">API Documentation<a class="anchor" aria-label="anchor" href="#api-documentation"></a></h2>
-<p>The API documentation is built automatically from the docstrings of classes, functions, etc. in the source files. The docs are built with Sphinx and use the “sphinx_book_theme” theme. If you have the dependencies installed (tool.poetry.group.doc.dependencies inside pyproject.toml) you can build the documentation locally with <code>make html</code> in the <code>/doc</code> directory. Opening the <code>/doc/build/index.html</code> file with a browser will then allow you to browse the documentation and check your contributions locally.</p>
-<ul><li>Go to the <code>MDDC/</code> directory in the <a href="https://github.com/niuniular/MDDC" class="external-link">code repository</a>.</li>
+<p>The API documentation is built automatically from the docstrings of classes, functions, etc. in the source files. The docs are built with <code>devtools::build_manual()</code>.</p>
+<ul><li>Go to the <code>R/</code> or <code>src/</code> directory in the <a href="https://github.com/niuniular/MDDC" class="external-link">code repository</a>.</li>
 <li>Look for the file with the name of the function.</li>
 <li>
 <a href="https://help.github.com/articles/editing-files-in-another-user-s-repository/" class="external-link">Propose a file change</a> to update the function documentation in the Roxygen comments (starting with <code>#'</code>).</li>
