@@ -5,7 +5,7 @@ Version: 1.0.0
 Authors@R: 
     c(
       person(given = "Anran", family = "Liu", role = c("aut", "cre"), email = "anranliu@buffalo.edu"),
-      person(given = "Raktim", family = "Mukhopadhyay", role = c("aut", "cre"), email = "raktimmu@buffalo.edu"),
+      person(given = "Raktim", family = "Mukhopadhyay", role = c("aut"), email = "raktimmu@buffalo.edu"),
       person(given = "Marianthi", family = "Markatou", role = "aut", email = "markatou@buffalo.edu")
     )
 Maintainer: 
@@ -32,7 +32,7 @@ LinkingTo:
     RcppEigen
 Author: 
     Anran Liu [aut, cre],
-    Raktim Mukhopadhyay [aut, cre],
+    Raktim Mukhopadhyay [aut],
     Marianthi Markatou [aut]
 Depends: R (>= 3.5.0)
 Suggests: 
