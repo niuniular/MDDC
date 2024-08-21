@@ -210,7 +210,7 @@ mddc_mc <- function(
   }
 
   num_cores <- as.numeric(num_cores)
-  registerDoParallel(cores = num_cores)
+  registerDoParallel(num_cores)
 
   results <- foreach(i = seq_len(iter_over), .packages = c("stats")) %dopar% {
     # nocov start
