@@ -130,7 +130,7 @@ mddc_mc <- function(
   for (j in seq_len(n_col)) {
     for (i in which((contin_table[, j] < 6) & (contin_table[, j] >
       0))) {
-      p_val_mat[i, j] <- get_fisher(contin_table, i, j, exclude_same_drug_class)
+      p_val_mat[i, j] <- get_fisher(contin_table, i - 1, j - 1, exclude_same_drug_class)
     }
   }
 

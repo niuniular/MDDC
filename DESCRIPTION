@@ -8,7 +8,7 @@ Authors@R:
             comment = c(ORCID = "0000-0002-4504-9786")),
       person(given = "Raktim", family = "Mukhopadhyay", role = c("aut"), email = "raktimmu@buffalo.edu",
             comment = c(ORCID = "0009-0007-8972-6682")),
-      person(given = "Marianthi", family = "Markatou", role = "aut", email = "markatou@buffalo.edu",
+      person(given = "Marianthi", family = "Markatou", role = c("aut"), email = "markatou@buffalo.edu",
             comment = c(ORCID = "0000-0002-1453-8229"))
     )
 Maintainer: 
