@@ -51,7 +51,8 @@ incorporating adverse event correlation within clusters.</p>
 <span>  n_rep <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  <span class="va">AE_idx</span>,</span>
 <span>  rho <span class="op">=</span> <span class="fl">0.5</span>,</span>
-<span>  <span class="va">signal_mat</span></span>
+<span>  <span class="va">signal_mat</span>,</span>
+<span>  seed <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -88,6 +89,11 @@ each cluster. Default is 0.5.</p></dd>
 table with entries representing the signal strength. The values should
 be greater or equal to 1, where 1 indicates no signal, and values
 greater than 1 indicate signal.</p></dd>
+
+
+<dt id="arg-seed">seed<a class="anchor" aria-label="anchor" href="#arg-seed"></a></dt>
+<dd><p>An optional integer to set the seed for reproducibility.
+If NULL, no seed is set.</p></dd>
 
 </dl></div>
     <div class="section level2">
