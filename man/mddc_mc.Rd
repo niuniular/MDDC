@@ -57,7 +57,7 @@ In the step 3, what correlation threshold should be used to
 select ``connected'' adverse events. Default is 0.8.}
 
 \item{num_cores}{Number of cores used to parallelize the
-MDDC Boxplot algorithm. Default is 2.}
+MDDC MC algorithm. Default is 2.}
 
 \item{seed}{An optional integer to set the seed for reproducibility.
 If NULL, no seed is set.}
