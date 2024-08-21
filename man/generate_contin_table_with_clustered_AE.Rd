@@ -10,7 +10,8 @@ generate_contin_table_with_clustered_AE(
   n_rep = 1,
   AE_idx,
   rho = 0.5,
-  signal_mat
+  signal_mat,
+  seed = NULL
 )
 }
 \arguments{
@@ -34,6 +35,9 @@ each cluster. Default is 0.5.}
 table with entries representing the signal strength. The values should
 be greater or equal to 1, where 1 indicates no signal, and values
 greater than 1 indicate signal.}
+
+\item{seed}{An optional integer to set the seed for reproducibility.
+If NULL, no seed is set.}
 }
 \value{
 A list of \code{n_rep} simulated contingency tables.
