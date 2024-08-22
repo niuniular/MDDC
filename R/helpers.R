@@ -95,15 +95,13 @@ get_log_bootstrap_cutoff <- function(contin_table, quantile, rep, seed) {
   sim_tab_list <- lapply(seq_len(rep), function(a) {
     matrix(rmultinom(1, n_dot_dot, p_mat), ncol = n_col)
   })
-
+  
   Z_ij_mat_list <- lapply(sim_tab_list, getZijMat)
-
-  max_list <- matrix(unlist(lapply(Z_ij_mat_list, function(a) {
-    apply(a, 2, function(b) {
-      max(log(b), na.rm = TRUE)
-    })
-  })), byrow = TRUE, ncol = n_col)
-
+  
+  max_list <- do.call(rbind, lapply(Z_ij_mat_list, function(a) {
+    apply(log(a), 2, max, na.rm = TRUE)
+  }))
+  
   cutoffs <- unlist(lapply(seq_len(n_col), function(a) {
     quantile(max_list[, a], quantile, na.rm = TRUE)
   }))
