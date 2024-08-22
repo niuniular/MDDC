@@ -30,10 +30,13 @@ jobs:
       
       - name: Install dependencies
         run: |
-          install.packages(c("remotes", "rcmdcheck", "pandoc"))
+          install.packages(c("remotes", "rcmdcheck"))
           remotes::install_deps(dependencies = TRUE)
         shell: Rscript {0}
+        
+      - name: Install Pandoc (only needed on some systems)
+        if: runner.os == 'Linux' || runner.os == 'macOS'
+        run: Rscript -e 'install.packages("rmarkdown"); rmarkdown::find_pandoc()'
       
       - name: Check
-        run: rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "error")
-        shell: Rscript {0}
+        run: Rscript -e 'rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "error")'
