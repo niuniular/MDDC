@@ -55,6 +55,7 @@ step 2 of the algorithm.</p>
 <span>  separate <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  if_col_cor <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  cor_lim <span class="op">=</span> <span class="fl">0.8</span>,</span>
+<span>  coef <span class="op">=</span> <span class="fl">1.5</span>,</span>
 <span>  num_cores <span class="op">=</span> <span class="fl">2</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -97,6 +98,11 @@ what correlation threshold should be used to select “connected”
 adverse events. Default is 0.8.</p></dd>
 
 
+<dt id="arg-coef">coef<a class="anchor" aria-label="anchor" href="#arg-coef"></a></dt>
+<dd><p>A numeric value used for determining the cutoff corresponding
+to the non-zero cells.</p></dd>
+
+
 <dt id="arg-num-cores">num_cores<a class="anchor" aria-label="anchor" href="#arg-num-cores"></a></dt>
 <dd><p>Number of cores used to parallelize the MDDC
 Boxplot algorithm. Default is 2.</p></dd>
@@ -115,6 +121,11 @@ to decide whether to use <code>corr_signal_pval</code> or
 <code>corr_signal_adj_pval</code>, and what threshold for p values should be
 used (for example, 0.05). Please see the example below.</p></li>
 </ul></div>
+    <div class="section level2">
+    <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
+    <div class="dont-index"><p><code><a href="find_optimal_coef.html">find_optimal_coef</a></code> for finding an optimal value of
+<code>coef</code>.</p></div>
+    </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
