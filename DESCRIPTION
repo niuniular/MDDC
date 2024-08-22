@@ -31,15 +31,10 @@ Imports:
     Rcpp,
     stats
 Suggests: 
-    knitr,
-    rmarkdown,
-    roxygen2,
     testthat (>= 3.0.0)
 LinkingTo:
     Rcpp,
     RcppEigen
-VignetteBuilder:
-    knitr
 Author: 
     Anran Liu [aut, cre],
     Raktim Mukhopadhyay [aut],
