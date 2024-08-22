@@ -26,18 +26,23 @@ RoxygenNote: 7.3.1
 Imports: 
     doParallel,
     foreach,
-    ggplot2
+    ggplot2,
     MASS,
     Rcpp,
     stats
-LinkingTo: 
+Suggests: 
+    knitr,
+    rmarkdown,
+    roxygen2,
+    testthat (>= 3.0.0)
+LinkingTo:
     Rcpp,
     RcppEigen
+VignetteBuilder:
+    knitr
 Author: 
     Anran Liu [aut, cre],
     Raktim Mukhopadhyay [aut],
     Marianthi Markatou [aut]
 Depends: R (>= 3.5.0)
-Suggests: 
-    testthat (>= 3.0.0)
 Config/testthat/edition: 3

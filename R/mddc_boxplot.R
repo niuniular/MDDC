@@ -23,6 +23,8 @@
 #' @param cor_lim A numeric value between (0, 1). In the step 3,
 #' what correlation threshold should be used to select ``connected''
 #' adverse events. Default is 0.8.
+#' @param coef A numeric value used for determining the cutoff corresponding
+#' to the non-zero cells.
 #' @param num_cores Number of cores used to parallelize the MDDC
 #' Boxplot algorithm. Default is 2.
 #'
@@ -40,6 +42,9 @@
 #' used (for example, 0.05). Please see the example below.
 #' }
 #' @export
+#'
+#' @seealso \code{\link{find_optimal_coef}} for finding an optimal value of
+#' \code{coef}.
 #'
 #' @examples
 #' # using statin49 data set as an example
@@ -70,8 +75,13 @@
 #' @importFrom doParallel stopImplicitCluster
 
 mddc_boxplot <- function(
-    contin_table, col_specific_cutoff = TRUE, separate = TRUE,
-    if_col_cor = FALSE, cor_lim = 0.8, num_cores = 2) {
+    contin_table,
+    col_specific_cutoff = TRUE,
+    separate = TRUE,
+    if_col_cor = FALSE,
+    cor_lim = 0.8,
+    coef = 1.5,
+    num_cores = 2) {
   n_row <- nrow(contin_table)
   n_col <- ncol(contin_table)
 
@@ -90,7 +100,7 @@ mddc_boxplot <- function(
         boxplot.stats(Z_ij_mat[which(contin_table[
           ,
           a
-        ] != 0), a])$stats[[5]]
+        ] != 0), a], coef = coef)$stats[[5]]
       }))
       zero_drug_cutoff <- unlist(lapply(seq_len(n_col), function(a) {
         boxplot.stats(Z_ij_mat[which(contin_table[
@@ -100,7 +110,7 @@ mddc_boxplot <- function(
       }))
     } else {
       c_univ_drug <-
-        apply(Z_ij_mat, 2, function(a) boxplot.stats(a)$stats[[5]])
+        apply(Z_ij_mat, 2, function(a) boxplot.stats(a, coef = coef)$stats[[5]])
       zero_drug_cutoff <-
         apply(Z_ij_mat, 2, function(a) boxplot.stats(a)$stats[[1]])
     }

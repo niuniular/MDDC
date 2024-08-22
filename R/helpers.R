@@ -95,13 +95,13 @@ get_log_bootstrap_cutoff <- function(contin_table, quantile, rep, seed) {
   sim_tab_list <- lapply(seq_len(rep), function(a) {
     matrix(rmultinom(1, n_dot_dot, p_mat), ncol = n_col)
   })
-  
+
   Z_ij_mat_list <- lapply(sim_tab_list, getZijMat)
-  
+
   max_list <- do.call(rbind, lapply(Z_ij_mat_list, function(a) {
     apply(log(a), 2, max, na.rm = TRUE)
   }))
-  
+
   cutoffs <- unlist(lapply(seq_len(n_col), function(a) {
     quantile(max_list[, a], quantile, na.rm = TRUE)
   }))
@@ -187,4 +187,49 @@ correlation_matrix <- function(n, rho) {
   diag(mat) <- 1
 
   return(mat)
+}
+
+#' Helper function to identify outliers using Boxplot
+#'
+#' This function identifies the outliers in a dataset by using
+#' \eqn{Q_3 + c_j \times IQR}.
+#'
+#' @param dat A numeric vector containing the data for which outliers
+#' are to be identified.
+#' @param c_j A numeric value used as a scaling factor to determine
+#' outliers.
+#' @return A logical vector indicating TRUE for values that are
+#' outliers and FALSE otherwise.
+#'
+#' @useDynLib MDDC
+#' @importFrom stats IQR
+#' @noRd
+get_boxplot_outliers <- function(dat, c_j) {
+  outliers <-
+    dat > (quantile(dat, 0.75, na.rm = TRUE) +
+      c_j * IQR(dat, na.rm = TRUE))
+  return(outliers)
+}
+
+#' Helper function to compute the FDR
+#'
+#' This function calculates the average number
+#' of outliers for a given column across a number of
+#' datasets.
+#'
+#' @param res_list A list of numeric matrices or data frames. Each element
+#' of the list represents a dataset where outliers will be identified.
+#' @param c_j A numeric value used as a scaling factor to determine
+#' outliers.
+#' @param j An integer representing the index of the column to
+#' compute the FDR on.
+#' @return A numeric value representing the average number of
+#' outliers across all datasets for the given column.
+#'
+#' @useDynLib MDDC
+#' @noRd
+compute_fdr <- function(res_list, c_j, j) {
+  mean(unlist(lapply(res_list, function(a) {
+    sum(get_boxplot_outliers(a[, j], c_j), na.rm = TRUE)
+  })))
 }
