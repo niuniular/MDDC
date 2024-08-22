@@ -32,6 +32,7 @@ Imports:
     stats
 Suggests: 
     knitr,
+    rmarkdown,
     roxygen2,
     testthat (>= 3.0.0)
 LinkingTo:
