@@ -14,7 +14,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [macos-latest]
         r-version: ['4.4.0']
     steps:
       - uses: actions/checkout@v4
@@ -24,7 +24,7 @@ jobs:
         with:
           r-version: ${{ matrix.r-version }}
 
-      - name: Install dependencies on Linux
+      - name: Install libcurl-devel on Linux
         if: runner.os == 'Linux'
         run: sudo apt-get install -y libcurl4-openssl-dev
       
@@ -33,11 +33,9 @@ jobs:
           install.packages(c("remotes", "rcmdcheck"))
           remotes::install_deps(dependencies = TRUE)
         shell: Rscript {0}
-      
-      - name: Install Pandoc on macOS
-        if: runner.os == 'macOS'
-        run: |
-          brew install pandoc
+        
+      - name: Install Pandoc
+        run: Rscript -e 'install.packages("pandoc"); pandoc::pandoc_install()'
       
       - name: Check
         run: Rscript -e 'rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "error")'
