@@ -45,8 +45,7 @@ jobs:
       - name: Install Pandoc on Windows
         if: runner.os == 'Windows'
         run: |
-          Invoke-WebRequest -Uri "https://github.com/jgm/pandoc/releases/download/3.3/pandoc-3.3-windows-x86_64.msi" -OutFile "pandoc-installer.msi"
-          Start-Process msiexec.exe -ArgumentList '/i pandoc-installer.msi /quiet /norestart' -NoNewWindow -Wait
+          choco install pandoc
       
       - name: Check
         run: Rscript -e 'rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "error")'
