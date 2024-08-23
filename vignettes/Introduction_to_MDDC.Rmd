@@ -306,6 +306,6 @@ This function takes the following arguments:
 The following heatmap shows the visualization of the associated p-values of Monte Carlo method in step 2:
 
 ```{r, fig.width=6, fig.height=10}
-plot_heatmap(test2$mc_pval[, -7])
+plot_heatmap(test2$mc_pval[-50, -7])
 ```
 
