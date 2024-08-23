@@ -99,8 +99,11 @@ adverse events. Default is 0.8.</p></dd>
 
 
 <dt id="arg-coef">coef<a class="anchor" aria-label="anchor" href="#arg-coef"></a></dt>
-<dd><p>A numeric value used for determining the cutoff corresponding
-to the non-zero cells.</p></dd>
+<dd><p>A numeric value or a list of numeric values. If a single numeric
+value is provided, it will be applied uniformly across all columns of the
+contingency table. If a list is provided, its length must match the number
+of columns in the contingency table, and each value will be used as the
+coefficient for the corresponding column.</p></dd>
 
 
 <dt id="arg-num-cores">num_cores<a class="anchor" aria-label="anchor" href="#arg-num-cores"></a></dt>
