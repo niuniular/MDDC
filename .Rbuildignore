@@ -20,4 +20,4 @@ data/.DS_Store
 ^CODE_OF_CONDUCT\.md$
 ^NEWS\.md$
 ^pkgdown$
-^code-workspace$
+.code-workspace

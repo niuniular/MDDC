@@ -12,8 +12,7 @@ Authors@R:
             comment = c(ORCID = "0000-0002-1453-8229"))
     )
 Maintainer: 
-    Anran Liu <anranliu@buffalo.edu>, 
-    Raktim Mukhopadhyay <raktimmu@buffalo.edu>
+    Anran Liu <anranliu@buffalo.edu>
 Description: Methods for detecting signals related to (adverse event, drug) pairs, 
     a data generation function for simulating pharmacovigilance datasets, 
     and various utility functions.
