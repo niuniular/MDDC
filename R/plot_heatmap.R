@@ -9,10 +9,9 @@
 #' in the heatmap. Default is 1.
 #' @param cell_height Numeric value indicating the height of each cell
 #' in the heatmap. Default is 1.
-#' @param ... Additional arguments to be passed to
-#' \code{\link[ggplot2]{geom_tile}} or other ggplot2 functions.
+#' @param ... Additional arguments to be passed to ggplot2 functions.
 #'
-#' @return A \code{\link[ggplot2]{ggplot}} object representing the heatmap.
+#' @return A ggplot2 object representing the heatmap.
 #' @export
 #'
 #' @examples

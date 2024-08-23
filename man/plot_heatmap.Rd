@@ -17,11 +17,10 @@ in the heatmap. Default is 1.}
 \item{cell_height}{Numeric value indicating the height of each cell
 in the heatmap. Default is 1.}
 
-\item{...}{Additional arguments to be passed to
-\code{\link[ggplot2]{geom_tile}} or other ggplot2 functions.}
+\item{...}{Additional arguments to be passed to ggplot2 functions.}
 }
 \value{
-A \code{\link[ggplot2]{ggplot}} object representing the heatmap.
+A ggplot2 object representing the heatmap.
 }
 \description{
 Creates a heatmap plot from a matrix or data frame.
