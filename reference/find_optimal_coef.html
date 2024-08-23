@@ -54,6 +54,7 @@ table, ensuring the target false discovery rate (FDR) is met.</p>
 <span>  n_sim <span class="op">=</span> <span class="fl">1000</span>,</span>
 <span>  target_fdr <span class="op">=</span> <span class="fl">0.05</span>,</span>
 <span>  grid <span class="op">=</span> <span class="fl">0.1</span>,</span>
+<span>  col_specific_cutoff <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  exclude_small_count <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -80,6 +81,12 @@ discovery rate (FDR). Default is 0.05.</p></dd>
 <dt id="arg-grid">grid<a class="anchor" aria-label="anchor" href="#arg-grid"></a></dt>
 <dd><p>A numeric value representing the size of the grid added to
 the default value of <code>coef = 1.5</code> as suggested by Tukey. Default is 0.1.</p></dd>
+
+
+<dt id="arg-col-specific-cutoff">col_specific_cutoff<a class="anchor" aria-label="anchor" href="#arg-col-specific-cutoff"></a></dt>
+<dd><p>Logical. If TRUE, then a single value of the
+coefficient is returned for the entire dataset, else when FALSE specific
+values correspoding to each of the columns are returned.</p></dd>
 
 
 <dt id="arg-exclude-small-count">exclude_small_count<a class="anchor" aria-label="anchor" href="#arg-exclude-small-count"></a></dt>

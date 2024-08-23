@@ -72,28 +72,29 @@ input contingency table using the function
 
 
 <dt id="arg-col-specific-cutoff">col_specific_cutoff<a class="anchor" aria-label="anchor" href="#arg-col-specific-cutoff"></a></dt>
-<dd><p>Logical. In the step 2 of the algorithm, whether
-to apply boxplot method to the standardized Pearson residuals of the entire
-table, or within each drug column. Default is <code>TRUE</code>, that is within
-each drug column (column specific cutoff). <code>FALSE</code> indicates applying
-boxplot method on residuals of the entire table.</p></dd>
+<dd><p>Logical. In the second step of the algorithm,
+whether to apply boxplot method to the standardized Pearson residuals of
+the entire table, or within each drug column. Default is <code>TRUE</code>, that
+is within each drug column (column specific cutoff). <code>FALSE</code> indicates
+applying boxplot method on residuals of the entire table.</p></dd>
 
 
 <dt id="arg-separate">separate<a class="anchor" aria-label="anchor" href="#arg-separate"></a></dt>
-<dd><p>Logical. In the step 2 of the algorithm, whether to separate
-the standardized Pearson residuals for the zero cells and non zero cells and
-apply boxplot method separately or together. Default is <code>TRUE</code>.</p></dd>
+<dd><p>Logical. In the second step of the algorithm, whether to
+separate the standardized Pearson residuals for the zero cells and non zero
+cells and apply boxplot method separately or together.
+Default is <code>TRUE</code>.</p></dd>
 
 
 <dt id="arg-if-col-cor">if_col_cor<a class="anchor" aria-label="anchor" href="#arg-if-col-cor"></a></dt>
-<dd><p>Logical. In the step 3 of the algorithm, whether to use
+<dd><p>Logical. In the third step of the algorithm, whether to use
 column (drug) correlation or row (adverse event) correlation. Default is
 <code>FALSE</code>, that is using the adverse event correlation. <code>TRUE</code>
 indicates using drug correlation.</p></dd>
 
 
 <dt id="arg-cor-lim">cor_lim<a class="anchor" aria-label="anchor" href="#arg-cor-lim"></a></dt>
-<dd><p>A numeric value between (0, 1). In the step 3,
+<dd><p>A numeric value between (0, 1). In the third step,
 what correlation threshold should be used to select “connected”
 adverse events. Default is 0.8.</p></dd>
 
@@ -113,14 +114,15 @@ Boxplot algorithm. Default is 2.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A list with the following components:</p><ul><li><p><code>boxplot_signal</code> returns the signals identified in the step 2.
+    <p>A list with the following components:</p><ul><li><p><code>boxplot_signal</code> returns the signals identified in the
+second step.
 1 indicates signals, 0 for non signal.</p></li>
 <li><p><code>corr_signal_pval</code> returns the p values for each cell in the
-contingency table in the step 5, when the \(r_{ij}\) values are mapped
+contingency table in the fifth step, when the \(r_{ij}\) values are mapped
 back to the standard normal distribution.</p></li>
 <li><p><code>corr_signal_adj_pval</code> returns the Benjamini-Hochberg adjusted
-p values for each cell in the step 5. We leave here an option for the user
-to decide whether to use <code>corr_signal_pval</code> or
+p values for each cell in the fifth step. We leave here an option for the
+user to decide whether to use <code>corr_signal_pval</code> or
 <code>corr_signal_adj_pval</code>, and what threshold for p values should be
 used (for example, 0.05). Please see the example below.</p></li>
 </ul></div>

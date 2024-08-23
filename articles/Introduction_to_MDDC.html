@@ -148,15 +148,15 @@ contingency table with rows representing adverse events and columns
 representing drugs. We recommend users first check the input contingency
 table using the function
 <code><a href="../reference/check_and_fix_contin_table.html">check_and_fix_contin_table()</a></code>.</p></li>
-<li><p><code>col_specific_cutoff</code>: Logical. In the step 2 of the
+<li><p><code>col_specific_cutoff</code>: Logical. In step 2 of the
 algorithm, whether to apply the boxplot method to the standardized
 Pearson residuals within each drug column (default is <code>TRUE</code>)
 or to the entire table (<code>FALSE</code>).</p></li>
-<li><p><code>separate</code>: Logical. In the step 2 of the algorithm,
+<li><p><code>separate</code>: Logical. In step 2 of the algorithm,
 whether to separate the standardized Pearson residuals for the zero
 cells and non zero cells and apply boxplot method separately or
 together. Default is <code>TRUE</code>.</p></li>
-<li><p><code>if_col_cor</code>: Logical. In the step 3 of the algorithm,
+<li><p><code>if_col_cor</code>: Logical. In step 3 of the algorithm,
 whether to use column (drug) correlation or row (adverse event)
 correlation. Default is <code>FALSE</code>, indicating the use of
 adverse event correlation. <code>TRUE</code> indicates the use of drug
@@ -164,6 +164,12 @@ correlation.</p></li>
 <li><p><code>cor_lim</code>: A numeric value between 0 and 1. Specifies
 the correlation threshold to select “connected” adverse events in step
 3. Default is 0.8.</p></li>
+<li><p><code>coef</code>: A numeric value or a list of numeric values.
+If a single numeric value is provided, it will be applied uniformly
+across all columns of the contingency table. If a list is provided, its
+length must match the number of columns in the contingency table, and
+each value will be used as the coefficient for the corresponding
+column.</p></li>
 <li><p><code>num_cores</code>: Number of cores used to parallelize the
 MDDC Boxplot algorithm. Default is 2.</p></li>
 </ul>
@@ -176,15 +182,15 @@ MDDC Boxplot algorithm. Default is 2.</p></li>
 <span>  col_specific_cutoff <span class="op">=</span> <span class="cn">T</span>,</span>
 <span>  separate <span class="op">=</span> <span class="cn">T</span>,</span>
 <span>  if_col_cor <span class="op">=</span> <span class="cn">F</span>,</span>
-<span>  cor_lim <span class="op">=</span> <span class="fl">0.8</span></span>
+<span>  cor_lim <span class="op">=</span> <span class="fl">0.8</span>,</span>
+<span>  coef <span class="op">=</span> <span class="fl">1.5</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>The above function outputs a list with three components:</p>
 <ul>
 <li><p><code>boxplot_signal</code>: An
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>I</mi><mo>×</mo><mi>J</mi></mrow><annotation encoding="application/x-tex">I\times J</annotation></semantics></math>
 data matrix with entries 1 or 0, indicating the signals identified in
-the step 2. A value of 1 indicates signals, 0 indicates no
-signal.</p></li>
+step 2. A value of 1 indicates signals, 0 indicates no signal.</p></li>
 <li><p><code>corr_signal_pval</code>: An
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>I</mi><mo>×</mo><mi>J</mi></mrow><annotation encoding="application/x-tex">I\times J</annotation></semantics></math>
 data matrix of p-values for each cell in the contingency table from step
@@ -233,7 +239,7 @@ and Simvastatin. Consequently, the standardized Pearson residual values
 for these four drugs were replaced with NA. With only two residual
 values remaining in the first row, it was not possible to find connected
 AEs for “Rhabdomyolysis”. Therefore, this adverse event was excluded
-from the subsequent steps of the analysis. Note that for computing
+from the subsequent steps of the analysis. Note that for computing the
 Pearson correlation in step 3, at least three values are required in the
 matching positions. Applying a p-value threshold of 0.05, we identify
 the following pairs as signals by considering AE correlations: (Muscle
@@ -245,7 +251,7 @@ Benjamini-Hochberg adjusted p-values. Users can choose whether to use
 can set their own p-value threshold (for example, 0.05).</p>
 </div>
 <div class="section level3">
-<h3 id="using-monte-carlo-method">Using Monte Carlo Method<a class="anchor" aria-label="anchor" href="#using-monte-carlo-method"></a>
+<h3 id="using-the-monte-carlo-method">Using the Monte Carlo Method<a class="anchor" aria-label="anchor" href="#using-the-monte-carlo-method"></a>
 </h3>
 <p>Next, we introduce another primary function of this package,
 <code><a href="../reference/mddc_mc.html">mddc_mc()</a></code>, which implements the MDDC (MC) algorithm. This
@@ -369,7 +375,7 @@ rows:</p>
 <span><span class="co">#&gt; 5 Atorvastatin    Muscle Necrosis           68       2.3541         42.8516</span></span>
 <span><span class="co">#&gt; 6 Atorvastatin     Muscle Rupture          181      11.2368          50.723</span></span></code></pre></div>
 <p>These (AE, drug) pairs are part of the signals identified by the MDDC
-(MC) method in the step 2 for pairs with counts greater than five.
+(MC) method in step 2 for pairs with counts greater than five.
 Similarly, we can apply this function to the signals obtained from the
 correlation steps using the following code. Here we use a threshold of
 0.05 for selecting the signals from step 5. We omit the output for
