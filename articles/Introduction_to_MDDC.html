@@ -249,6 +249,57 @@ Disorder, Rosuvastatin).</p>
 Benjamini-Hochberg adjusted p-values. Users can choose whether to use
 <code>corr_signal_pval</code> or <code>corr_signal_adj_pval</code> and
 can set their own p-value threshold (for example, 0.05).</p>
+<div class="section level4">
+<h4 id="function-for-finding-optimal-boxplot-coefficient">Function for Finding Optimal Boxplot Coefficient<a class="anchor" aria-label="anchor" href="#function-for-finding-optimal-boxplot-coefficient"></a>
+</h4>
+<p>We provide a function that outputs appropriate coefficients for
+boxplot using a grid search method to control the FDR. This function
+takes the following arguments:</p>
+<ul>
+<li><p><code>contin_table</code>: A matrix representing the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>I</mi><mo>×</mo><mi>J</mi></mrow><annotation encoding="application/x-tex">I \times J</annotation></semantics></math>
+contingency table.</p></li>
+<li><p><code>n_sim</code>: An integer specifying the number of simulated
+tables under the assumption of independence between rows and columns.
+Default is 1000.</p></li>
+<li><p><code>target_fdr</code>: A numeric value specifying the desired
+level of false discovery rate (FDR). Default is 0.05.</p></li>
+<li><p><code>grid</code>: A numeric value representing the size of the
+grid added to the default value of <code>coef = 1.5</code> as suggested
+by Tukey. Default is 0.1.</p></li>
+<li><p><code>col_specific_cutoff</code>: Logical. If TRUE, then a single
+value of the coefficient is returned for the entire dataset, else when
+FALSE specific values correspoding to each of the columns are
+returned.</p></li>
+<li><p><code>exclude_small_count</code>: A logical indicating whether to
+exclude cells with counts smaller than or equal to five when computing
+boxplot statistics. Default is <code>TRUE</code>.</p></li>
+</ul>
+<p>We apply this function to the <code>statin49</code> dataset:</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/find_optimal_coef.html">find_optimal_coef</a></span><span class="op">(</span></span>
+<span>  contin_table <span class="op">=</span> <span class="va">statin49</span>,</span>
+<span>  n_sim <span class="op">=</span> <span class="fl">1000</span>,</span>
+<span>  target_fdr <span class="op">=</span> <span class="fl">0.05</span>,</span>
+<span>  grid <span class="op">=</span> <span class="fl">0.1</span>,</span>
+<span>  col_specific_cutoff <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  exclude_small_count <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; $coef</span></span>
+<span><span class="co">#&gt; [1] 2.5 3.2 2.8 2.7 2.6 2.4 2.0</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $FDR</span></span>
+<span><span class="co">#&gt; [1] 0.050 0.044 0.050 0.049 0.047 0.038 0.044</span></span></code></pre></div>
+<p>This function outputs a list with the following components:</p>
+<ul>
+<li><p><code>coef</code>: A numeric vector containing the optimal
+coefficient ‘coef’ for each column of the input contingency
+table.</p></li>
+<li><p><code>FDR</code>: A numeric vector with the corresponding false
+discovery rate (FDR) for each column.</p></li>
+</ul>
+</div>
 </div>
 <div class="section level3">
 <h3 id="using-the-monte-carlo-method">Using the Monte Carlo Method<a class="anchor" aria-label="anchor" href="#using-the-monte-carlo-method"></a>
@@ -299,7 +350,7 @@ reproducibility. If NULL, no seed is set.</p></li>
 </ul>
 <p>We now apply MDDC (MC) algorithm to <code>statin49</code> using the
 following code:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
 <span><span class="va">test2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mddc_mc.html">mddc_mc</a></span><span class="op">(</span></span>
 <span>  contin_table <span class="op">=</span> <span class="va">statin49</span>,</span>
@@ -360,7 +411,7 @@ signal). This matrix can be obtained by applying the
 <p>Now we apply this function to the second component
 <code>mc_signal</code> we obtained above and display the first few
 rows:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">test3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/report_drug_AE_pairs.html">report_drug_AE_pairs</a></span><span class="op">(</span></span>
 <span>  contin_table <span class="op">=</span> <span class="va">statin49</span>,</span>
 <span>  contin_table_signal <span class="op">=</span> <span class="va">test2</span><span class="op">$</span><span class="va">mc_signal</span></span>
@@ -380,7 +431,7 @@ Similarly, we can apply this function to the signals obtained from the
 correlation steps using the following code. Here we use a threshold of
 0.05 for selecting the signals from step 5. We omit the output for
 brevity.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/report_drug_AE_pairs.html">report_drug_AE_pairs</a></span><span class="op">(</span></span>
 <span>  contin_table <span class="op">=</span> <span class="va">statin49</span>,</span>
 <span>  contin_table_signal <span class="op">=</span> <span class="va">test2</span><span class="op">$</span><span class="va">corr_signal_pval</span> <span class="op">&lt;</span> <span class="fl">0.05</span></span>
@@ -448,7 +499,7 @@ First, we need to create a data matrix with the same dimensions as
 <code>statin49</code> that indicates the signal strength for each (AE,
 drug) pair. In this example, we assign a signal (Rhabdomyolysis,
 Atorvastatin) with a strength of 4 to the simulated dataset:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># create a matrix indicating signal strength</span></span>
@@ -467,7 +518,7 @@ with laboratory tests for muscle injury, 3) AEs associated with kidney
 injury and its laboratory diagnosis and treatment. Next we take a look
 at the first few rows of <code>sttain49_AE_idx</code>, which indicate
 the group index of each AE in <code>statin49</code>:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">statin49_AE_idx</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   idx                 AE</span></span>
 <span><span class="co">#&gt; 1   1     Rhabdomyolysis</span></span>
@@ -480,7 +531,7 @@ the group index of each AE in <code>statin49</code>:</p>
 of <code>statin49</code>, the pre-specified matrix of signal strength,
 and the AE group index, with a within group correlation
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ρ</mi><mo>=</mo><mn>0.5</mn></mrow><annotation encoding="application/x-tex">\rho=0.5</annotation></semantics></math>:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sim_dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/generate_contin_table_with_clustered_AE.html">generate_contin_table_with_clustered_AE</a></span><span class="op">(</span></span>
 <span>  contin_table <span class="op">=</span> <span class="va">statin49</span>,</span>
 <span>  n_rep <span class="op">=</span> <span class="fl">3</span>,</span>
@@ -494,7 +545,7 @@ the argument <code>n_rep</code>. In this example, we have
 <code>n_rep = 3</code>. Now we perform the MDDC (MC) analysis on the
 first simulated contingency table and extract the identified pairs from
 step 2:</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">test5</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mddc_mc.html">mddc_mc</a></span><span class="op">(</span><span class="va">sim_dat</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/report_drug_AE_pairs.html">report_drug_AE_pairs</a></span><span class="op">(</span></span>
 <span>  contin_table <span class="op">=</span> <span class="va">sim_dat</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>,</span>
@@ -523,9 +574,9 @@ each cell in the heatmap. Default is 1.</p></li>
 </ul>
 <p>The following heatmap shows the visualization of the associated
 p-values of Monte Carlo method in step 2:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_heatmap.html">plot_heatmap</a></span><span class="op">(</span><span class="va">test2</span><span class="op">$</span><span class="va">mc_pval</span><span class="op">[</span>, <span class="op">-</span><span class="fl">7</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Introduction_to_MDDC_files/figure-html/unnamed-chunk-15-1.png" width="576"></p>
+<p><img src="Introduction_to_MDDC_files/figure-html/unnamed-chunk-16-1.png" width="576"></p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
