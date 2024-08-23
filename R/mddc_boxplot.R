@@ -23,8 +23,11 @@
 #' @param cor_lim A numeric value between (0, 1). In the step 3,
 #' what correlation threshold should be used to select ``connected''
 #' adverse events. Default is 0.8.
-#' @param coef A numeric value used for determining the cutoff corresponding
-#' to the non-zero cells.
+#' @param coef A numeric value or a list of numeric values. If a single numeric
+#' value is provided, it will be applied uniformly across all columns of the
+#' contingency table. If a list is provided, its length must match the number
+#' of columns in the contingency table, and each value will be used as the
+#' coefficient for the corresponding column.
 #' @param num_cores Number of cores used to parallelize the MDDC
 #' Boxplot algorithm. Default is 2.
 #'
@@ -88,6 +91,17 @@ mddc_boxplot <- function(
   row_names <- row.names(contin_table)
   col_names <- colnames(contin_table)
 
+  if (!is.list(coef) && !is.vector(coef)) {
+    # If coef is neither, repeat it to match the number of columns
+    boxplot_coef_list <- rep(coef, n_col)
+  } else {
+    if (length(coef) != n_col) {
+      stop("Length of 'coef' must be the same as the number of columns.")
+    }
+    # Assign coef directly to boxplot_coef_list
+    boxplot_coef_list <- coef
+  }
+
   Z_ij_mat <- getZijMat(continTable = contin_table, na = FALSE)
 
   res_all <- as.vector(Z_ij_mat)
@@ -100,7 +114,7 @@ mddc_boxplot <- function(
         boxplot.stats(Z_ij_mat[which(contin_table[
           ,
           a
-        ] != 0), a], coef = coef)$stats[[5]]
+        ] != 0), a], coef = boxplot_coef_list[a])$stats[[5]]
       }))
       zero_drug_cutoff <- unlist(lapply(seq_len(n_col), function(a) {
         boxplot.stats(Z_ij_mat[which(contin_table[
@@ -110,7 +124,11 @@ mddc_boxplot <- function(
       }))
     } else {
       c_univ_drug <-
-        apply(Z_ij_mat, 2, function(a) boxplot.stats(a, coef = coef)$stats[[5]])
+        apply(Z_ij_mat, 2, function(a, i) {
+          boxplot.stats(a, coef = boxplot_coef_list[i])$stats[[5]]
+        },
+        i = seq_len(n_col)
+        )
       zero_drug_cutoff <-
         apply(Z_ij_mat, 2, function(a) boxplot.stats(a)$stats[[1]])
     }

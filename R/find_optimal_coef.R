@@ -77,7 +77,7 @@ find_optimal_coef <- function(contin_table,
   }
 
   c_vec <- rep(1.5, J)
-  
+
   # Optimize c_j for each column j
 
   fdr_vec <- rep(1, J)

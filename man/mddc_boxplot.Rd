@@ -40,8 +40,11 @@ indicates using drug correlation.}
 what correlation threshold should be used to select ``connected''
 adverse events. Default is 0.8.}
 
-\item{coef}{A numeric value used for determining the cutoff corresponding
-to the non-zero cells.}
+\item{coef}{A numeric value or a list of numeric values. If a single numeric
+value is provided, it will be applied uniformly across all columns of the
+contingency table. If a list is provided, its length must match the number
+of columns in the contingency table, and each value will be used as the
+coefficient for the corresponding column.}
 
 \item{num_cores}{Number of cores used to parallelize the MDDC
 Boxplot algorithm. Default is 2.}

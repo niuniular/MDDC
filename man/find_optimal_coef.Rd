@@ -45,5 +45,6 @@ table, ensuring the target false discovery rate (FDR) is met.
 }
 \examples{
 # This example uses the statin49 data
+data(statin49)
 find_optimal_coef(statin49)
 }
