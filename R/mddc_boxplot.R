@@ -91,17 +91,26 @@ mddc_boxplot <- function(
   row_names <- row.names(contin_table)
   col_names <- colnames(contin_table)
 
-  if (!is.list(coef) && !is.vector(coef)) {
-    # If coef is neither, repeat it to match the number of columns
-    boxplot_coef_list <- rep(coef, n_col)
-  } else {
-    if (length(coef) != n_col) {
-      stop("Length of 'coef' must be the same as the number of columns.")
+  if (is.numeric(coef)) {
+    if (length(coef) == 1) {
+      # If coef is a single numeric value, replicate it for each column
+      coef <- rep(coef, n_col)
+    } else if (length(coef) != n_col) {
+      # If coef is a numeric vector but its length does not match n_col, 
+      # throw an error
+      stop("Length of 'coef' does not match the number of columns (n_col).")
     }
-    # Assign coef directly to boxplot_coef_list
-    boxplot_coef_list <- coef
+  } else if (is.list(coef)) {
+    if (length(coef) != n_col) {
+      # If coef is a list but its length does not match n_col, throw an error
+      stop("Length of 'coef' does not match the number of columns (n_col).")
+    }
+  } else {
+    # If coef is neither a numeric nor a list, throw an error
+    stop("'coef' must be a numeric value, numeric vector, or list.")
   }
-
+  
+  boxplot_coef_list <- coef
   Z_ij_mat <- getZijMat(continTable = contin_table, na = FALSE)
 
   res_all <- as.vector(Z_ij_mat)
@@ -123,12 +132,15 @@ mddc_boxplot <- function(
         ] == 0), a])$stats[[1]]
       }))
     } else {
-      c_univ_drug <-
-        apply(Z_ij_mat, 2, function(a, i) {
-          boxplot.stats(a, coef = boxplot_coef_list[i])$stats[[5]]
-        },
-        i = seq_len(n_col)
-        )
+      # c_univ_drug <-
+      #   apply(Z_ij_mat, 2, function(a, i) {
+      #     boxplot.stats(a, coef = boxplot_coef_list[i])$stats[[5]]
+      #   },
+      #   i = seq_len(n_col)
+      #   )
+      c_univ_drug <- unlist(lapply(seq_len(n_col), function(a) {
+        boxplot.stats(Z_ij_mat[, a], coef = boxplot_coef_list[a])$stats[[5]]
+      }))
       zero_drug_cutoff <-
         apply(Z_ij_mat, 2, function(a) boxplot.stats(a)$stats[[1]])
     }
