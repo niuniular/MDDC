@@ -12,6 +12,9 @@
 #' discovery rate (FDR). Default is 0.05.
 #' @param grid A numeric value representing the size of the grid added to
 #' the default value of \code{coef = 1.5} as suggested by Tukey. Default is 0.1.
+#' @param col_specific_cutoff Logical. If TRUE, then a single value of the
+#' coefficient is returned for the entire dataset, else when FALSE specific
+#' values correspoding to each of the columns are returned.
 #' @param exclude_small_count A logical indicating whether to exclude cells
 #' with counts smaller than or equal to five when computing boxplot statistics.
 #' Default is \code{TRUE}.
@@ -35,6 +38,7 @@ find_optimal_coef <- function(contin_table,
                               n_sim = 1000,
                               target_fdr = 0.05,
                               grid = 0.1,
+                              col_specific_cutoff = TRUE,
                               exclude_small_count = TRUE) {
   I <- nrow(contin_table)
   J <- ncol(contin_table)
@@ -77,20 +81,28 @@ find_optimal_coef <- function(contin_table,
   }
 
   c_vec <- rep(1.5, J)
+  c <- 1.5
 
-  # Optimize c_j for each column j
+  if (col_specific_cutoff == TRUE) {
+    # Optimize c_j for each column j
+    fdr_vec <- rep(1, J)
 
-  fdr_vec <- rep(1, J)
-
-  for (j in 1:J) {
-    while (fdr_vec[j] > target_fdr) {
-      c_vec[j] <- c_vec[j] + grid
-      fdr_vec[j] <- compute_fdr(res_list, c_vec[j], j)
+    for (j in 1:J) {
+      while (fdr_vec[j] > target_fdr) {
+        c_vec[j] <- c_vec[j] + grid
+        fdr_vec[j] <- compute_fdr(res_list, c_vec[j], j)
+      }
     }
+    rslt <- list(c_vec, fdr_vec)
+    names(rslt) <- c("coef", "FDR")
+  } else {
+    fdr <- 1
+    while (fdr > target_fdr) {
+      c <- c + grid
+      fdr <- compute_fdr_all(res_list, c)
+    }
+    rslt <- c(c, fdr)
+    names(rslt) <- c("coef", "FDR")
   }
-
-  rslt <- list(c_vec, fdr_vec)
-  names(rslt) <- c("coef", "FDR")
-
   return(rslt)
 }

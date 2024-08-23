@@ -8,19 +8,20 @@
 #' with row (adverse event) and column (drug) names. Please first check the
 #' input contingency table using the function
 #' \code{check_and_fix_contin_table()}.
-#' @param col_specific_cutoff Logical. In the step 2 of the algorithm, whether
-#' to apply boxplot method to the standardized Pearson residuals of the entire
-#' table, or within each drug column. Default is \code{TRUE}, that is within
-#' each drug column (column specific cutoff). \code{FALSE} indicates applying
-#' boxplot method on residuals of the entire table.
-#' @param separate Logical. In the step 2 of the algorithm, whether to separate
-#' the standardized Pearson residuals for the zero cells and non zero cells and
-#' apply boxplot method separately or together. Default is \code{TRUE}.
-#' @param if_col_cor Logical. In the step 3 of the algorithm, whether to use
+#' @param col_specific_cutoff Logical. In the second step of the algorithm,
+#' whether to apply boxplot method to the standardized Pearson residuals of
+#' the entire table, or within each drug column. Default is \code{TRUE}, that
+#' is within each drug column (column specific cutoff). \code{FALSE} indicates
+#' applying boxplot method on residuals of the entire table.
+#' @param separate Logical. In the second step of the algorithm, whether to
+#' separate the standardized Pearson residuals for the zero cells and non zero
+#' cells and apply boxplot method separately or together.
+#' Default is \code{TRUE}.
+#' @param if_col_cor Logical. In the third step of the algorithm, whether to use
 #' column (drug) correlation or row (adverse event) correlation. Default is
 #' \code{FALSE}, that is using the adverse event correlation. \code{TRUE}
 #' indicates using drug correlation.
-#' @param cor_lim A numeric value between (0, 1). In the step 3,
+#' @param cor_lim A numeric value between (0, 1). In the third step,
 #' what correlation threshold should be used to select ``connected''
 #' adverse events. Default is 0.8.
 #' @param coef A numeric value or a list of numeric values. If a single numeric
@@ -33,14 +34,15 @@
 #'
 #' @return A list with the following components:
 #' \itemize{
-#' \item \code{boxplot_signal} returns the signals identified in the step 2.
+#' \item \code{boxplot_signal} returns the signals identified in the
+#' second step.
 #' 1 indicates signals, 0 for non signal.
 #' \item \code{corr_signal_pval} returns the p values for each cell in the
-#' contingency table in the step 5, when the \eqn{r_{ij}} values are mapped
+#' contingency table in the fifth step, when the \eqn{r_{ij}} values are mapped
 #' back to the standard normal distribution.
 #' \item \code{corr_signal_adj_pval} returns the Benjamini-Hochberg adjusted
-#' p values for each cell in the step 5. We leave here an option for the user
-#' to decide whether to use \code{corr_signal_pval} or
+#' p values for each cell in the fifth step. We leave here an option for the
+#' user to decide whether to use \code{corr_signal_pval} or
 #' \code{corr_signal_adj_pval}, and what threshold for p values should be
 #' used (for example, 0.05). Please see the example below.
 #' }
@@ -91,25 +93,31 @@ mddc_boxplot <- function(
   row_names <- row.names(contin_table)
   col_names <- colnames(contin_table)
 
-  if (is.numeric(coef)) {
-    if (length(coef) == 1) {
-      # If coef is a single numeric value, replicate it for each column
-      coef <- rep(coef, n_col)
-    } else if (length(coef) != n_col) {
-      # If coef is a numeric vector but its length does not match n_col, 
-      # throw an error
-      stop("Length of 'coef' does not match the number of columns (n_col).")
-    }
-  } else if (is.list(coef)) {
-    if (length(coef) != n_col) {
-      # If coef is a list but its length does not match n_col, throw an error
-      stop("Length of 'coef' does not match the number of columns (n_col).")
+  if (col_specific_cutoff) {
+    if (is.numeric(coef)) {
+      if (length(coef) == 1) {
+        # If coef is a single numeric value, replicate it for each column
+        coef <- rep(coef, n_col)
+      } else if (length(coef) != n_col) {
+        # If coef is a numeric vector but its length does not match n_col,
+        # throw an error
+        stop("Length of 'coef' does not match the number of columns (n_col).")
+      }
+    } else if (is.list(coef)) {
+      if (length(coef) != n_col) {
+        # If coef is a list but its length does not match n_col, throw an error
+        stop("Length of 'coef' does not match the number of columns (n_col).")
+      }
+    } else {
+      # If coef is neither a numeric nor a list, throw an error
+      stop("'coef' must be a numeric value, numeric vector, or list.")
     }
   } else {
-    # If coef is neither a numeric nor a list, throw an error
-    stop("'coef' must be a numeric value, numeric vector, or list.")
+    if (length(coef) != 1) {
+      stop("'coef' must be a numeric value when 'col_specific_cutoff is FALSE")
+    }
   }
-  
+
   boxplot_coef_list <- coef
   Z_ij_mat <- getZijMat(continTable = contin_table, na = FALSE)
 
@@ -146,10 +154,11 @@ mddc_boxplot <- function(
     }
   } else {
     if (separate == TRUE) {
-      c_univ_drug <- rep(boxplot.stats(res_nonzero)$stats[5], n_col)
+      c_univ_drug <-
+        rep(boxplot.stats(res_nonzero, coef = coef)$stats[5], n_col)
       zero_drug_cutoff <- rep(boxplot.stats(res_zero)$stats[1], n_col)
     } else {
-      c_univ_drug <- rep(boxplot.stats(res_all)$stats[5], n_col)
+      c_univ_drug <- rep(boxplot.stats(res_all, coef = coef)$stats[5], n_col)
       zero_drug_cutoff <- rep(boxplot.stats(res_all)$stats[1], n_col)
     }
   }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/generate_contin_table_with_clustered_AE.R
 \name{generate_contin_table_with_clustered_AE}
 \alias{generate_contin_table_with_clustered_AE}
-\title{Generate simulated contingency tables with option of incorporating
+\title{Generate simulated contingency tables with the option of incorporating
 adverse event correlation within clusters.}
 \usage{
 generate_contin_table_with_clustered_AE(
@@ -43,7 +43,7 @@ If NULL, no seed is set.}
 A list of \code{n_rep} simulated contingency tables.
 }
 \description{
-Generate simulated contingency tables with option of
+Generate simulated contingency tables with the option of
 incorporating adverse event correlation within clusters.
 }
 \examples{

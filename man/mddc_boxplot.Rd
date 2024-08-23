@@ -21,22 +21,23 @@ with row (adverse event) and column (drug) names. Please first check the
 input contingency table using the function
 \code{check_and_fix_contin_table()}.}
 
-\item{col_specific_cutoff}{Logical. In the step 2 of the algorithm, whether
-to apply boxplot method to the standardized Pearson residuals of the entire
-table, or within each drug column. Default is \code{TRUE}, that is within
-each drug column (column specific cutoff). \code{FALSE} indicates applying
-boxplot method on residuals of the entire table.}
+\item{col_specific_cutoff}{Logical. In the second step of the algorithm,
+whether to apply boxplot method to the standardized Pearson residuals of
+the entire table, or within each drug column. Default is \code{TRUE}, that
+is within each drug column (column specific cutoff). \code{FALSE} indicates
+applying boxplot method on residuals of the entire table.}
 
-\item{separate}{Logical. In the step 2 of the algorithm, whether to separate
-the standardized Pearson residuals for the zero cells and non zero cells and
-apply boxplot method separately or together. Default is \code{TRUE}.}
+\item{separate}{Logical. In the second step of the algorithm, whether to
+separate the standardized Pearson residuals for the zero cells and non zero
+cells and apply boxplot method separately or together.
+Default is \code{TRUE}.}
 
-\item{if_col_cor}{Logical. In the step 3 of the algorithm, whether to use
+\item{if_col_cor}{Logical. In the third step of the algorithm, whether to use
 column (drug) correlation or row (adverse event) correlation. Default is
 \code{FALSE}, that is using the adverse event correlation. \code{TRUE}
 indicates using drug correlation.}
 
-\item{cor_lim}{A numeric value between (0, 1). In the step 3,
+\item{cor_lim}{A numeric value between (0, 1). In the third step,
 what correlation threshold should be used to select ``connected''
 adverse events. Default is 0.8.}
 
@@ -52,14 +53,15 @@ Boxplot algorithm. Default is 2.}
 \value{
 A list with the following components:
 \itemize{
-\item \code{boxplot_signal} returns the signals identified in the step 2.
+\item \code{boxplot_signal} returns the signals identified in the
+second step.
 1 indicates signals, 0 for non signal.
 \item \code{corr_signal_pval} returns the p values for each cell in the
-contingency table in the step 5, when the \eqn{r_{ij}} values are mapped
+contingency table in the fifth step, when the \eqn{r_{ij}} values are mapped
 back to the standard normal distribution.
 \item \code{corr_signal_adj_pval} returns the Benjamini-Hochberg adjusted
-p values for each cell in the step 5. We leave here an option for the user
-to decide whether to use \code{corr_signal_pval} or
+p values for each cell in the fifth step. We leave here an option for the
+user to decide whether to use \code{corr_signal_pval} or
 \code{corr_signal_adj_pval}, and what threshold for p values should be
 used (for example, 0.05). Please see the example below.
 }

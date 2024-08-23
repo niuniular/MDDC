@@ -1,7 +1,7 @@
-#' Generate simulated contingency tables with option of incorporating
+#' Generate simulated contingency tables with the option of incorporating
 #' adverse event correlation within clusters.
 #'
-#' @description Generate simulated contingency tables with option of
+#' @description Generate simulated contingency tables with the option of
 #' incorporating adverse event correlation within clusters.
 #'
 #' @param contin_table A data matrix of an \eqn{I} x \eqn{J} contingency

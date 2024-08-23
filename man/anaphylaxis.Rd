@@ -17,8 +17,9 @@ data(anaphylaxis)
 }
 \description{
 A 130 by 4 data matrix from the FDA Adverse Event Reporting System (FAERS)
-database, processed for 2016. It contains drugs and associated adverse
-events, focusing on events related to anaphylaxis.
+database, reports processed for the year 2016. 
+It contains drugs and associated adverse events, focusing on events related 
+to anaphylaxis.
 }
 \details{
 The 130 rows represent different drugs, while the 4 columns correspond to

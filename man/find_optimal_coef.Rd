@@ -9,6 +9,7 @@ find_optimal_coef(
   n_sim = 1000,
   target_fdr = 0.05,
   grid = 0.1,
+  col_specific_cutoff = TRUE,
   exclude_small_count = TRUE
 )
 }
@@ -24,6 +25,10 @@ discovery rate (FDR). Default is 0.05.}
 
 \item{grid}{A numeric value representing the size of the grid added to
 the default value of \code{coef = 1.5} as suggested by Tukey. Default is 0.1.}
+
+\item{col_specific_cutoff}{Logical. If TRUE, then a single value of the
+coefficient is returned for the entire dataset, else when FALSE specific
+values correspoding to each of the columns are returned.}
 
 \item{exclude_small_count}{A logical indicating whether to exclude cells
 with counts smaller than or equal to five when computing boxplot statistics.

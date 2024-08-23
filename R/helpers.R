@@ -233,3 +233,25 @@ compute_fdr <- function(res_list, c_j, j) {
     sum(get_boxplot_outliers(a[, j], c_j), na.rm = TRUE)
   })))
 }
+
+
+#' Helper function to compute the FDR
+#'
+#' This function calculates the average number
+#' of outliers across a number of
+#' datasets.
+#'
+#' @param res_list A list of numeric matrices or data frames. Each element
+#' of the list represents a dataset where outliers will be identified.
+#' @param c A numeric value used as a scaling factor to determine
+#' outliers.
+#' @return A numeric value representing the average number of
+#' outliers across all datasets.
+#'
+#' @useDynLib MDDC
+#' @noRd
+compute_fdr_all <- function(res_list, c) {
+  mean(unlist(lapply(res_list, function(a) {
+    sum(get_boxplot_outliers(a, c), na.rm = TRUE)
+  })))
+}

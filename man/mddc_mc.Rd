@@ -24,36 +24,36 @@ with row (adverse event) and column (drug) names. Please first check the
 input contingency table using the function
 \code{check_and_fix_contin_table()}.}
 
-\item{quantile}{In the step 2 of the algorithm, the quantile of the null
+\item{quantile}{In the second step of the algorithm, the quantile of the null
 distribution obtained via MC method to use as a threshold for identifying
 cells with high value of the standardized Pearson residuals. Default is 0.95.}
 
-\item{rep}{In the step 2, the number of Monte Carlo replications in the MC
-method. Default is 10000.}
+\item{rep}{In the second step, the number of Monte Carlo replications in the
+MC method. Default is 10000.}
 
-\item{exclude_same_drug_class}{In the step 2, when applying Fisher's exact
-test to cells with a count less than six, a 2 by 2 contingency table needs
-to be constructed. Does the construction exclude other drugs in the same
-class as the drug of interest? Default is \code{TRUE}.}
+\item{exclude_same_drug_class}{In the second step, when applying Fisher's
+exact test to cells with a count less than six, a 2 by 2 contingency table
+needs to be constructed. Does the construction exclude other drugs in the
+same class as the drug of interest? Default is \code{TRUE}.}
 
-\item{col_specific_cutoff}{Logical. In the step 2 of the algorithm,
+\item{col_specific_cutoff}{Logical. In the second step of the algorithm,
 whether to apply MC method to the standardized Pearson residuals
 of the entire table, or within each drug column.
 Default is \code{TRUE}, that is within each drug
 column (column specific cutoff). \code{FALSE} indicates applying MC method
 on residuals of the entire table.}
 
-\item{separate}{Logical. In the step 2 of the algorithm, whether to separate
-the standardized Pearson residuals for the zero cells and non zero cells and
-apply MC method separately or together. Default is \code{TRUE}.}
+\item{separate}{Logical. In the second step of the algorithm, whether to
+separate the standardized Pearson residuals for the zero cells and non zero
+cells and apply MC method separately or together. Default is \code{TRUE}.}
 
-\item{if_col_cor}{Logical. In the step 3 of the algorithm, whether to use
+\item{if_col_cor}{Logical. In the third step of the algorithm, whether to use
 column (drug) correlation or row (adverse event) correlation. Default is
 \code{FALSE}, that is using the adverse event correlation. \code{TRUE}
 indicates using drug correlation.}
 
 \item{cor_lim}{A numeric value between (0, 1).
-In the step 3, what correlation threshold should be used to
+In the third step, what correlation threshold should be used to
 select ``connected'' adverse events. Default is 0.8.}
 
 \item{num_cores}{Number of cores used to parallelize the
@@ -65,21 +65,22 @@ If NULL, no seed is set.}
 \value{
 A list with the following components:
 \itemize{
-\item \code{mc_pval} returns the p values for each cell in the step 2. For
-cells with a count greater than five, the p values are obtained
+\item \code{mc_pval} returns the p values for each cell in the second step.
+For cells with a count greater than five, the p values are obtained
 via MC method. For cells with a count less than or equal to five,
 the p values are obtained via Fisher's exact tests.
 \item \code{mc_signal} returns the signals with a count greater than five and
-identified in the step 2 by MC method. 1 indicates signals, 0 for non signal.
+identified in the second step by MC method. 1 indicates signals, 0 for non
+signal.
 \item \code{fisher_signal} returns the signals with a count
-less than or equal to five and identified in the step 2 by
+less than or equal to five and identified in the second step by
 Fisher's exact tests. 1 indicates signals, 0 for non signal.
 \item \code{corr_signal_pval} returns the p values for each cell in the
-contingency table in the step 5, when the \eqn{r_{ij}} values are mapped back
-to the standard normal distribution.
+contingency table in the fifth step, when the \eqn{r_{ij}} values are mapped
+back to the standard normal distribution.
 \item \code{corr_signal_adj_pval} returns the Benjamini-Hochberg adjusted p
-values for each cell in the step 5. We leave here an option for the user to
-decide whether to use \code{corr_signal_pval} or
+values for each cell in the fifth step. We leave here an option for the user
+to decide whether to use \code{corr_signal_pval} or
 \code{corr_signal_adj_pval}, and what threshold for p values should be used
 (for example, 0.05). Please see the example below.
 }
@@ -87,7 +88,7 @@ decide whether to use \code{corr_signal_pval} or
 \description{
 Modified Detecting Deviating Cells (MDDC) algorithm for adverse
 event signal identification. Monte Carlo (MC) method is used for cutoff
-selection in step 2 of the algorithm.
+selection in the second step of the algorithm.
 }
 \examples{
 # using statin49 data set as an example
