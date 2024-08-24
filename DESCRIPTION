@@ -11,8 +11,6 @@ Authors@R:
       person(given = "Marianthi", family = "Markatou", role = c("aut"), email = "markatou@buffalo.edu",
             comment = c(ORCID = "0000-0002-1453-8229"))
     )
-Maintainer: 
-    Anran Liu <anranliu@buffalo.edu>
 Description: Methods for detecting signals related to (adverse event, drug) pairs, 
     a data generation function for simulating pharmacovigilance datasets, 
     and various utility functions.
@@ -33,15 +31,13 @@ Suggests:
     knitr,
     rmarkdown,
     roxygen2,
+    spelling,
     testthat (>= 3.0.0)
 LinkingTo:
     Rcpp,
     RcppEigen
 VignetteBuilder:
     knitr
-Author: 
-    Anran Liu [aut, cre],
-    Raktim Mukhopadhyay [aut],
-    Marianthi Markatou [aut]
 Depends: R (>= 3.5.0)
 Config/testthat/edition: 3
+Language: en-US

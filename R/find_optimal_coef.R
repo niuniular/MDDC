@@ -29,9 +29,11 @@
 #' @export
 #'
 #' @examples
+#' \donttest{
 #' # This example uses the statin49 data
 #' data(statin49)
 #' find_optimal_coef(statin49)
+#' }
 #' @useDynLib MDDC
 #' @importFrom stats rmultinom
 find_optimal_coef <- function(contin_table,

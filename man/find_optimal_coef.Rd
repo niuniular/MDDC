@@ -49,7 +49,9 @@ adaptive boxplot coefficient `coef` for each column of a contingency
 table, ensuring the target false discovery rate (FDR) is met.
 }
 \examples{
+\donttest{
 # This example uses the statin49 data
 data(statin49)
 find_optimal_coef(statin49)
+}
 }
