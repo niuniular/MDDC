@@ -18,11 +18,15 @@
 #' a number), and \code{AE} lists the adverse event names. See the
 #' \code{statin49_AE_idx} for \code{statin49} data as an example.
 #' @param n_rep Number of contingency tables to be generated.
-#' @param rho A numeric value or a matrix indicating the correlation of the
-#' AEs within each cluster. If a numeric value is provided, it indicates that
-#' all AEs within the cluster have the correlation \eqn{\rho}.
-#' If a matrix is provided, it should represent the correlation structure within
-#' each cluster. Default is NULL.
+#' @param rho A numeric value, matrix, or NULL indicating the correlation 
+#' structure.If a numeric value (float or int) is provided, it represents the 
+#' correlation value \eqn{\rho} to be used between all elements within each 
+#' cluster specified by \code{AE_idx}. If a matrix is provided, it must be a 
+#' square matrix with dimensions equal to the number of rows in 
+#' \code{contin_table}. In this case, \code{rho} defines the correlation 
+#' structure directly, and \code{AE_idx} is not used. If \code{rho} is NULL, 
+#' a covariance matrix is generated based on the correlation coefficients of 
+#' \code{contin_table}.
 #' @param seed An optional integer to set the seed for reproducibility.
 #' If NULL, no seed is set.
 #'
