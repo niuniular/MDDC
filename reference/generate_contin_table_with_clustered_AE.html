@@ -48,10 +48,10 @@ incorporating adverse event correlation within clusters.</p>
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">generate_contin_table_with_clustered_AE</span><span class="op">(</span></span>
 <span>  <span class="va">contin_table</span>,</span>
-<span>  n_rep <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>  <span class="va">AE_idx</span>,</span>
-<span>  rho <span class="op">=</span> <span class="fl">0.5</span>,</span>
 <span>  <span class="va">signal_mat</span>,</span>
+<span>  AE_idx <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  n_rep <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  rho <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  seed <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -68,8 +68,11 @@ Please first check the input contingency table using the function
 <code><a href="check_and_fix_contin_table.html">check_and_fix_contin_table()</a></code>.</p></dd>
 
 
-<dt id="arg-n-rep">n_rep<a class="anchor" aria-label="anchor" href="#arg-n-rep"></a></dt>
-<dd><p>Number of contingency tables to be generated.</p></dd>
+<dt id="arg-signal-mat">signal_mat<a class="anchor" aria-label="anchor" href="#arg-signal-mat"></a></dt>
+<dd><p>A data matrix of the same dimension as the contingency
+table with entries representing the signal strength. The values should
+be greater or equal to 1, where 1 indicates no signal, and values
+greater than 1 indicate signal.</p></dd>
 
 
 <dt id="arg-ae-idx">AE_idx<a class="anchor" aria-label="anchor" href="#arg-ae-idx"></a></dt>
@@ -79,16 +82,16 @@ a number), and <code>AE</code> lists the adverse event names. See the
 <code>statin49_AE_idx</code> for <code>statin49</code> data as an example.</p></dd>
 
 
+<dt id="arg-n-rep">n_rep<a class="anchor" aria-label="anchor" href="#arg-n-rep"></a></dt>
+<dd><p>Number of contingency tables to be generated.</p></dd>
+
+
 <dt id="arg-rho">rho<a class="anchor" aria-label="anchor" href="#arg-rho"></a></dt>
-<dd><p>A numeric value indicating the correlation of the AEs within
-each cluster. Default is 0.5.</p></dd>
-
-
-<dt id="arg-signal-mat">signal_mat<a class="anchor" aria-label="anchor" href="#arg-signal-mat"></a></dt>
-<dd><p>A data matrix of the same dimension as the contingency
-table with entries representing the signal strength. The values should
-be greater or equal to 1, where 1 indicates no signal, and values
-greater than 1 indicate signal.</p></dd>
+<dd><p>A numeric value or a matrix indicating the correlation of the
+AEs within each cluster. If a numeric value is provided, it indicates that
+all AEs within the cluster have the correlation \(\rho\).
+If a matrix is provided, it should represent the correlation structure within
+each cluster. Default is NULL.</p></dd>
 
 
 <dt id="arg-seed">seed<a class="anchor" aria-label="anchor" href="#arg-seed"></a></dt>
