@@ -1,6 +1,6 @@
 Package: MDDC
 Type: Package
-Title: Modified Detecting Deviating Cells (MDDC) Algorithm for Adverse Event Identification in Pharmacovigilance
+Title: Modified Detecting Deviating Cells Algorithm in Pharmacovigilance
 Version: 1.0.0
 Authors@R: 
     c(

@@ -13,6 +13,7 @@
   1. It is easy to compute.
   2. It considers AE relationships.
   3. It depends on data-driven cutoffs.
+  4. It is independent of the use of ontologies. 
 - The MDDC algorithm has five steps, with the first two steps identifying univariate outliers via cutoffs, and the next three steps evaluating the signals via the use of AE correlations. The algorithm can be found at **[MDDC algorithm](https://mddc.readthedocs.io/en/latest/user_guide/mddc_algorithm.html)**.
 
 ## Authors

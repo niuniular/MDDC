@@ -9,17 +9,20 @@
 #' row and column marginals are used to generate the simulated data.
 #' Please first check the input contingency table using the function
 #' \code{check_and_fix_contin_table()}.
-#' @param n_rep Number of contingency tables to be generated.
-#' @param AE_idx A data frame with two variables \code{idx} and \code{AE},
-#' where \code{idx} indicates the cluster index (can be either a name or
-#' a number), and \code{AE} lists the adverse event names. See the
-#' \code{statin49_AE_idx} for \code{statin49} data as an example.
-#' @param rho A numeric value indicating the correlation of the AEs within
-#' each cluster. Default is 0.5.
 #' @param signal_mat A data matrix of the same dimension as the contingency
 #' table with entries representing the signal strength. The values should
 #' be greater or equal to 1, where 1 indicates no signal, and values
 #' greater than 1 indicate signal.
+#' @param AE_idx A data frame with two variables \code{idx} and \code{AE},
+#' where \code{idx} indicates the cluster index (can be either a name or
+#' a number), and \code{AE} lists the adverse event names. See the
+#' \code{statin49_AE_idx} for \code{statin49} data as an example.
+#' @param n_rep Number of contingency tables to be generated.
+#' @param rho A numeric value or a matrix indicating the correlation of the
+#' AEs within each cluster. If a numeric value is provided, it indicates that
+#' all AEs within the cluster have the correlation \eqn{\rho}.
+#' If a matrix is provided, it should represent the correlation structure within
+#' each cluster. Default is NULL.
 #' @param seed An optional integer to set the seed for reproducibility.
 #' If NULL, no seed is set.
 #'
@@ -53,10 +56,10 @@
 #'   signal_mat = lambda_matrix
 #' )
 generate_contin_table_with_clustered_AE <- function(contin_table,
-                                                    n_rep = 1,
-                                                    AE_idx,
-                                                    rho = 0.5,
                                                     signal_mat,
+                                                    AE_idx = NULL,
+                                                    n_rep = 1,
+                                                    rho = NULL,
                                                     seed = NULL) {
   if (!is.null(seed)) {
     set.seed(seed)
@@ -64,7 +67,6 @@ generate_contin_table_with_clustered_AE <- function(contin_table,
 
   n_row <- nrow(contin_table)
   n_col <- ncol(contin_table)
-
   row_names <- row.names(contin_table)
   col_names <- colnames(contin_table)
 
@@ -77,42 +79,66 @@ generate_contin_table_with_clustered_AE <- function(contin_table,
 
   E_ij_mat <- n_i_dot %*% t(n_dot_j) / n_dot_dot
 
-  group_s <- unique(AE_idx$idx)
-  n_group_s <- unlist(lapply(
-    seq_len(length(group_s)),
-    function(a) sum(AE_idx$idx == group_s[a])
-  ))
-
-  get_new_contin_table <- function(a) {
-    Z_ij_mat <- matrix(NA, nrow = n_row, ncol = n_col)
-
-    for (i in seq_len(length(group_s))) {
-      if (n_group_s[i] > 1) {
-        Z_ij_mat[which(row.names(contin_table) %in%
-          AE_idx$AE[which(AE_idx$idx == group_s[i])]), ] <-
-          t(MASS::mvrnorm(
-            n = n_col,
-            mu = rep(0, n_group_s[i]),
-            Sigma = correlation_matrix(n_group_s[i], rho)
-          ))
-      } else {
-        Z_ij_mat[which(row_names %in% AE_idx$AE[which(AE_idx$idx ==
-          group_s[i])]), ] <-
-          rnorm(n_col)
+  if (is.numeric(rho) && length(rho) == 1) {
+    if (!(0 <= rho && rho <= 1)) {
+      stop("The value of `rho` must lie between [0,1]")
+    } else {
+      if (is.null(AE_idx)) {
+        stop("User provided `rho` but the `AE_idx` is not provided.")
       }
+
+      group_s <- unique(AE_idx$idx)
+      n_group_s <- unlist(lapply(
+        seq_len(length(group_s)),
+        function(a) sum(AE_idx$idx == group_s[a])
+      ))
+      return(lapply(
+        seq_len(n_rep),
+        get_contin_table_numeric_rho,
+        contin_table,
+        AE_idx,
+        rho,
+        group_s,
+        n_group_s,
+        E_ij_mat,
+        signal_mat,
+        p_i_dot,
+        p_dot_j
+      ))
     }
-
-    new_contin_table <- round(Z_ij_mat * sqrt(E_ij_mat * signal_mat *
-      ((1 - p_i_dot) %*%
-        t((1 - p_dot_j)))) +
-      E_ij_mat * signal_mat)
-    new_contin_table[which(new_contin_table < 0)] <- 0
-
-    rownames(new_contin_table) <- row_names
-    colnames(new_contin_table) <- col_names
-
-    return(new_contin_table)
+  } else if (is.matrix(rho)) {
+    if (!all(dim(rho) == c(dim(contin_table)[1], dim(contin_table)[1]))) {
+      stop("Please check the shape of the input matrix `rho`.
+           It should be an I x I matrix where I is the number of rows
+           in the contingency table.")
+    } else {
+      cov_matrix <- rho
+      return(lapply(
+        seq_len(n_rep),
+        get_contin_table_matrix_rho,
+        contin_table,
+        cov_matrix,
+        E_ij_mat,
+        signal_mat,
+        p_i_dot,
+        p_dot_j
+      ))
+    }
+  } else if (is.null(rho)) {
+    if (!is.null(AE_idx)) {
+      stop("User provided the `AE` but `rho` has not been provided.
+           If user is unable to provide `rho`, then please set `AE_idx`= NULL.")
+    }
+    cov_matrix <- cor(t(contin_table))
+    return(lapply(
+      seq_len(n_rep),
+      get_contin_table_matrix_rho,
+      contin_table,
+      cov_matrix,
+      E_ij_mat,
+      signal_mat,
+      p_i_dot,
+      p_dot_j
+    ))
   }
-
-  return(lapply(seq_len(n_rep), get_new_contin_table))
 }

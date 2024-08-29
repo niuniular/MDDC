@@ -103,7 +103,7 @@ find_optimal_coef <- function(contin_table,
       c <- c + grid
       fdr <- compute_fdr_all(res_list, c)
     }
-    rslt <- c(c, fdr)
+    rslt <- list(c, fdr)
     names(rslt) <- c("coef", "FDR")
   }
   return(rslt)

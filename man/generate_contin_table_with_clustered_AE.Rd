@@ -7,10 +7,10 @@ adverse event correlation within clusters.}
 \usage{
 generate_contin_table_with_clustered_AE(
   contin_table,
-  n_rep = 1,
-  AE_idx,
-  rho = 0.5,
   signal_mat,
+  AE_idx = NULL,
+  n_rep = 1,
+  rho = NULL,
   seed = NULL
 )
 }
@@ -21,20 +21,23 @@ row and column marginals are used to generate the simulated data.
 Please first check the input contingency table using the function
 \code{check_and_fix_contin_table()}.}
 
-\item{n_rep}{Number of contingency tables to be generated.}
+\item{signal_mat}{A data matrix of the same dimension as the contingency
+table with entries representing the signal strength. The values should
+be greater or equal to 1, where 1 indicates no signal, and values
+greater than 1 indicate signal.}
 
 \item{AE_idx}{A data frame with two variables \code{idx} and \code{AE},
 where \code{idx} indicates the cluster index (can be either a name or
 a number), and \code{AE} lists the adverse event names. See the
 \code{statin49_AE_idx} for \code{statin49} data as an example.}
 
-\item{rho}{A numeric value indicating the correlation of the AEs within
-each cluster. Default is 0.5.}
+\item{n_rep}{Number of contingency tables to be generated.}
 
-\item{signal_mat}{A data matrix of the same dimension as the contingency
-table with entries representing the signal strength. The values should
-be greater or equal to 1, where 1 indicates no signal, and values
-greater than 1 indicate signal.}
+\item{rho}{A numeric value or a matrix indicating the correlation of the
+AEs within each cluster. If a numeric value is provided, it indicates that
+all AEs within the cluster have the correlation \eqn{\rho}.
+If a matrix is provided, it should represent the correlation structure within
+each cluster. Default is NULL.}
 
 \item{seed}{An optional integer to set the seed for reproducibility.
 If NULL, no seed is set.}
