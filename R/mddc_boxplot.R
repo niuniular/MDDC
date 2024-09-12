@@ -140,12 +140,6 @@ mddc_boxplot <- function(
         ] == 0), a])$stats[[1]]
       }))
     } else {
-      # c_univ_drug <-
-      #   apply(Z_ij_mat, 2, function(a, i) {
-      #     boxplot.stats(a, coef = boxplot_coef_list[i])$stats[[5]]
-      #   },
-      #   i = seq_len(n_col)
-      #   )
       c_univ_drug <- unlist(lapply(seq_len(n_col), function(a) {
         boxplot.stats(Z_ij_mat[, a], coef = boxplot_coef_list[a])$stats[[5]]
       }))
@@ -195,7 +189,7 @@ mddc_boxplot <- function(
 
   U_ij_mat <- ifelse(1 - if_outlier_mat, Z_ij_mat, NA)
 
-  cor_U <- cor_with_NA(U_ij_mat, if_col_cor)
+  cor_U <- pearsonCorWithNA(U_ij_mat, if_col_cor)
 
   if (if_col_cor == TRUE) {
     iter_over <- n_col

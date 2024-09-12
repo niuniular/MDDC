@@ -60,12 +60,25 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// pearsonCorWithNA
+Eigen::MatrixXd pearsonCorWithNA(const Eigen::MatrixXd& mat, bool ifColCorr);
+RcppExport SEXP _MDDC_pearsonCorWithNA(SEXP matSEXP, SEXP ifColCorrSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const Eigen::MatrixXd& >::type mat(matSEXP);
+    Rcpp::traits::input_parameter< bool >::type ifColCorr(ifColCorrSEXP);
+    rcpp_result_gen = Rcpp::wrap(pearsonCorWithNA(mat, ifColCorr));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_MDDC_get_expected_counts", (DL_FUNC) &_MDDC_get_expected_counts, 1},
     {"_MDDC_getZijMat", (DL_FUNC) &_MDDC_getZijMat, 2},
     {"_MDDC_getPVal", (DL_FUNC) &_MDDC_getPVal, 2},
     {"_MDDC_getFisherExactTestTable", (DL_FUNC) &_MDDC_getFisherExactTestTable, 4},
+    {"_MDDC_pearsonCorWithNA", (DL_FUNC) &_MDDC_pearsonCorWithNA, 2},
     {NULL, NULL, 0}
 };
 

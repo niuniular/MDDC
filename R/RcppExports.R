@@ -131,3 +131,37 @@ getFisherExactTestTable <- function(continTable, rowIdx, colIdx, excludeSameDrug
     .Call('_MDDC_getFisherExactTestTable', PACKAGE = 'MDDC', continTable, rowIdx, colIdx, excludeSameDrugClass)
 }
 
+#' Compute Correlation Matrix with Handling of Missing Values
+#'
+#' This function calculates a correlation matrix from the input matrix,
+#' handling missing values (`NA`) by computing correlations only for
+#' non-missing pairs. The function supports computing either row-wise or
+#' column-wise correlations, based on the input flag `if_col_cor`.
+#'
+#' @param mat A numeric matrix or data frame. Each column represents a variable,
+#'   and each row represents an observation. The function will compute pairwise
+#'   correlations between the columns (or rows if `if_col_cor = FALSE`).
+#' @param if_col_cor Logical. If `TRUE`, the function computes correlations
+#'   between columns of `mat`. If `FALSE`, correlations are computed between
+#'   rows (the matrix is transposed internally).
+#'
+#' @return A square matrix containing the computed correlation coefficients.
+#'   The dimensions of the returned matrix will be equal to the number of
+#'   columns (or rows if `if_col_cor = FALSE`) in the input matrix `mat`.
+#'   Missing values (`NA`) in the input matrix are handled by only using
+#'   observations where both variables have non-missing values. If fewer than
+#'   3 valid pairs are available for a correlation, `NA` is returned for
+#'   that pair.
+#'
+#' @details The function iterates through each pair of columns (or rows)
+#'   and computes the correlation using Pearson's method, only including
+#'   observations where both variables have non-missing values. If the number
+#'   of valid pairs is less than 3, the function assigns `NA` to the
+#'   corresponding entry in the correlation matrix.
+#'
+#' @useDynLib MDDC
+#' @noRd
+pearsonCorWithNA <- function(mat, ifColCorr = TRUE) {
+    .Call('_MDDC_pearsonCorWithNA', PACKAGE = 'MDDC', mat, ifColCorr)
+}
+

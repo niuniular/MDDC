@@ -224,3 +224,88 @@ Eigen::MatrixXd getFisherExactTestTable(Eigen::MatrixXd continTable, int rowIdx,
 
     return tabl;
 }
+
+// [[Rcpp::depends(RcppEigen)]]
+//' Compute Correlation Matrix with Handling of Missing Values
+//'
+//' This function calculates a correlation matrix from the input matrix,
+//' handling missing values (`NA`) by computing correlations only for
+//' non-missing pairs. The function supports computing either row-wise or
+//' column-wise correlations, based on the input flag `if_col_cor`.
+//'
+//' @param mat A numeric matrix or data frame. Each column represents a variable,
+//'   and each row represents an observation. The function will compute pairwise
+//'   correlations between the columns (or rows if `if_col_cor = FALSE`).
+//' @param if_col_cor Logical. If `TRUE`, the function computes correlations
+//'   between columns of `mat`. If `FALSE`, correlations are computed between
+//'   rows (the matrix is transposed internally).
+//'
+//' @return A square matrix containing the computed correlation coefficients.
+//'   The dimensions of the returned matrix will be equal to the number of
+//'   columns (or rows if `if_col_cor = FALSE`) in the input matrix `mat`.
+//'   Missing values (`NA`) in the input matrix are handled by only using
+//'   observations where both variables have non-missing values. If fewer than
+//'   3 valid pairs are available for a correlation, `NA` is returned for
+//'   that pair.
+//'
+//' @details The function iterates through each pair of columns (or rows)
+//'   and computes the correlation using Pearson's method, only including
+//'   observations where both variables have non-missing values. If the number
+//'   of valid pairs is less than 3, the function assigns `NA` to the
+//'   corresponding entry in the correlation matrix.
+//'
+//' @useDynLib MDDC
+//' @noRd
+// [[Rcpp::export]]
+Eigen::MatrixXd pearsonCorWithNA(const Eigen::MatrixXd &mat, bool ifColCorr = true)
+{
+    // Computes the Pearson Correlation in the presence of NA values
+    Eigen::MatrixXd matrix = ifColCorr ? mat : mat.transpose();
+    int nCol = matrix.cols();
+    Eigen::MatrixXd corMat(nCol, nCol);
+    corMat.fill(std::numeric_limits<double>::quiet_NaN());
+
+    for (int i = 0; i < nCol; ++i)
+    {
+        for (int j = i + 1; j < nCol; ++j)
+        {
+            std::vector<double> x, y;
+            for (int k = 0; k < matrix.rows(); ++k)
+            {
+                if (!std::isnan(matrix(k, i)) && !std::isnan(matrix(k, j)))
+                {
+                    x.push_back(matrix(k, i));
+                    y.push_back(matrix(k, j));
+                }
+            }
+            if (x.size() >= 3)
+            {
+                double meanX = std::accumulate(x.begin(), x.end(), 0.0) / x.size();
+                double meanY = std::accumulate(y.begin(), y.end(), 0.0) / y.size();
+
+                double numerator = 0.0;
+                double denomX = 0.0;
+                double denomY = 0.0;
+
+                for (size_t k = 0; k < x.size(); ++k)
+                {
+                    double diffX = x[k] - meanX;
+                    double diffY = y[k] - meanY;
+                    numerator += diffX * diffY;
+                    denomX += diffX * diffX;
+                    denomY += diffY * diffY;
+                }
+
+                double denominator = std::sqrt(denomX * denomY);
+                double correlation = numerator / denominator;
+
+                {
+                    corMat(i, j) = correlation;
+                    corMat(j, i) = correlation;
+                }
+            }
+        }
+    }
+
+    return corMat;
+}

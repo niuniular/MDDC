@@ -208,7 +208,7 @@ mddc_mc <- function(
 
   U_ij_mat <- ifelse(1 - if_outlier_mat, Z_ij_mat, NA)
 
-  cor_U <- cor_with_NA(U_ij_mat, if_col_cor)
+  cor_U <- pearsonCorWithNA(U_ij_mat, if_col_cor)
   if (if_col_cor == TRUE) {
     iter_over <- n_col
   } else {

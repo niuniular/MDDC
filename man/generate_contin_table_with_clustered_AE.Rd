@@ -35,7 +35,7 @@ a number), and \code{AE} lists the adverse event names. See the
 
 \item{rho}{A numeric value, matrix, or NULL indicating the correlation 
 structure.If a numeric value (float or int) is provided, it represents the 
-correlation value \eqn{\rho} to be used between all elements within each 
+correlation value \code{rho} to be used between all elements within each 
 cluster specified by \code{AE_idx}. If a matrix is provided, it must be a 
 square matrix with dimensions equal to the number of rows in 
 \code{contin_table}. In this case, \code{rho} defines the correlation 
