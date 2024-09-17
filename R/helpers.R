@@ -276,7 +276,14 @@ get_contin_table <- function(a,
                              E_ij_mat,
                              signal_mat,
                              p_i_dot,
-                             p_dot_j) {
+                             p_dot_j,
+                             seed,
+                             n_rep) {
+  
+  if (!is.null(seed)) {
+    set.seed(seed + n_rep)
+  }
+
   Z_ij_mat <- t(MASS::mvrnorm(
     n = n_col,
     mu = rep(0, n_row),
