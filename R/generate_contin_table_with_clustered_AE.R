@@ -187,9 +187,7 @@ generate_contin_table_with_clustered_AE <- function(row_marginal,
     E_ij_mat,
     signal_mat,
     p_i_dot,
-    p_dot_j,
-    seed,
-    n_rep
+    p_dot_j
   ))
 
   if (!is.null(contin_table)) {
