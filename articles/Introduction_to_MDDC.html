@@ -534,7 +534,8 @@ of <code>statin49</code>, the pre-specified matrix of signal strength,
 and the AE group index, with a within group correlation
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ρ</mi><mo>=</mo><mn>0.5</mn></mrow><annotation encoding="application/x-tex">\rho=0.5</annotation></semantics></math>:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">sim_dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/generate_contin_table_with_clustered_AE.html">generate_contin_table_with_clustered_AE</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
+<span><span class="va">sim_dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/generate_contin_table_with_clustered_AE.html">generate_contin_table_with_clustered_AE</a></span><span class="op">(</span></span>
 <span>  contin_table <span class="op">=</span> <span class="va">statin49</span>,</span>
 <span>  n_rep <span class="op">=</span> <span class="fl">3</span>,</span>
 <span>  AE_idx <span class="op">=</span> <span class="va">statin49_AE_idx</span>,</span>
@@ -553,14 +554,10 @@ step 2:</p>
 <span>  contin_table <span class="op">=</span> <span class="va">sim_dat</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>,</span>
 <span>  contin_table_signal <span class="op">=</span> <span class="va">test5</span><span class="op">$</span><span class="va">mc_signal</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt;           drug                      AE observed_num  expected_num</span></span>
-<span><span class="co">#&gt; 1 Atorvastatin          Rhabdomyolysis          441       113.252</span></span>
-<span><span class="co">#&gt; 2   Lovastatin End Stage Renal Disease           12        4.9643</span></span>
-<span><span class="co">#&gt; 3        Other                Other AE     61678656 61678241.6564</span></span>
-<span><span class="co">#&gt;   std_pearson_res</span></span>
-<span><span class="co">#&gt; 1         30.8541</span></span>
-<span><span class="co">#&gt; 2          3.1603</span></span>
-<span><span class="co">#&gt; 3           3.729</span></span></code></pre></div>
+<span><span class="co">#&gt;           drug             AE observed_num expected_num std_pearson_res</span></span>
+<span><span class="co">#&gt; 1 Atorvastatin Rhabdomyolysis          442     113.1439         30.9732</span></span>
+<span><span class="co">#&gt; 2  Fluvastatin       Other AE         5572    5528.1733          3.4441</span></span>
+<span><span class="co">#&gt; 3 Rosuvastatin       Other AE       118837  118594.1216          4.1246</span></span></code></pre></div>
 <p>In the output, there is one pair (Rhabdomyolysis, Atorvastatin)
 identified, which matches what we embedded.</p>
 </div>
