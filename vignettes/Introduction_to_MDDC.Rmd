@@ -272,6 +272,7 @@ head(statin49_AE_idx)
 Now we generate 3 simulated contingency tables based on the marginals of ``statin49``, the pre-specified matrix of signal strength, and the AE group index, with a within group correlation $\rho=0.5$:
 
 ```{r}
+set.seed(42)
 sim_dat <- generate_contin_table_with_clustered_AE(
   contin_table = statin49,
   n_rep = 3,
