@@ -534,13 +534,13 @@ of <code>statin49</code>, the pre-specified matrix of signal strength,
 and the AE group index, with a within group correlation
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ρ</mi><mo>=</mo><mn>0.5</mn></mrow><annotation encoding="application/x-tex">\rho=0.5</annotation></semantics></math>:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
-<span><span class="va">sim_dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/generate_contin_table_with_clustered_AE.html">generate_contin_table_with_clustered_AE</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="va">sim_dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/generate_contin_table_with_clustered_AE.html">generate_contin_table_with_clustered_AE</a></span><span class="op">(</span></span>
 <span>  contin_table <span class="op">=</span> <span class="va">statin49</span>,</span>
 <span>  n_rep <span class="op">=</span> <span class="fl">3</span>,</span>
 <span>  AE_idx <span class="op">=</span> <span class="va">statin49_AE_idx</span>,</span>
 <span>  rho <span class="op">=</span> <span class="fl">0.5</span>,</span>
-<span>  signal_mat <span class="op">=</span> <span class="va">sig_mat</span></span>
+<span>  signal_mat <span class="op">=</span> <span class="va">sig_mat</span>,</span>
+<span>  seed <span class="op">=</span> <span class="fl">42</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>This function returns a list of simulated contingency tables, with
 the length of the list equal to the number of replications specified in
