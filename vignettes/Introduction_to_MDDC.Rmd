@@ -231,25 +231,27 @@ report_drug_AE_pairs(
 
 # Simulating datasets with grouped AEs
 
-This package offers a data generation function for simulating pharmacovigilance datasets, with the option to incorporate grouped AEs. This function can embed correlations between the standardized Pearson residuals for AEs and takes five arguments:
+This package offers a data generation function for simulating pharmacovigilance datasets, with the option to incorporate grouped AEs. This function can embed correlations between the standardized Pearson residuals for AEs and takes the following arguments:
+
+- ``row_marginal``: Marginal sums for the rows of the contingency table.
+
+- ``column_marginal``: Marginal sums for the columns of the contingency table.
+
+- ``signal_mat``: A data matrix of the same dimensions as the contingency table with entries indicating the signal strength. Values must be greater than or equal to 1, where 1 indicates no signal, and values greater than 1 indicate a signal.
 
 - ``contin_table``: A data matrix representing an $I \times J$ contingency table with rows corresponding to adverse events and columns corresponding to drugs. The row and column marginals are used to generate the simulated data. 
 
-- ``n_rep``: The number of simulated contingency tables to be generated.
-
 - ``AE_idx``: A data frame with two variables, ``idx`` and ``AE``, where ``idx`` indicates the cluster index (either a name or a number), and ``AE`` lists the adverse event names. An example named ``AE_idx``, which provides the AE group index for the ``statin49`` dataset, is included in the package.
 
-- ``rho``: A numeric value representing the correlation of the AEs within each cluster. The default is 0.5.
+- ``n_rep``: The number of simulated contingency tables to be generated.
 
-- ``signal_mat``: A data matrix of the same dimensions as the contingency table with entries indicating the signal strength. Values must be greater than or equal to 1, where 1 indicates no signal, and values greater than 1 indicate a signal.
+- ``rho``: A numeric value representing the correlation of the AEs within each cluster. The default is 0.5.
 
 - ``seed``: An optional integer to set the seed for reproducibility. If NULL, no seed is set.
 
 Now we demonstrate the usage of this function by generating three simulated datasets based on the marginals of ``statin49``. First, we need to create a data matrix with the same dimensions as ``statin49`` that indicates the signal strength for each (AE, drug) pair. In this example, we assign a signal (Rhabdomyolysis, Atorvastatin) with a strength of 4 to the simulated dataset:
 
 ```{r}
-set.seed(42)
-
 # create a matrix indicating signal strength
 sig_mat <- matrix(1,
   nrow = nrow(statin49),

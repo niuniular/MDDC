@@ -14,8 +14,8 @@ test_that("generate_contin_table_with_clustered_AE generates correct output", {
   colnames(contin_table) <- c("Drug1", "Drug2", "Drug3")
 
   AE_idx <- data.frame(
-    idx = c("Cluster1", "Cluster1", "Cluster2", "Cluster2"),
-    AE = c("AE1", "AE2", "AE2", "AE3")
+    idx = c("Cluster1", "Cluster2", "Cluster3"),
+    AE = c("AE1", "AE2", "AE3")
   )
 
   lambda_matrix <- matrix(1,
@@ -29,6 +29,8 @@ test_that("generate_contin_table_with_clustered_AE generates correct output", {
 
   # Call the function
   simulated_tables1 <- generate_contin_table_with_clustered_AE(
+    row_marginal = NULL,
+    column_marginal = NULL,
     contin_table = contin_table,
     n_rep = 5,
     AE_idx = AE_idx,
@@ -37,9 +39,20 @@ test_that("generate_contin_table_with_clustered_AE generates correct output", {
   )
 
   simulated_tables2 <- generate_contin_table_with_clustered_AE(
+    row_marginal = NULL,
+    column_marginal = NULL,
     contin_table = contin_table,
     n_rep = 5,
     AE_idx = NULL,
+    rho = diag(ncol(contin_table)),
+    signal_mat = lambda_matrix
+  )
+
+  simulated_tables3 <- generate_contin_table_with_clustered_AE(
+    row_marginal = rowSums(contin_table),
+    column_marginal = colSums(contin_table),
+    n_rep = 5,
+    AE_idx = AE_idx,
     rho = diag(ncol(contin_table)),
     signal_mat = lambda_matrix
   )

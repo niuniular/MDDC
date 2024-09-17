@@ -204,7 +204,45 @@ compute_fdr_all <- function(res_list, c) {
   })))
 }
 
-#' Generate a Simulated Contingency Table with specified numeric correlation
+
+#' Create a Block Diagonal Matrix
+#'
+#' This function constructs a block diagonal matrix from a list of matrices.
+#' Each input matrix is placed on the diagonal of the resulting matrix, with
+#' all off-diagonal blocks filled with zeros.
+#'
+#' @param ... A series of matrices to be placed on the diagonal of the resulting
+#' block diagonal matrix. Each matrix should have the same number of columns in
+#' order to ensure proper placement.
+#'
+#' @return A matrix where the input matrices are arranged along the diagonal
+#' and all off-diagonal entries are zero.
+#'
+#' @useDynLib MDDC
+#' @noRd
+create_block_diagonal_matrix <- function(matrices) {
+  total_rows <- sum(sapply(matrices, nrow))
+  total_cols <- sum(sapply(matrices, ncol))
+  result <- matrix(0, nrow = total_rows, ncol = total_cols)
+  current_row <- 1
+  current_col <- 1
+
+  for (matrix in matrices) {
+    r <- nrow(matrix)
+    c <- ncol(matrix)
+    result[
+      current_row:(current_row + r - 1),
+      current_col:(current_col + c - 1)
+    ] <- matrix
+    current_row <- current_row + r
+    current_col <- current_col + c
+  }
+
+  return(result)
+}
+
+
+#' Generate a Simulated Contingency Table with specified correlation
 #' within cluster
 #'
 #' This function generates a new contingency table by introducing correlation
@@ -231,90 +269,24 @@ compute_fdr_all <- function(res_list, c) {
 #'
 #' @useDynLib MDDC
 #' @noRd
-get_contin_table_numeric_rho <- function(a,
-                                         contin_table,
-                                         AE_idx,
-                                         rho,
-                                         group_s,
-                                         n_group_s,
-                                         E_ij_mat,
-                                         signal_mat,
-                                         p_i_dot,
-                                         p_dot_j) {
-  Z_ij_mat <- matrix(NA, nrow = nrow(contin_table), ncol = ncol(contin_table))
-
-  for (i in seq_len(length(group_s))) {
-    if (n_group_s[i] > 1) {
-      Z_ij_mat[which(row.names(contin_table) %in%
-        AE_idx$AE[which(AE_idx$idx == group_s[i])]), ] <-
-        t(MASS::mvrnorm(
-          n = ncol(contin_table),
-          mu = rep(0, n_group_s[i]),
-          Sigma = correlation_matrix(n_group_s[i], rho)
-        ))
-    } else {
-      Z_ij_mat[which(row.names(contin_table) %in% AE_idx$AE[which(AE_idx$idx ==
-        group_s[i])]), ] <-
-        rnorm(ncol(contin_table))
-    }
-  }
+get_contin_table <- function(a,
+                             n_row,
+                             n_col,
+                             cov_matrix,
+                             E_ij_mat,
+                             signal_mat,
+                             p_i_dot,
+                             p_dot_j) {
+  Z_ij_mat <- t(MASS::mvrnorm(
+    n = n_col,
+    mu = rep(0, n_row),
+    Sigma = cov_matrix
+  ))
 
   new_contin_table <- round(Z_ij_mat * sqrt(E_ij_mat * signal_mat *
     ((1 - p_i_dot) %*%
       t((1 - p_dot_j)))) +
     E_ij_mat * signal_mat)
   new_contin_table[which(new_contin_table < 0)] <- 0
-
-  rownames(new_contin_table) <- row.names(contin_table)
-  colnames(new_contin_table) <- colnames(contin_table)
-
-  return(new_contin_table)
-}
-
-
-#' Generate a Simulated Contingency Table with specified matrix correlation
-#' within cluster
-#'
-#' This function generates a new contingency table by introducing correlation
-#' between AEs within cluster.
-#'
-#' @param contin_table A data matrix of an \eqn{I} x \eqn{J} contingency
-#' table with row (adverse event) and column (drug) names, of which the
-#' row and column marginals are used to generate the simulated data.
-#' Please first check the input contingency table using the function
-#' @param rho A numeric value indicating the correlation of the
-#' AEs within each cluster.
-#' @param E_ij_mat Matrix of expected counts.
-#' @param signal_mat Signal matrix.
-#' @param p_i_dot Row marginal probabilities.
-#' @param p_dot_j Column marginal probabilities.
-#'
-#' @return Simulated contingency table.
-#'
-#' @useDynLib MDDC
-#' @noRd
-get_contin_table_matrix_rho <- function(a,
-                                        contin_table,
-                                        rho,
-                                        E_ij_mat,
-                                        signal_mat,
-                                        p_i_dot,
-                                        p_dot_j) {
-  Z_ij_mat <-
-    t(MASS::mvrnorm(
-      n = ncol(contin_table),
-      mu = rep(0, nrow(contin_table)),
-      Sigma = rho
-    ))
-
-  new_contin_table <- round(Z_ij_mat * sqrt(E_ij_mat * signal_mat *
-    ((1 - p_i_dot) %*%
-      t((1 - p_dot_j)))) +
-    E_ij_mat * signal_mat)
-  new_contin_table[which(new_contin_table < 0)] <- 0
-
-  rownames(new_contin_table) <- row.names(contin_table)
-  colnames(new_contin_table) <- colnames(contin_table)
-
   return(new_contin_table)
 }

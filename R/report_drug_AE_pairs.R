@@ -9,6 +9,10 @@
 #' (indicating signal) or 0 (indicating non-signal). This data matrix can
 #' be obtained via applying the function \code{mddc_boxplot} or
 #' \code{mddc_mc}.
+#' @param along_rows Specifies the content along the rows of the 
+#' \code{contin_table} (e.g. AE or Drug).
+#' @param along_cols Specifies the content along the columns of the 
+#' \code{contin_table} (e.g. AE or Drug).
 #' @return A data frame with five variables:
 #' \itemize{
 #' \item \code{drug} the drug name.
@@ -45,7 +49,8 @@
 #'   contin_table_signal = contin_table_signal_corr
 #' )
 #' result_2
-report_drug_AE_pairs <- function(contin_table, contin_table_signal) {
+report_drug_AE_pairs <- function(contin_table, contin_table_signal,
+                                 along_rows = "AE", along_cols = "Drug") {
   # Check if the inputs are data matrix
   if (!is.matrix(contin_table) || !is.matrix(contin_table_signal)) {
     stop("Both inputs must be data matrices.")
@@ -68,11 +73,20 @@ report_drug_AE_pairs <- function(contin_table, contin_table_signal) {
     stop("The column names of contin_table and contin_table_signal must match.")
   }
 
-  # Replace NA entries in contin_table_signal with 0
-  contin_table_signal[is.na(contin_table_signal)] <- 0
+  if (is.null(rownames(contin_table)) && is.null(colnames(contin_table))) {
+    rownames(contin_table) <- paste(along_rows, seq_len(nrow(contin_table)),
+      sep = "_"
+    )
+    colnames(contin_table) <- paste(along_cols, seq_len(ncol(contin_table)),
+      sep = "_"
+    )
+  }
 
   row_names <- rownames(contin_table)
   col_names <- colnames(contin_table)
+
+  # Replace NA entries in contin_table_signal with 0
+  contin_table_signal[is.na(contin_table_signal)] <- 0
 
   mat_expected_count <- round(get_expected_counts(contin_table), 4)
   mat_std_res <- round(get_std_pearson_res(contin_table), 4)

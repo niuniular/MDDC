@@ -6,8 +6,10 @@
 adverse event correlation within clusters.}
 \usage{
 generate_contin_table_with_clustered_AE(
-  contin_table,
+  row_marginal,
+  column_marginal,
   signal_mat,
+  contin_table = NULL,
   AE_idx = NULL,
   n_rep = 1,
   rho = NULL,
@@ -15,32 +17,40 @@ generate_contin_table_with_clustered_AE(
 )
 }
 \arguments{
-\item{contin_table}{A data matrix of an \eqn{I} x \eqn{J} contingency
-table with row (adverse event) and column (drug) names, of which the
-row and column marginals are used to generate the simulated data.
-Please first check the input contingency table using the function
-\code{check_and_fix_contin_table()}.}
+\item{row_marginal}{Marginal sums for the rows of the contingency table.}
+
+\item{column_marginal}{Marginal sums for the columns of the contingency 
+table.}
 
 \item{signal_mat}{A data matrix of the same dimension as the contingency
 table with entries representing the signal strength. The values should
 be greater or equal to 1, where 1 indicates no signal, and values
 greater than 1 indicate signal.}
 
-\item{AE_idx}{A data frame with two variables \code{idx} and \code{AE},
-where \code{idx} indicates the cluster index (can be either a name or
-a number), and \code{AE} lists the adverse event names. See the
-\code{statin49_AE_idx} for \code{statin49} data as an example.}
+\item{contin_table}{A data matrix of an \eqn{I} x \eqn{J} contingency
+table with row (adverse event) and column (drug) names, of which the
+row and column marginals are used to generate the simulated data.
+Please first check the input contingency table using the function
+\code{check_and_fix_contin_table()}. Defualt is NULL.}
+
+\item{AE_idx}{A data frame or list.
+In case of data frame it must contain two variables \code{idx} and \code{AE},
+where \code{idx} indicates the cluster index (a number),
+and \code{AE} lists the adverse event names. See the
+\code{statin49_AE_idx} for \code{statin49} data as an example.
+In case of a list, make sure the cluster indices are aligned with the
+corresponding row marginal.}
 
 \item{n_rep}{Number of contingency tables to be generated.}
 
-\item{rho}{A numeric value, matrix, or NULL indicating the correlation 
-structure.If a numeric value (float or int) is provided, it represents the 
-correlation value \code{rho} to be used between all elements within each 
-cluster specified by \code{AE_idx}. If a matrix is provided, it must be a 
-square matrix with dimensions equal to the number of rows in 
-\code{contin_table}. In this case, \code{rho} defines the correlation 
-structure directly, and \code{AE_idx} is not used. If \code{rho} is NULL, 
-a covariance matrix is generated based on the correlation coefficients of 
+\item{rho}{A numeric value, matrix, or NULL indicating the correlation
+structure.If a numeric value (float or int) is provided, it represents the
+correlation value \code{rho} to be used between all elements within each
+cluster specified by \code{AE_idx}. If a matrix is provided, it must be a
+square matrix with dimensions equal to the number of rows in
+\code{contin_table}. In this case, \code{rho} defines the correlation
+structure directly, and \code{AE_idx} is not used. If \code{rho} is NULL,
+a covariance matrix is generated based on the correlation coefficients of
 \code{contin_table}.}
 
 \item{seed}{An optional integer to set the seed for reproducibility.

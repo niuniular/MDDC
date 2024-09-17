@@ -4,7 +4,12 @@
 \alias{report_drug_AE_pairs}
 \title{Report the potential adverse events for drugs from contingency table}
 \usage{
-report_drug_AE_pairs(contin_table, contin_table_signal)
+report_drug_AE_pairs(
+  contin_table,
+  contin_table_signal,
+  along_rows = "AE",
+  along_cols = "Drug"
+)
 }
 \arguments{
 \item{contin_table}{A data matrix of an \eqn{I} x \eqn{J} contingency
@@ -17,6 +22,12 @@ and column names as \code{contin_table}, with entries either 1
 (indicating signal) or 0 (indicating non-signal). This data matrix can
 be obtained via applying the function \code{mddc_boxplot} or
 \code{mddc_mc}.}
+
+\item{along_rows}{Specifies the content along the rows of the 
+\code{contin_table} (e.g. AE or Drug).}
+
+\item{along_cols}{Specifies the content along the columns of the 
+\code{contin_table} (e.g. AE or Drug).}
 }
 \value{
 A data frame with five variables:
