@@ -549,8 +549,7 @@ the argument <code>n_rep</code>. In this example, we have
 first simulated contingency table and extract the identified pairs from
 step 2:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
-<span><span class="va">test5</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mddc_mc.html">mddc_mc</a></span><span class="op">(</span><span class="va">sim_dat</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">test5</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mddc_mc.html">mddc_mc</a></span><span class="op">(</span><span class="va">sim_dat</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, seed <span class="op">=</span> <span class="fl">42</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/report_drug_AE_pairs.html">report_drug_AE_pairs</a></span><span class="op">(</span></span>
 <span>  contin_table <span class="op">=</span> <span class="va">sim_dat</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>,</span>
 <span>  contin_table_signal <span class="op">=</span> <span class="va">test5</span><span class="op">$</span><span class="va">mc_signal</span></span>
