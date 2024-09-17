@@ -285,8 +285,7 @@ sim_dat <- generate_contin_table_with_clustered_AE(
 This function returns a list of simulated contingency tables, with the length of the list equal to the number of replications specified in the argument ``n_rep``. In this example, we have ``n_rep = 3``. Now we perform the MDDC (MC) analysis on the first simulated contingency table and extract the identified pairs from step 2:
 
 ```{r}
-set.seed(42)
-test5 <- mddc_mc(sim_dat[[1]])
+test5 <- mddc_mc(sim_dat[[1]], seed = 42)
 report_drug_AE_pairs(
   contin_table = sim_dat[[1]],
   contin_table_signal = test5$mc_signal
