@@ -277,12 +277,12 @@ get_contin_table <- function(a,
                              signal_mat,
                              p_i_dot,
                              p_dot_j) {
+  
   Z_ij_mat <- t(MASS::mvrnorm(
     n = n_col,
     mu = rep(0, n_row),
     Sigma = cov_matrix
   ))
-
   new_contin_table <- round(Z_ij_mat * sqrt(E_ij_mat * signal_mat *
     ((1 - p_i_dot) %*%
       t((1 - p_dot_j)))) +
