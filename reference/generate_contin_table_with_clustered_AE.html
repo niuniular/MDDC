@@ -47,8 +47,10 @@ incorporating adverse event correlation within clusters.</p>
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">generate_contin_table_with_clustered_AE</span><span class="op">(</span></span>
-<span>  <span class="va">contin_table</span>,</span>
+<span>  <span class="va">row_marginal</span>,</span>
+<span>  <span class="va">column_marginal</span>,</span>
 <span>  <span class="va">signal_mat</span>,</span>
+<span>  contin_table <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  AE_idx <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  n_rep <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  rho <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -60,12 +62,13 @@ incorporating adverse event correlation within clusters.</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
 
 
-<dl><dt id="arg-contin-table">contin_table<a class="anchor" aria-label="anchor" href="#arg-contin-table"></a></dt>
-<dd><p>A data matrix of an \(I\) x \(J\) contingency
-table with row (adverse event) and column (drug) names, of which the
-row and column marginals are used to generate the simulated data.
-Please first check the input contingency table using the function
-<code><a href="check_and_fix_contin_table.html">check_and_fix_contin_table()</a></code>.</p></dd>
+<dl><dt id="arg-row-marginal">row_marginal<a class="anchor" aria-label="anchor" href="#arg-row-marginal"></a></dt>
+<dd><p>Marginal sums for the rows of the contingency table.</p></dd>
+
+
+<dt id="arg-column-marginal">column_marginal<a class="anchor" aria-label="anchor" href="#arg-column-marginal"></a></dt>
+<dd><p>Marginal sums for the columns of the contingency
+table.</p></dd>
 
 
 <dt id="arg-signal-mat">signal_mat<a class="anchor" aria-label="anchor" href="#arg-signal-mat"></a></dt>
@@ -75,11 +78,22 @@ be greater or equal to 1, where 1 indicates no signal, and values
 greater than 1 indicate signal.</p></dd>
 
 
+<dt id="arg-contin-table">contin_table<a class="anchor" aria-label="anchor" href="#arg-contin-table"></a></dt>
+<dd><p>A data matrix of an \(I\) x \(J\) contingency
+table with row (adverse event) and column (drug) names, of which the
+row and column marginals are used to generate the simulated data.
+Please first check the input contingency table using the function
+<code><a href="check_and_fix_contin_table.html">check_and_fix_contin_table()</a></code>. Defualt is NULL.</p></dd>
+
+
 <dt id="arg-ae-idx">AE_idx<a class="anchor" aria-label="anchor" href="#arg-ae-idx"></a></dt>
-<dd><p>A data frame with two variables <code>idx</code> and <code>AE</code>,
-where <code>idx</code> indicates the cluster index (can be either a name or
-a number), and <code>AE</code> lists the adverse event names. See the
-<code>statin49_AE_idx</code> for <code>statin49</code> data as an example.</p></dd>
+<dd><p>A data frame or list.
+In case of data frame it must contain two variables <code>idx</code> and <code>AE</code>,
+where <code>idx</code> indicates the cluster index (a number),
+and <code>AE</code> lists the adverse event names. See the
+<code>statin49_AE_idx</code> for <code>statin49</code> data as an example.
+In case of a list, make sure the cluster indices are aligned with the
+corresponding row marginal.</p></dd>
 
 
 <dt id="arg-n-rep">n_rep<a class="anchor" aria-label="anchor" href="#arg-n-rep"></a></dt>

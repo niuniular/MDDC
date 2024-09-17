@@ -469,27 +469,31 @@ brevity.</p>
 <p>This package offers a data generation function for simulating
 pharmacovigilance datasets, with the option to incorporate grouped AEs.
 This function can embed correlations between the standardized Pearson
-residuals for AEs and takes five arguments:</p>
+residuals for AEs and takes the following arguments:</p>
 <ul>
+<li><p><code>row_marginal</code>: Marginal sums for the rows of the
+contingency table.</p></li>
+<li><p><code>column_marginal</code>: Marginal sums for the columns of
+the contingency table.</p></li>
+<li><p><code>signal_mat</code>: A data matrix of the same dimensions as
+the contingency table with entries indicating the signal strength.
+Values must be greater than or equal to 1, where 1 indicates no signal,
+and values greater than 1 indicate a signal.</p></li>
 <li><p><code>contin_table</code>: A data matrix representing an
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>I</mi><mo>×</mo><mi>J</mi></mrow><annotation encoding="application/x-tex">I \times J</annotation></semantics></math>
 contingency table with rows corresponding to adverse events and columns
 corresponding to drugs. The row and column marginals are used to
 generate the simulated data.</p></li>
-<li><p><code>n_rep</code>: The number of simulated contingency tables to
-be generated.</p></li>
 <li><p><code>AE_idx</code>: A data frame with two variables,
 <code>idx</code> and <code>AE</code>, where <code>idx</code> indicates
 the cluster index (either a name or a number), and <code>AE</code> lists
 the adverse event names. An example named <code>AE_idx</code>, which
 provides the AE group index for the <code>statin49</code> dataset, is
 included in the package.</p></li>
+<li><p><code>n_rep</code>: The number of simulated contingency tables to
+be generated.</p></li>
 <li><p><code>rho</code>: A numeric value representing the correlation of
 the AEs within each cluster. The default is 0.5.</p></li>
-<li><p><code>signal_mat</code>: A data matrix of the same dimensions as
-the contingency table with entries indicating the signal strength.
-Values must be greater than or equal to 1, where 1 indicates no signal,
-and values greater than 1 indicate a signal.</p></li>
 <li><p><code>seed</code>: An optional integer to set the seed for
 reproducibility. If NULL, no seed is set.</p></li>
 </ul>
@@ -500,9 +504,7 @@ First, we need to create a data matrix with the same dimensions as
 drug) pair. In this example, we assign a signal (Rhabdomyolysis,
 Atorvastatin) with a strength of 4 to the simulated dataset:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># create a matrix indicating signal strength</span></span>
+<code class="sourceCode R"><span><span class="co"># create a matrix indicating signal strength</span></span>
 <span><span class="va">sig_mat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fl">1</span>,</span>
 <span>  nrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">statin49</span><span class="op">)</span>,</span>
 <span>  ncol <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">statin49</span><span class="op">)</span></span>
@@ -551,9 +553,14 @@ step 2:</p>
 <span>  contin_table <span class="op">=</span> <span class="va">sim_dat</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>,</span>
 <span>  contin_table_signal <span class="op">=</span> <span class="va">test5</span><span class="op">$</span><span class="va">mc_signal</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt;           drug             AE observed_num expected_num std_pearson_res</span></span>
-<span><span class="co">#&gt; 1 Atorvastatin Rhabdomyolysis          457     113.3853         32.3288</span></span>
-<span><span class="co">#&gt; 2        Other       Other AE     61678634 61678273.228           3.247</span></span></code></pre></div>
+<span><span class="co">#&gt;           drug                      AE observed_num  expected_num</span></span>
+<span><span class="co">#&gt; 1 Atorvastatin          Rhabdomyolysis          441       113.252</span></span>
+<span><span class="co">#&gt; 2   Lovastatin End Stage Renal Disease           12        4.9643</span></span>
+<span><span class="co">#&gt; 3        Other                Other AE     61678656 61678241.6564</span></span>
+<span><span class="co">#&gt;   std_pearson_res</span></span>
+<span><span class="co">#&gt; 1         30.8541</span></span>
+<span><span class="co">#&gt; 2          3.1603</span></span>
+<span><span class="co">#&gt; 3           3.729</span></span></code></pre></div>
 <p>In the output, there is one pair (Rhabdomyolysis, Atorvastatin)
 identified, which matches what we embedded.</p>
 </div>
