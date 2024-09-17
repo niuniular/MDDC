@@ -292,7 +292,7 @@ report_drug_AE_pairs(
 )
 ```
 
-In the output, there is one pair (Rhabdomyolysis, Atorvastatin) identified, which matches what we embedded.
+In the output, there is the pair (Rhabdomyolysis, Atorvastatin) identified, which matches what we embedded.
 
 # Visualization
 
