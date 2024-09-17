@@ -9,9 +9,9 @@
 #' (indicating signal) or 0 (indicating non-signal). This data matrix can
 #' be obtained via applying the function \code{mddc_boxplot} or
 #' \code{mddc_mc}.
-#' @param along_rows Specifies the content along the rows of the 
+#' @param along_rows Specifies the content along the rows of the
 #' \code{contin_table} (e.g. AE or Drug).
-#' @param along_cols Specifies the content along the columns of the 
+#' @param along_cols Specifies the content along the columns of the
 #' \code{contin_table} (e.g. AE or Drug).
 #' @return A data frame with five variables:
 #' \itemize{

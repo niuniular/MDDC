@@ -5,7 +5,7 @@
 #' incorporating adverse event correlation within clusters.
 #'
 #' @param row_marginal Marginal sums for the rows of the contingency table.
-#' @param column_marginal Marginal sums for the columns of the contingency 
+#' @param column_marginal Marginal sums for the columns of the contingency
 #' table.
 #' @param signal_mat A data matrix of the same dimension as the contingency
 #' table with entries representing the signal strength. The values should
