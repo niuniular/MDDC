@@ -110,33 +110,6 @@ get_fisher <- function(
   return(fisher.test(tabl)$p.value)
 }
 
-
-#' Create a Correlation Matrix
-#'
-#' This function generates an n x n matrix where the diagonal elements are 1
-#' and all off-diagonal elements are set to a given correlation
-#' coefficient \code{rho}.
-#'
-#' @param n Integer. The number of rows and columns of the matrix.
-#' @param rho Numeric. The correlation coefficient for the
-#' off-diagonal elements.
-#' @return A numeric matrix of size n x n with 1 on the diagonal
-#' and \code{rho} on the off-diagonal.
-#' @examples
-#' correlation_matrix(3, 0.5)
-#' correlation_matrix(4, 0.8)
-#' @useDynLib MDDC
-#' @noRd
-correlation_matrix <- function(n, rho) {
-  # Create an n x n matrix filled with rho
-  mat <- matrix(rho, nrow = n, ncol = n)
-
-  # Set the diagonal elements to 1
-  diag(mat) <- 1
-
-  return(mat)
-}
-
 #' Helper function to identify outliers using Boxplot
 #'
 #' This function identifies the outliers in a dataset by using
@@ -221,8 +194,8 @@ compute_fdr_all <- function(res_list, c) {
 #' @useDynLib MDDC
 #' @noRd
 create_block_diagonal_matrix <- function(matrices) {
-  total_rows <- sum(sapply(matrices, nrow))
-  total_cols <- sum(sapply(matrices, ncol))
+  total_rows <- sum(vapply(matrices, nrow, integer(1)))
+  total_cols <- sum(vapply(matrices, ncol, integer(1)))
   result <- matrix(0, nrow = total_rows, ncol = total_cols)
   current_row <- 1
   current_col <- 1
