@@ -23,10 +23,10 @@ and column names as \code{contin_table}, with entries either 1
 be obtained via applying the function \code{mddc_boxplot} or
 \code{mddc_mc}.}
 
-\item{along_rows}{Specifies the content along the rows of the 
+\item{along_rows}{Specifies the content along the rows of the
 \code{contin_table} (e.g. AE or Drug).}
 
-\item{along_cols}{Specifies the content along the columns of the 
+\item{along_cols}{Specifies the content along the columns of the
 \code{contin_table} (e.g. AE or Drug).}
 }
 \value{

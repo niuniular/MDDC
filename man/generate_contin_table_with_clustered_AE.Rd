@@ -19,7 +19,7 @@ generate_contin_table_with_clustered_AE(
 \arguments{
 \item{row_marginal}{Marginal sums for the rows of the contingency table.}
 
-\item{column_marginal}{Marginal sums for the columns of the contingency 
+\item{column_marginal}{Marginal sums for the columns of the contingency
 table.}
 
 \item{signal_mat}{A data matrix of the same dimension as the contingency

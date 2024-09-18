@@ -180,11 +180,11 @@ generate_contin_table_with_clustered_AE <- function(row_marginal,
 
   tables <- lapply(seq_len(n_rep), function(i) {
     if (!is.null(seed)) {
-      set.seed(seed + i)  # To ensure each replication is reproducible
+      set.seed(seed + i) # To ensure each replication is reproducible
     }
     get_contin_table(i, n_row, n_col, cov_matrix, E_ij_mat, signal_mat, p_i_dot, p_dot_j)
   })
-  
+
 
   if (!is.null(contin_table)) {
     if (all(!is.na(colnames(contin_table))) &&

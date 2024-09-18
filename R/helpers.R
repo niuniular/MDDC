@@ -277,7 +277,6 @@ get_contin_table <- function(a,
                              signal_mat,
                              p_i_dot,
                              p_dot_j) {
-  
   Z_ij_mat <- t(MASS::mvrnorm(
     n = n_col,
     mu = rep(0, n_row),
