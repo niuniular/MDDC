@@ -86,7 +86,7 @@ the default value of <code>coef = 1.5</code> as suggested by Tukey. Default is 0
 <dt id="arg-col-specific-cutoff">col_specific_cutoff<a class="anchor" aria-label="anchor" href="#arg-col-specific-cutoff"></a></dt>
 <dd><p>Logical. If TRUE, then a single value of the
 coefficient is returned for the entire dataset, else when FALSE specific
-values correspoding to each of the columns are returned.</p></dd>
+values corresponding to each of the columns are returned.</p></dd>
 
 
 <dt id="arg-exclude-small-count">exclude_small_count<a class="anchor" aria-label="anchor" href="#arg-exclude-small-count"></a></dt>
@@ -97,14 +97,12 @@ Default is <code>TRUE</code>.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A list with the following components:</p><dl><dt>coef</dt>
-<dd><p>A numeric vector containing the optimal coefficient
-             `coef` for each column of the input contingency table.</p></dd>
+    <p>A list with the following components:</p><dl>
+ coef: A numeric vector containing the optimal coefficient
+             `coef` for each column of the input contingency table.
 
-  <dt>FDR</dt>
-<dd><p>A numeric vector with the corresponding false discovery
-             rate (FDR) for each column.</p></dd>
-
+ FDR: A numeric vector with the corresponding false discovery
+             rate (FDR) for each column.
 
 </dl></div>
 
