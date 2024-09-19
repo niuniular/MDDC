@@ -28,7 +28,7 @@ the default value of \code{coef = 1.5} as suggested by Tukey. Default is 0.1.}
 
 \item{col_specific_cutoff}{Logical. If TRUE, then a single value of the
 coefficient is returned for the entire dataset, else when FALSE specific
-values correspoding to each of the columns are returned.}
+values corresponding to each of the columns are returned.}
 
 \item{exclude_small_count}{A logical indicating whether to exclude cells
 with counts smaller than or equal to five when computing boxplot statistics.
@@ -37,10 +37,11 @@ Default is \code{TRUE}.}
 \value{
 A list with the following components:
 \describe{
-  \item{coef}{A numeric vector containing the optimal coefficient
-             `coef` for each column of the input contingency table.}
-  \item{FDR}{A numeric vector with the corresponding false discovery
-             rate (FDR) for each column.}
+ \code{coef}: A numeric vector containing the optimal coefficient
+             `coef` for each column of the input contingency table.
+
+ \code{FDR}: A numeric vector with the corresponding false discovery
+             rate (FDR) for each column.
 }
 }
 \description{

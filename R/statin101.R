@@ -1,0 +1,35 @@
+#' FDA statin dataset with 101 adverse events
+#'
+#' @description A 102 by 5 data matrix of a contingency table processed from
+#' the FDA Adverse Event Reporting System (FAERS) database from Q1 2021 to
+#' Q4 2023.
+#'
+#' @format A data matrix with 102 rows and 5 columns.
+#'
+#' @details A 102 by data matrix of a contingency table from the FDA Adverse
+#' Event Reporting System (FAERS) database, covering Q1 2021 to Q4 2023.
+#'
+#' The 101 rows correspond to the AEs with the highest overall
+#' frequency (row marginals) reported during the period. The reported AEs -
+#' "Off label use" and "Drug ineffective" have been excluded.
+#'
+#' The 5 columns include 4 statin medications and an "other" column.
+#' Marginal totals for each drug: 101,462 for Atorvastatin, 9,203 for
+#' Fluvastatin, 130,994 for Rosuvastatin,
+#' 87,841 for Simvastatin, and 5,739,3834 for Other drugs.
+#'
+#' Also refer to supplementary material of:
+#'
+#'  Ding, Y., Markatou, M., & Ball, R. (2020). An evaluation of statistical
+#'  approaches to postmarketing surveillance. Statistics in Medicine, 39(7),
+#'  845-874
+#'
+#'  for the data generation process.
+#'  The quarterly files can be found in
+#'  \url{https://fis.fda.gov/extensions/FPD-QDE-FAERS/FPD-QDE-FAERS.html}.
+#'
+#' @examples
+#' data(statin101)
+#' head(statin101)
+#'
+"statin101"

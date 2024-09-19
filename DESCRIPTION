@@ -4,16 +4,19 @@ Title: Modified Detecting Deviating Cells Algorithm in Pharmacovigilance
 Version: 1.0.0
 Authors@R: 
     c(
-      person(given = "Anran", family = "Liu", role = c("aut", "cre"), email = "anranliu@buffalo.edu",
-            comment = c(ORCID = "0000-0002-4504-9786")),
-      person(given = "Raktim", family = "Mukhopadhyay", role = c("aut"), email = "raktimmu@buffalo.edu",
-            comment = c(ORCID = "0009-0007-8972-6682")),
-      person(given = "Marianthi", family = "Markatou", role = c("aut"), email = "markatou@buffalo.edu",
-            comment = c(ORCID = "0000-0002-1453-8229"))
+      person(given = "Anran", family = "Liu", role = c("aut", "cre"), 
+      email = "anranliu@buffalo.edu", 
+      comment = c(ORCID = "0000-0002-4504-9786")),
+      person(given = "Raktim", family = "Mukhopadhyay", 
+      role = c("aut"), email = "raktimmu@buffalo.edu",
+      comment = c(ORCID = "0009-0007-8972-6682")),
+      person(given = "Marianthi", family = "Markatou", 
+      role = c("aut"), email = "markatou@buffalo.edu",
+      comment = c(ORCID = "0000-0002-1453-8229"))
     )
 Maintainer: Anran Liu <anranliu@buffalo.edu>
-Description: Methods for detecting signals related to (adverse event, drug) pairs, 
-    a data generation function for simulating pharmacovigilance datasets, 
+Description: Methods for detecting signals related to (adverse event, drug) 
+    pairs, a data generation function for simulating pharmacovigilance datasets, 
     and various utility functions.
 URL: https://github.com/niuniular/MDDC
 BugReports: https://github.com/niuniular/MDDC/issues
