@@ -188,7 +188,6 @@ generate_contin_table_with_clustered_AE <- function(row_marginal,
     )
   })
 
-
   if (!is.null(contin_table)) {
     if (all(!is.na(colnames(contin_table))) &&
       all(!is.na(rownames(contin_table)))) {
