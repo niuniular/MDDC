@@ -28,7 +28,7 @@
 #' table with row (adverse event) and column (drug) names, of which the
 #' row and column marginals are used to generate the simulated data.
 #' Please first check the input contingency table using the function
-#' \code{check_and_fix_contin_table()}. Defualt is NULL.
+#' \code{check_and_fix_contin_table()}. Default is NULL.
 #' @param AE_idx A data frame or list.
 #' In case of data frame it must contain two variables \code{idx} and \code{AE},
 #' where \code{idx} indicates the cluster index (a number),
@@ -126,7 +126,7 @@ generate_contin_table_with_clustered_AE_with_tol <-
 
     if (is.numeric(rho) && length(rho) == 1) {
       if (!(0 <= rho && rho <= 1)) {
-        stop("The value of `rho` must lie between [0,1]")
+        stop("The value of `rho` must lie between [0,1].")
       } else {
         if (!is.null(contin_table)) {
           if (length(AE_idx) != dim(contin_table)[1]) {
@@ -134,13 +134,16 @@ generate_contin_table_with_clustered_AE_with_tol <-
                 rows of `contin_table`.")
           }
         } else {
-          if (length(AE_idx) != length(row_marginal)) {
-            stop("The length of `AE_idx` should be same
-              as length of `row_marginal`.")
+          if (is.null(AE_idx)) {
+            stop("User provided `rho` but the `AE_idx` is not provided.")
           }
-        }
-        if (is.null(AE_idx)) {
-          stop("User provided `rho` but the `AE_idx` is not provided.")
+
+          if (!is.null(AE_idx)) {
+            if (length(AE_idx) != length(row_marginal)) {
+              stop("The length of `AE_idx` should be same
+              as length of `row_marginal`.")
+            }
+          }
         }
         group_s <- unique(AE_idx)
         n_group_s <- vapply(group_s, function(g) sum(AE_idx == g), numeric(1))
@@ -192,7 +195,8 @@ generate_contin_table_with_clustered_AE_with_tol <-
     })
 
     simulated_table_sums <- vapply(tables, sum, numeric(1))
-    rtd_values <- (abs(simulated_table_sums - sum(n_i_dot)) / sum(n_i_dot)) * 100
+    rtd_values <- (abs(simulated_table_sums - sum(n_i_dot))
+    / sum(n_i_dot)) * 100
 
     if (max(rtd_values) > tol) {
       indices <- which(rtd_values > tol)
