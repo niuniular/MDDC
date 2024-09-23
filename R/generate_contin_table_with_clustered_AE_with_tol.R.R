@@ -136,9 +136,7 @@ generate_contin_table_with_clustered_AE_with_tol <-
         } else {
           if (is.null(AE_idx)) {
             stop("User provided `rho` but the `AE_idx` is not provided.")
-          }
-
-          if (!is.null(AE_idx)) {
+          } else {
             if (length(AE_idx) != length(row_marginal)) {
               stop("The length of `AE_idx` should be same
               as length of `row_marginal`.")

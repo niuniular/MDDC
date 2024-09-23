@@ -31,7 +31,7 @@ greater than 1 indicate signal.}
 table with row (adverse event) and column (drug) names, of which the
 row and column marginals are used to generate the simulated data.
 Please first check the input contingency table using the function
-\code{check_and_fix_contin_table()}. Defualt is NULL.}
+\code{check_and_fix_contin_table()}. Default is NULL.}
 
 \item{AE_idx}{A data frame or list.
 In case of data frame it must contain two variables \code{idx} and \code{AE},

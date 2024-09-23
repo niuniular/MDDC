@@ -3,7 +3,8 @@ library(testthat)
 library(MASS) # For mvrnorm function
 
 # Define the test cases
-test_that("generate_contin_table_with_clustered_AE_with_tol works with valid inputs", {
+test_that("generate_contin_table_with_clustered_AE_with_tol
+          works with valid inputs", {
   row_marginal <- c(10, 20, 30)
   column_marginal <- c(15, 25, 20)
   signal_mat <- matrix(1, nrow = 3, ncol = 3)
@@ -24,44 +25,60 @@ test_that("generate_contin_table_with_clustered_AE_with_tol works with valid inp
   )
 
   expect_length(result, n_rep)
-  expect_true(all(sapply(result, is.matrix)))
+  expect_true(all(vapply(result, is.matrix, logical(1))))
 })
 
-test_that("generate_contin_table_with_clustered_AE_with_tol errors if row and column marginals don't match", {
+test_that("generate_contin_table_with_clustered_AE_with_tol errors if row
+          and column marginals don't match", {
   row_marginal <- c(10, 20)
   column_marginal <- c(15, 25, 30)
 
   expect_error(
-    generate_contin_table_with_clustered_AE_with_tol(row_marginal, column_marginal, signal_mat = matrix(1, 2, 3)),
+    generate_contin_table_with_clustered_AE_with_tol(row_marginal,
+      column_marginal,
+      signal_mat =
+        matrix(1, 2, 3)
+    ),
     "The sum of row and column marginals do not match."
   )
 })
 
-test_that("generate_contin_table_with_clustered_AE_with_tol errors if AE_idx is missing with rho", {
+test_that("generate_contin_table_with_clustered_AE_with_tol
+          errors if AE_idx is missing with rho", {
   row_marginal <- c(10, 20, 30)
   column_marginal <- c(15, 25, 20)
   signal_mat <- matrix(1, nrow = 3, ncol = 3)
   rho <- 0.5
 
   expect_error(
-    generate_contin_table_with_clustered_AE_with_tol(row_marginal, column_marginal, signal_mat, rho = rho),
+    generate_contin_table_with_clustered_AE_with_tol(row_marginal,
+      column_marginal,
+      signal_mat,
+      rho = rho
+    ),
     "User provided `rho` but the `AE_idx` is not provided."
   )
 })
 
-test_that("generate_contin_table_with_clustered_AE_with_tol errors if rho is out of range", {
+test_that("generate_contin_table_with_clustered_AE_with_tol
+          errors if rho is out of range", {
   row_marginal <- c(10, 20, 30)
   column_marginal <- c(15, 25, 20)
   signal_mat <- matrix(1, nrow = 3, ncol = 3)
   rho <- -1.5
 
   expect_error(
-    generate_contin_table_with_clustered_AE_with_tol(row_marginal, column_marginal, signal_mat, rho = rho),
+    generate_contin_table_with_clustered_AE_with_tol(row_marginal,
+      column_marginal,
+      signal_mat,
+      rho = rho
+    ),
     regexp = "The value of `rho` must lie between \\[0,1\\]."
   )
 })
 
-test_that("generate_contin_table_with_clustered_AE_with_tol generates tables with RTD within tolerance", {
+test_that("generate_contin_table_with_clustered_AE_with_tol generates
+          tables with RTD within tolerance", {
   row_marginal <- c(10, 20, 30)
   column_marginal <- c(15, 25, 20)
   signal_mat <- matrix(1, nrow = 3, ncol = 3)
@@ -113,7 +130,8 @@ test_that("generate_contin_table_with_clustered_AE_with_tol calculates rho", {
   expect_true(all(rtd_values <= tol))
 })
 
-test_that("generate_contin_table_with_clustered_AE_with_tol accepts custom covariance matrix", {
+test_that("generate_contin_table_with_clustered_AE_with_tol
+          accepts custom covariance matrix", {
   row_marginal <- c(10, 20, 30)
   column_marginal <- c(15, 25, 20)
   signal_mat <- matrix(1, nrow = 3, ncol = 3)
@@ -129,10 +147,11 @@ test_that("generate_contin_table_with_clustered_AE_with_tol accepts custom covar
   )
 
   expect_length(result, 3)
-  expect_true(all(sapply(result, is.matrix)))
+  expect_true(all(vapply(result, is.matrix, logical(1))))
 })
 
-test_that("generate_contin_table_with_clustered_AE_with_tol errors if AE_idx length does not match table", {
+test_that("generate_contin_table_with_clustered_AE_with_tol errors
+          if AE_idx length does not match table", {
   row_marginal <- c(10, 20, 30)
   column_marginal <- c(15, 25, 20)
   signal_mat <- matrix(1, nrow = 3, ncol = 3)
@@ -153,7 +172,8 @@ test_that("generate_contin_table_with_clustered_AE_with_tol errors if AE_idx len
 })
 
 
-test_that("generate_contin_table_with_clustered_AE_with_tol errors if corr matrix does not match", {
+test_that("generate_contin_table_with_clustered_AE_with_tol errors
+          if corr matrix does not match", {
   row_marginal <- c(10, 20, 30)
   column_marginal <- c(15, 25, 20)
   signal_mat <- matrix(1, nrow = 3, ncol = 3)
@@ -175,7 +195,8 @@ test_that("generate_contin_table_with_clustered_AE_with_tol errors if corr matri
   )
 })
 
-test_that("generate_contin_table_with_clustered_AE_with_tol errors if corr matrix does not match with contin_table", {
+test_that("generate_contin_table_with_clustered_AE_with_tol errors if
+          corr matrix does not match with contin_table", {
   contin_table <- matrix(20, 3, 3)
   signal_mat <- matrix(1, nrow = 3, ncol = 3)
   rho <- matrix(0.5, 2, 2)
@@ -193,7 +214,8 @@ test_that("generate_contin_table_with_clustered_AE_with_tol errors if corr matri
   )
 })
 
-test_that("generate_contin_table_with_clustered_AE_with_tol errors if rho is not provided", {
+test_that("generate_contin_table_with_clustered_AE_with_tol errors
+          if rho is not provided", {
   contin_table <- matrix(20, 3, 3)
   signal_mat <- matrix(1, nrow = 3, ncol = 3)
   AE_idx <- c(1, 2, 3)
@@ -210,7 +232,8 @@ test_that("generate_contin_table_with_clustered_AE_with_tol errors if rho is not
   )
 })
 
-test_that("generate_contin_table_with_clustered_AE_with_tol errors if contin_table is not provided", {
+test_that("generate_contin_table_with_clustered_AE_with_tol errors
+          if contin_table is not provided", {
   signal_mat <- matrix(1, nrow = 3, ncol = 3)
   AE_idx <- c(1, 2, 3)
   expect_error(
@@ -225,7 +248,8 @@ test_that("generate_contin_table_with_clustered_AE_with_tol errors if contin_tab
 })
 
 
-test_that("generate_contin_table_with_clustered_AE_with_tol errors if AE_idx length does not match contin table", {
+test_that("generate_contin_table_with_clustered_AE_with_tol errors if
+          AE_idx length does not match contin table", {
   contin_table <- matrix(20, 3, 3)
   signal_mat <- matrix(1, nrow = 3, ncol = 3)
 
@@ -245,7 +269,8 @@ test_that("generate_contin_table_with_clustered_AE_with_tol errors if AE_idx len
   )
 })
 
-test_that("generate_contin_table_with_clustered_AE_with_tol errors with all NULL", {
+test_that("generate_contin_table_with_clustered_AE_with_tol
+          errors with all NULL", {
   row_marginal <- NULL
   column_marginal <- NULL
   signal_mat <- matrix(1, nrow = 3, ncol = 3)
@@ -269,7 +294,8 @@ test_that("generate_contin_table_with_clustered_AE_with_tol errors with all NULL
 
 
 
-test_that("generate_contin_table_with_clustered_AE_with_tol generates correct output", {
+test_that("generate_contin_table_with_clustered_AE_with_tol
+          generates correct output", {
   contin_table <- matrix(c(
     10, 20, 30,
     5, 10, 15,
@@ -330,7 +356,8 @@ test_that("generate_contin_table_with_clustered_AE_with_tol generates correct ou
   # Check dimensions of the simulated tables
   for (sim_table in simulated_tables1) {
     expect_equal(dim(sim_table), dim(contin_table),
-      info = "Simulated tables should have the same dimensions as the input table."
+      info = "Simulated tables should have the same
+      dimensions as the input table."
     )
     expect_true(all(rownames(sim_table) == rownames(contin_table)),
       info = "Row names should match the input table."
@@ -343,7 +370,8 @@ test_that("generate_contin_table_with_clustered_AE_with_tol generates correct ou
   # Check for non-negative values
   for (sim_table in simulated_tables1) {
     expect_true(all(sim_table >= 0),
-      info = "Simulated tables should contain only non-negative values."
+      info = "Simulated tables should contain
+      only non-negative values."
     )
   }
 
@@ -355,7 +383,8 @@ test_that("generate_contin_table_with_clustered_AE_with_tol generates correct ou
   # Check dimensions of the simulated tables
   for (sim_table in simulated_tables2) {
     expect_equal(dim(sim_table), dim(contin_table),
-      info = "Simulated tables should have the same dimensions as the input table."
+      info = "Simulated tables should have the same
+      dimensions as the input table."
     )
     expect_true(all(rownames(sim_table) == rownames(contin_table)),
       info = "Row names should match the input table."
@@ -380,7 +409,8 @@ test_that("generate_contin_table_with_clustered_AE_with_tol generates correct ou
   # Check dimensions of the simulated tables
   for (sim_table in simulated_tables3) {
     expect_equal(dim(sim_table), dim(contin_table),
-      info = "Simulated tables should have the same dimensions as the input table."
+      info = "Simulated tables should have the same
+      dimensions as the input table."
     )
     expect_true(all(rownames(sim_table) == rownames(contin_table)),
       info = "Row names should match the input table."

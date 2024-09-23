@@ -120,22 +120,24 @@ generate_contin_table_with_clustered_AE <- function(row_marginal,
 
   if (is.numeric(rho) && length(rho) == 1) {
     if (!(0 <= rho && rho <= 1)) {
-      stop("The value of `rho` must lie between [0,1]")
+      stop("The value of `rho` must lie between [0,1].")
     } else {
       if (!is.null(contin_table)) {
         if (length(AE_idx) != dim(contin_table)[1]) {
-          stop("The length of `cluster_idx` should be same as
+          stop("The length of `AE_idx` should be same as
                 rows of `contin_table`.")
         }
       } else {
-        if (length(AE_idx) != length(row_marginal)) {
-          stop("The length of `cluster_idx` should be same
+        if (is.null(AE_idx)) {
+          stop("User provided `rho` but the `AE_idx` is not provided.")
+        } else {
+          if (length(AE_idx) != length(row_marginal)) {
+            stop("The length of `AE_idx` should be same
               as length of `row_marginal`.")
+          }
         }
       }
-      if (is.null(AE_idx)) {
-        stop("User provided `rho` but the `AE_idx` is not provided.")
-      }
+
       group_s <- unique(AE_idx)
       n_group_s <- vapply(group_s, function(g) sum(AE_idx == g), numeric(1))
       names(n_group_s) <- group_s
