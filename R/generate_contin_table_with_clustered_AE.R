@@ -40,7 +40,6 @@
 #'
 #' @useDynLib MDDC
 #' @importFrom stats rnorm
-#' @importFrom MASS mvrnorm
 #' @export
 #'
 #' @examples

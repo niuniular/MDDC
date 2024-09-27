@@ -241,6 +241,7 @@ create_block_diagonal_matrix <- function(matrices) {
 #' @return Simulated contingency table.
 #'
 #' @useDynLib MDDC
+#' @importFrom MASS mvrnorm
 #' @noRd
 get_contin_table <- function(a,
                              n_row,
@@ -250,7 +251,7 @@ get_contin_table <- function(a,
                              signal_mat,
                              p_i_dot,
                              p_dot_j) {
-  Z_ij_mat <- t(MASS::mvrnorm(
+  Z_ij_mat <- t(mvrnorm(
     n = n_col,
     mu = rep(0, n_row),
     Sigma = cov_matrix
