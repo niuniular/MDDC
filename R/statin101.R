@@ -16,7 +16,7 @@
 #' The 5 columns include 4 statin medications and an "other" column.
 #' Marginal totals for each drug: 101,462 for Atorvastatin, 9,203 for
 #' Fluvastatin, 130,994 for Rosuvastatin,
-#' 87,841 for Simvastatin, and 5,739,3834 for Other drugs.
+#' 87,841 for Simvastatin, and 57,393,834 for Other drugs.
 #'
 #' Also refer to supplementary material of:
 #'

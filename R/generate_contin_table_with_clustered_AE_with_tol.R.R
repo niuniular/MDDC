@@ -21,12 +21,12 @@
 #'
 #' This represents the difference between the total number of reports in the
 #' simulated datasets and the original input total number of reports.
-#' A lower value of tolerance will generate tables with total report counts
-#' closer to the actual supplied value. Default is 0.1.
+#' Sufficiently low tolerance will generate tables with total report counts
+#' equal to the actual supplied value. Default is 0.1.
 #' @param contin_table A data matrix of an \eqn{I} x \eqn{J} contingency
-#' table with row (adverse event) and column (drug) names, of which the
-#' row and column marginals are used to generate the simulated data.
-#' Please first check the input contingency table using the function
+#' table with row (adverse event) and column (drug or vaccine) names, 
+#' of which the row and column marginals are used to generate the simulated 
+#' data. Please first check the input contingency table using the function
 #' \code{check_and_fix_contin_table()}. Default is NULL.
 #' @param AE_idx A data frame or list.
 #' In case of data frame it must contain two variables \code{idx} and \code{AE},

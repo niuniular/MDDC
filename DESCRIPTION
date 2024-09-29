@@ -15,9 +15,9 @@ Authors@R:
       comment = c(ORCID = "0000-0002-1453-8229"))
     )
 Maintainer: Anran Liu <anranliu@buffalo.edu>
-Description: Methods for detecting signals related to (adverse event, drug) 
-    pairs, a data generation function for simulating pharmacovigilance datasets, 
-    and various utility functions.
+Description: Methods for detecting signals related to (adverse event, medical
+    product e.g. drugs, vaccines) pairs, a data generation function for 
+    simulating pharmacovigilance datasets, and various utility functions.
 URL: https://github.com/niuniular/MDDC
 BugReports: https://github.com/niuniular/MDDC/issues
 License: GPL-3

@@ -29,22 +29,21 @@ table with entries representing the signal strength. The values should
 be greater or equal to 1, where 1 indicates no signal, and values
 greater than 1 indicate signal.}
 
-\item{tol}{numeric, optional, default=0.1
-Tolerance for the total report count, expressed in terms of the Relative
-Total Difference (RTD), defined as:
+\item{tol}{Tolerance for the total report count, expressed in 
+terms of the Relative Total Difference (RTD), defined as:
 
 \deqn{RTD = \frac{|n^{orig}_{\cdot \cdot} -
 n^{sim}_{\cdot \cdot}|}{n^{orig}_{\cdot \cdot}} \times 100}
 
 This represents the difference between the total number of reports in the
 simulated datasets and the original input total number of reports.
-A lower value of tolerance will generate tables with total report counts
-closer to the actual supplied value.}
+Sufficiently low tolerance will generate tables with total report counts
+equal to the actual supplied value. Default is 0.1.}
 
 \item{contin_table}{A data matrix of an \eqn{I} x \eqn{J} contingency
-table with row (adverse event) and column (drug) names, of which the
-row and column marginals are used to generate the simulated data.
-Please first check the input contingency table using the function
+table with row (adverse event) and column (drug or vaccine) names, 
+of which the row and column marginals are used to generate the simulated 
+data. Please first check the input contingency table using the function
 \code{check_and_fix_contin_table()}. Default is NULL.}
 
 \item{AE_idx}{A data frame or list.

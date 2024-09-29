@@ -12,8 +12,8 @@
 #' be greater or equal to 1, where 1 indicates no signal, and values
 #' greater than 1 indicate signal.
 #' @param contin_table A data matrix of an \eqn{I} x \eqn{J} contingency
-#' table with row (adverse event) and column (drug) names, of which the
-#' row and column marginals are used to generate the simulated data.
+#' table with row (adverse event) and column (drug or vaccine) names, of which 
+#' the row and column marginals are used to generate the simulated data.
 #' Please first check the input contingency table using the function
 #' \code{check_and_fix_contin_table()}. Default is NULL.
 #' @param AE_idx A data frame or list.

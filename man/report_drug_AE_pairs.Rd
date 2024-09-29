@@ -13,8 +13,8 @@ report_drug_AE_pairs(
 }
 \arguments{
 \item{contin_table}{A data matrix of an \eqn{I} x \eqn{J} contingency
-table with row (adverse event) and column (drug) names. Please first
-check the input contingency table using the function
+table with row (adverse event) and column (drug or vaccine) names. 
+Please first check the input contingency table using the function
 \code{check_and_fix_contin_table()}.}
 
 \item{contin_table_signal}{A data matrix with the same dimension and row
@@ -33,9 +33,11 @@ be obtained via applying the function \code{mddc_boxplot} or
 A data frame with five variables:
 \itemize{
 \item \code{drug} the drug name.
-\item \code{AE} the potential adverse event for the drug.
-\item \code{observed_num} the observed count of the (drug, AE) pair.
-\item \code{expected_num} the expected count of the (drug, AE) pair.
+\item \code{AE} the potential adverse event for the drug or vaccine.
+\item \code{observed_num} the observed count of the (drug or vaccine, AE) 
+pair.
+\item \code{expected_num} the expected count of the (drug or vaccine , AE) 
+pair.
 \item \code{std_pearson_res} the value of the standardized Pearson residual.
 }
 }
