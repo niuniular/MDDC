@@ -57,8 +57,8 @@
 
 <dl><dt id="arg-contin-table">contin_table<a class="anchor" aria-label="anchor" href="#arg-contin-table"></a></dt>
 <dd><p>A data matrix of an \(I\) x \(J\) contingency
-table with row (adverse event) and column (drug) names. Please first
-check the input contingency table using the function
+table with row (adverse event) and column (drug or vaccine) names.
+Please first check the input contingency table using the function
 <code><a href="check_and_fix_contin_table.html">check_and_fix_contin_table()</a></code>.</p></dd>
 
 
@@ -83,9 +83,11 @@ be obtained via applying the function <code>mddc_boxplot</code> or
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>A data frame with five variables:</p><ul><li><p><code>drug</code> the drug name.</p></li>
-<li><p><code>AE</code> the potential adverse event for the drug.</p></li>
-<li><p><code>observed_num</code> the observed count of the (drug, AE) pair.</p></li>
-<li><p><code>expected_num</code> the expected count of the (drug, AE) pair.</p></li>
+<li><p><code>AE</code> the potential adverse event for the drug or vaccine.</p></li>
+<li><p><code>observed_num</code> the observed count of the (drug or vaccine, AE)
+pair.</p></li>
+<li><p><code>expected_num</code> the expected count of the (drug or vaccine , AE)
+pair.</p></li>
 <li><p><code>std_pearson_res</code> the value of the standardized Pearson residual.</p></li>
 </ul></div>
 

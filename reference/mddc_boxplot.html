@@ -66,8 +66,8 @@ step 2 of the algorithm.</p>
 
 <dl><dt id="arg-contin-table">contin_table<a class="anchor" aria-label="anchor" href="#arg-contin-table"></a></dt>
 <dd><p>A data matrix of an \(I\) x \(J\) contingency table
-with row (adverse event) and column (drug) names. Please first check the
-input contingency table using the function
+with row (adverse event) and column (drug or vaccine) names. Please first
+check the input contingency table using the function
 <code><a href="check_and_fix_contin_table.html">check_and_fix_contin_table()</a></code>.</p></dd>
 
 
@@ -88,9 +88,9 @@ Default is <code>TRUE</code>.</p></dd>
 
 <dt id="arg-if-col-cor">if_col_cor<a class="anchor" aria-label="anchor" href="#arg-if-col-cor"></a></dt>
 <dd><p>Logical. In the third step of the algorithm, whether to use
-column (drug) correlation or row (adverse event) correlation. Default is
-<code>FALSE</code>, that is using the adverse event correlation. <code>TRUE</code>
-indicates using drug correlation.</p></dd>
+column (drug or vaccine) correlation or row (adverse event) correlation.
+Default is <code>FALSE</code>, that is using the adverse event correlation.
+<code>TRUE</code> indicates using drug or vaccine correlation.</p></dd>
 
 
 <dt id="arg-cor-lim">cor_lim<a class="anchor" aria-label="anchor" href="#arg-cor-lim"></a></dt>

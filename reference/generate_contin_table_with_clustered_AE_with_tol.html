@@ -82,22 +82,21 @@ greater than 1 indicate signal.</p></dd>
 
 
 <dt id="arg-tol">tol<a class="anchor" aria-label="anchor" href="#arg-tol"></a></dt>
-<dd><p>numeric, optional, default=0.1
-Tolerance for the total report count, expressed in terms of the Relative
-Total Difference (RTD), defined as:</p>
+<dd><p>Tolerance for the total report count, expressed in
+terms of the Relative Total Difference (RTD), defined as:</p>
 <p>$$RTD = \frac{|n^{orig}_{\cdot \cdot} -
 n^{sim}_{\cdot \cdot}|}{n^{orig}_{\cdot \cdot}} \times 100$$</p>
 <p>This represents the difference between the total number of reports in the
 simulated datasets and the original input total number of reports.
-A lower value of tolerance will generate tables with total report counts
-closer to the actual supplied value.</p></dd>
+Sufficiently low tolerance will generate tables with total report counts
+equal to the actual supplied value. Default is 0.1.</p></dd>
 
 
 <dt id="arg-contin-table">contin_table<a class="anchor" aria-label="anchor" href="#arg-contin-table"></a></dt>
 <dd><p>A data matrix of an \(I\) x \(J\) contingency
-table with row (adverse event) and column (drug) names, of which the
-row and column marginals are used to generate the simulated data.
-Please first check the input contingency table using the function
+table with row (adverse event) and column (drug or vaccine) names,
+of which the row and column marginals are used to generate the simulated
+data. Please first check the input contingency table using the function
 <code><a href="check_and_fix_contin_table.html">check_and_fix_contin_table()</a></code>. Default is NULL.</p></dd>
 
 
