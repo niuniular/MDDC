@@ -8,7 +8,7 @@
 - We are interested in which (AE, drug) pairs are signals. The signals refer to potential adverse events that may be caused by a drug.
 - In the contingency table setting, the signals refer to the cells with $n_{ij}$ abnormally higher than the expected values.
 - [**Rousseeuw and Bossche (2018)**](https://wis.kuleuven.be/stat/robust/papers/publications-2018/rousseeuwvandenbossche-ddc-technometrics-2018.pdf) proposed the Detecting Deviating Cells (DDC) algorithm for outlier identification in a multivariate dataset.
-- The original DDC algorithm assumes multivariate normality of the data and selects cutoff values based on this assumption. The foundation of the DDC algorithm lies in detecting deviating data cells within a multivariate normally distributed dataset. Inspired by this work, we modify the DDC algorithm to better suit the discrete nature of adverse event data in pharmacovigilance that clearly do not follow a multivariate normal distribution. 
+- The original DDC algorithm assumes multivariate normality of the data and selects cutoff values based on this assumption. We modify the DDC algorithm to better suit the discrete nature of adverse event data in pharmacovigilance that clearly do not follow a multivariate normal distribution. 
 - Our Modified Detecting Deviating Cells (MDDC) algorithm has the following characteristics:
   1. It is easy to compute.
   2. It considers AE relationships.
