@@ -1,3 +1,11 @@
+| Category          | Badge                                                                                                                                                                                                                                                                                                                                                              |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **License**       | [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://github.com/niuniular/MDDC/blob/main/LICENSE.md)                                                                                                                                                                                                                                       |
+| **CI/CD**         | [![R](https://github.com/niuniular/MDDC/actions/workflows/r.yml/badge.svg)](https://github.com/niuniular/MDDC/actions/workflows/r.yml)                                                           |
+| **Code Coverage** | [![codecov](https://codecov.io/gh/niuniular/MDDC/graph/badge.svg?token=YLQNKH2AI6)](https://codecov.io/gh/niuniular/MDDC)                                                                                                                                                                                                                             |
+| **Code Quality**  | [![Codacy Badge](https://app.codacy.com/project/badge/Grade/c71ad2e3c52546e7a99ee8fea57d6142)](https://app.codacy.com/gh/niuniular/MDDC/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade) [![CodeFactor](https://www.codefactor.io/repository/github/niuniular/mddc/badge)](https://www.codefactor.io/repository/github/niuniular/mddc) |
+
+
 # Introduction
 
 * In this package, we present the Modified Detecting Deviating Cells (MDDC) algorithm for adverse event identification.
