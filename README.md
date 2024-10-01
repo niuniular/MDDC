@@ -12,9 +12,9 @@
 * For a certain time period, the spontaneous reports can be extracted from the safety database and depicted as an $I \times J$ contingency table, where:
   * $I$ denotes the total number of AEs
   * $J$ denotes the total number of drugs
-  * With cell counts $n\_{ij}$ the total number of reported cases corresponding to the $j$-th drug and $i$-th AE
+  * With cell counts $n_{ij}$ the total number of reported cases corresponding to the $j$-th drug and $i$-th AE
 * We are interested in which (AE, drug) pairs are signals. The signals refer to potential adverse events that may be caused by a drug.
-* In the contingency table setting, the signals refer to the cells with $n\_{ij}$ abnormally higher than the expected values.
+* In the contingency table setting, the signals refer to the cells with $n_{ij}$ abnormally higher than the expected values.
 * [**Rousseeuw and Bossche (2018)**](https://wis.kuleuven.be/stat/robust/papers/publications-2018/rousseeuwvandenbossche-ddc-technometrics-2018.pdf) proposed the Detecting Deviating Cells (DDC) algorithm for outlier identification in a multivariate dataset.
 * The original DDC algorithm assumes multivariate normality of the data and selects cutoff values based on this assumption. We modify the DDC algorithm to better suit the discrete nature of adverse event data in pharmacovigilance that clearly do not follow a multivariate normal distribution.
 * Our Modified Detecting Deviating Cells (MDDC) algorithm has the following characteristics:
