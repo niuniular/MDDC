@@ -10,8 +10,9 @@
 #' \code{check_and_fix_contin_table()}.
 #' @param col_specific_cutoff Logical. In the second step of the algorithm,
 #' whether to apply boxplot method to the standardized Pearson residuals of
-#' the entire table, or within each drug column. Default is \code{TRUE}, that
-#' is within each drug column (column specific cutoff). \code{FALSE} indicates
+#' the entire table, or within each drug or vaccine column. 
+#' Default is \code{TRUE}, that is within each drug or vaccine column 
+#' (column specific cutoff). \code{FALSE} indicates
 #' applying boxplot method on residuals of the entire table.
 #' @param separate Logical. In the second step of the algorithm, whether to
 #' separate the standardized Pearson residuals for the zero cells and non zero

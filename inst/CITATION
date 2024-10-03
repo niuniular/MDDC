@@ -1,0 +1,14 @@
+citHeader("If you use this package in your research or work, please cite it as follows:")
+
+citation <- bibentry(
+  bibtype = "Article",
+  title = "MDDC: An R and Python Package for Adverse Event Identification in Pharmacovigilance Data",
+  author = c(
+    person("Anran", "Liu"),
+    person("Raktim", "Mukhopadhyay"),
+    person("Marianthi", "Markatou")
+  ),
+  journal = "arXiv preprint",
+  year = "2024",
+  note = "https://doi.org/10.48550/arXiv.2410.01168"
+)

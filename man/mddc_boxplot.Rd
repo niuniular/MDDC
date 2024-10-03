@@ -23,8 +23,9 @@ check the input contingency table using the function
 
 \item{col_specific_cutoff}{Logical. In the second step of the algorithm,
 whether to apply boxplot method to the standardized Pearson residuals of
-the entire table, or within each drug column. Default is \code{TRUE}, that
-is within each drug column (column specific cutoff). \code{FALSE} indicates
+the entire table, or within each drug or vaccine column. 
+Default is \code{TRUE}, that is within each drug or vaccine column 
+(column specific cutoff). \code{FALSE} indicates
 applying boxplot method on residuals of the entire table.}
 
 \item{separate}{Logical. In the second step of the algorithm, whether to
