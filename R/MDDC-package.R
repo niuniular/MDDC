@@ -38,12 +38,10 @@
 #' The MDDC algorithm consists of five steps. The first two steps identify
 #' univariate outliers via cutoffs, and the next three steps
 #' evaluate the signals using AE correlations. More details can be found in the
-#' \href{https://mddc.readthedocs.io/en/latest/user_guide/mddc_algorithm.html}
-#' {MDDC algorithm documentation}.
+#' \href{https://mddc.readthedocs.io/en/latest/user_guide/mddc_algorithm.html}{MDDC algorithm documentation}.
 #'
 #' For an introduction to the `MDDC` package, see the vignette:
-#' \href{https://niuniular.github.io/MDDC/articles/Introduction_to_MDDC.html}
-#' {Usage Examples for MDDC in R}.
+#' \href{https://niuniular.github.io/MDDC/articles/Introduction_to_MDDC.html}{Usage Examples for MDDC in R}.
 #'
 #' @details This work has been supported by the Food and Drug Administration
 #' and the Kaleida Health Foundation.
