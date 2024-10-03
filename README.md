@@ -3,8 +3,7 @@
 | **License**       | [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://github.com/niuniular/MDDC/blob/main/LICENSE.md)                                                                                                                                                                                                                                       |
 | **CI/CD**         | [![R](https://github.com/niuniular/MDDC/actions/workflows/r.yml/badge.svg)](https://github.com/niuniular/MDDC/actions/workflows/r.yml)                                                           |
 | **Code Coverage** | [![codecov](https://codecov.io/gh/niuniular/MDDC/graph/badge.svg?token=YLQNKH2AI6)](https://codecov.io/gh/niuniular/MDDC)                                                                                                                                                                                                                             |
-| **Code Quality**  | [![Codacy Badge](https://app.codacy.com/project/badge/Grade/c71ad2e3c52546e7a99ee8fea57d6142)](https://app.codacy.com/gh/niuniular/MDDC/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade) [![CodeFactor](https://www.codefactor.io/repository/github/niuniular/mddc/badge)](https://www.codefactor.io/repository/github/niuniular/mddc) |
-
+| **Code Quality**  | [![Codacy Badge](https://app.codacy.com/project/badge/Grade/c71ad2e3c52546e7a99ee8fea57d6142)](https://app.codacy.com/gh/niuniular/MDDC/dashboard?utm_source=gh\&utm_medium=referral\&utm_content=\&utm_campaign=Badge_grade) [![CodeFactor](https://www.codefactor.io/repository/github/niuniular/mddc/badge)](https://www.codefactor.io/repository/github/niuniular/mddc) |
 
 # Introduction
 
@@ -45,10 +44,30 @@
 
 The documentation is hosted at - https://niuniular.github.io/MDDC/index.html
 
+## Citation
+
+If you use this package in your research or work, please cite it as follows:
+
+```
+@misc{liu2024mddcrpythonpackage,
+      title={MDDC: An R and Python Package for Adverse Event Identification in Pharmacovigilance Data}, 
+      author={Anran Liu and Raktim Mukhopadhyay and Marianthi Markatou},
+      year={2024},
+      eprint={2410.01168},
+      archivePrefix={arXiv},
+      primaryClass={stat.CO},
+      url={https://arxiv.org/abs/2410.01168}, 
+}
+```
+
 ## Funding Information
 
 The work has been supported by Food and Drug Administration, and Kaleida Health Foundation.
 
 ## References
+
+Liu, A., Mukhopadhyay, R., and Markatou, M. (2024). MDDC: An R and Python package for adverse event identification in pharmacovigilance data. arXiv preprint. arXiv:2410.01168
+
+Liu, A., Markatou, M., Dang, O., & Ball, R. (2024). Pattern discovery in pharmacovigilance through the Modified Detecting Deviating Cells (MDDC) algorithm (Technical Report). Department of Biostatistics, University at Buffalo.
 
 Rousseeuw, P. J., & Bossche, W. V. D. (2018). Detecting deviating data cells. Technometrics, 60(2), 135-145.
