@@ -5,13 +5,13 @@
 #' event signal identification. Boxplot method is used for cutoff selection in
 #' step 2 of the algorithm.
 #' @param contin_table A data matrix of an \eqn{I} x \eqn{J} contingency table
-#' with row (adverse event) and column (drug or vaccine) names. Please first 
+#' with row (adverse event) and column (drug or vaccine) names. Please first
 #' check the input contingency table using the function
 #' \code{check_and_fix_contin_table()}.
 #' @param col_specific_cutoff Logical. In the second step of the algorithm,
 #' whether to apply boxplot method to the standardized Pearson residuals of
-#' the entire table, or within each drug or vaccine column. 
-#' Default is \code{TRUE}, that is within each drug or vaccine column 
+#' the entire table, or within each drug or vaccine column.
+#' Default is \code{TRUE}, that is within each drug or vaccine column
 #' (column specific cutoff). \code{FALSE} indicates
 #' applying boxplot method on residuals of the entire table.
 #' @param separate Logical. In the second step of the algorithm, whether to
@@ -19,8 +19,8 @@
 #' cells and apply boxplot method separately or together.
 #' Default is \code{TRUE}.
 #' @param if_col_cor Logical. In the third step of the algorithm, whether to use
-#' column (drug or vaccine) correlation or row (adverse event) correlation. 
-#' Default is \code{FALSE}, that is using the adverse event correlation. 
+#' column (drug or vaccine) correlation or row (adverse event) correlation.
+#' Default is \code{FALSE}, that is using the adverse event correlation.
 #' \code{TRUE} indicates using drug or vaccine correlation.
 #' @param cor_lim A numeric value between (0, 1). In the third step,
 #' what correlation threshold should be used to select ``connected''

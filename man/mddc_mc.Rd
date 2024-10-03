@@ -20,7 +20,7 @@ mddc_mc(
 }
 \arguments{
 \item{contin_table}{A data matrix of an \eqn{I} x \eqn{J} contingency table
-with row (adverse event) and column (drug or vaccine) names. 
+with row (adverse event) and column (drug or vaccine) names.
 Please first check the input contingency table using the function
 \code{check_and_fix_contin_table()}.}
 
@@ -33,14 +33,14 @@ MC method. Default is 10000.}
 
 \item{exclude_same_drug_class}{In the second step, when applying Fisher's
 exact test to cells with a count less than six, a 2 by 2 contingency table
-needs to be constructed. Does the construction need to exclude other drugs 
-or vaccines in the same class as the drug or vaccine of interest? 
+needs to be constructed. Does the construction need to exclude other drugs
+or vaccines in the same class as the drug or vaccine of interest?
 Default is \code{TRUE}.}
 
 \item{col_specific_cutoff}{Logical. In the second step of the algorithm,
 whether to apply MC method to the standardized Pearson residuals
 of the entire table, or within each drug or vaccine column.
-Default is \code{TRUE}, that is within each drug or vaccine 
+Default is \code{TRUE}, that is within each drug or vaccine
 column (column specific cutoff). \code{FALSE} indicates applying MC method
 on residuals of the entire table.}
 
@@ -49,8 +49,8 @@ separate the standardized Pearson residuals for the zero cells and non zero
 cells and apply MC method separately or together. Default is \code{TRUE}.}
 
 \item{if_col_cor}{Logical. In the third step of the algorithm, whether to use
-column (drug or vaccine) correlation or row (adverse event) correlation. 
-Default is \code{FALSE}, that is using the adverse event correlation. 
+column (drug or vaccine) correlation or row (adverse event) correlation.
+Default is \code{FALSE}, that is using the adverse event correlation.
 \code{TRUE} indicates using drug or vaccine correlation.}
 
 \item{cor_lim}{A numeric value between (0, 1).
