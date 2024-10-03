@@ -10,3 +10,4 @@ data/.DS_Store
 docs/*
 *.code-workspace
 *.Rcheck
+*.tar.gz
