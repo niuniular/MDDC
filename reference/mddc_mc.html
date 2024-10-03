@@ -88,8 +88,8 @@ MC method. Default is 10000.</p></dd>
 <dt id="arg-exclude-same-drug-class">exclude_same_drug_class<a class="anchor" aria-label="anchor" href="#arg-exclude-same-drug-class"></a></dt>
 <dd><p>In the second step, when applying Fisher's
 exact test to cells with a count less than six, a 2 by 2 contingency table
-needs to be constructed. Does the construction need to exclude other drugs or
-vaccines in the same class as the drug or vaccine of interest?
+needs to be constructed. Does the construction need to exclude other drugs
+or vaccines in the same class as the drug or vaccine of interest?
 Default is <code>TRUE</code>.</p></dd>
 
 
@@ -97,7 +97,7 @@ Default is <code>TRUE</code>.</p></dd>
 <dd><p>Logical. In the second step of the algorithm,
 whether to apply MC method to the standardized Pearson residuals
 of the entire table, or within each drug or vaccine column.
-Default is <code>TRUE</code>, that is within each drug
+Default is <code>TRUE</code>, that is within each drug or vaccine
 column (column specific cutoff). <code>FALSE</code> indicates applying MC method
 on residuals of the entire table.</p></dd>
 
@@ -110,9 +110,9 @@ cells and apply MC method separately or together. Default is <code>TRUE</code>.<
 
 <dt id="arg-if-col-cor">if_col_cor<a class="anchor" aria-label="anchor" href="#arg-if-col-cor"></a></dt>
 <dd><p>Logical. In the third step of the algorithm, whether to use
-column (drug or vaccine) correlation or row (adverse event) correlation. Default is
-<code>FALSE</code>, that is using the adverse event correlation. <code>TRUE</code>
-indicates using drug or vaccine correlation.</p></dd>
+column (drug or vaccine) correlation or row (adverse event) correlation.
+Default is <code>FALSE</code>, that is using the adverse event correlation.
+<code>TRUE</code> indicates using drug or vaccine correlation.</p></dd>
 
 
 <dt id="arg-cor-lim">cor_lim<a class="anchor" aria-label="anchor" href="#arg-cor-lim"></a></dt>
