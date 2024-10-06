@@ -122,7 +122,7 @@ We provide a function that outputs appropriate coefficients for boxplot using a 
 
 - ``grid``: A numeric value representing the size of the grid added to the default value of ``coef = 1.5`` as suggested by Tukey. Default is 0.1.
 
-- ``col_specific_cutoff``: Logical. If TRUE, then a single value of the coefficient is returned for the entire dataset, else when FALSE specific values correspoding to each of the columns are returned.
+- ``col_specific_cutoff``: Logical. If TRUE, then a single value of the coefficient is returned for the entire dataset, else when FALSE specific values corresponding to each of the columns are returned.
 
 - ``exclude_small_count``: A logical indicating whether to exclude cells with counts smaller than or equal to five when computing boxplot statistics. Default is ``TRUE``.
 
@@ -296,7 +296,7 @@ In the output, there is the pair (Rhabdomyolysis, Atorvastatin) identified, whic
 
 # Visualization
 
-We have also included heatmap visulizations as a part of our package to help visualize the identified signals or p-values.
+We have also included heatmap visualizations as a part of our package to help visualize the identified signals or p-values.
 
 This function takes the following arguments:
 
