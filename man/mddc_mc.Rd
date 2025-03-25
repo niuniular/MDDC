@@ -70,6 +70,8 @@ A list with the following components:
 For cells with a count greater than five, the p values are obtained
 via MC method. For cells with a count less than or equal to five,
 the p values are obtained via Fisher's exact tests.
+\item \code{mc_pval_adj} returns the adjusted p values using the
+Benjamini-Hochberg procedure for each cell in the second step.
 \item \code{mc_signal} returns the signals with a count greater than five and
 identified in the second step by MC method. 1 indicates signals, 0 for non
 signal.
@@ -96,7 +98,7 @@ selection in the second step of the algorithm.
 data(statin49)
 
 # apply the mddc_mc
-mc_res <- mddc_boxplot(statin49)
+mc_res <- mddc_mc(statin49)
 
 # signals identified in step 2 using MC method
 signal_step2 <- mc_res$mc_signal

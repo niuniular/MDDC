@@ -7,7 +7,7 @@
   "codeRepository": "https://github.com/niuniular/MDDC",
   "issueTracker": "https://github.com/niuniular/MDDC/issues",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
