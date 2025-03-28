@@ -188,11 +188,19 @@ test2 <- mddc_mc(
 
 This function outputs a list with five components:
 
-- ``mc_pval``: Returns the p-values for each cell in step 2. For cells with counts greater than five, the p-values are obtained via the Monte Carlo (MC) method. For cells with counts less than or equal to five, the p-values are obtained via Fisher's exact tests.
+- ``mc_pval``: Returns the p values for each cell in the second step. For cells with a count greater than five, the p values are obtained via MC method. For cells with a count less than or equal to five, the p values are obtained via Fisher's exact tests. The Fisher exact p-values are not adjusted for multiplicity of testing.
+
+- ``mc_pval_adj``: Returns the adjusted p values using the Benjamini-Hochberg procedure for each cell in the second step.
+
+- ``mc_signal``: Returns the signals with a count greater than five and identified in the second step by MC method. Please note that the unadjusted p-values are used here. 1 indicates signals, 0 for non signal.
 
 - ``mc_signal``: Indicates signals for cells with counts greater than five, identified in step 2 by the MC method. A value of 1 indicates a signal, while 0 indicates no signal.
 
-- ``fisher_signal``: Indicates signals for cells with counts less than or equal to five, identified in step 2 by Fisher's exact tests. A value of 1 indicates a signal, while 0 indicates no signal.
+- ``fisher_signal``: Returns the signals with a count less than or equal to five and identified in the second step by Fisher's exact tests. 1 indicates signals, 0 for non signal. Please note that the unadjusted p-values are used here.
+
+- ``mc_signal_adj``: Returns the signals with a count greater than five and identified in the second step by MC method using the adjusted p-values. 1 indicates signals, 0 for non signal.
+
+- ``fisher_signal_adj``: Returns the signals with a count less than or equal to five and identified in the second step by Fisher's exact tests using the adjusted p-values. 1 indicates signals, 0 for non signal.
 
 - ``corr_signal_pval``: Returns the p-values for each cell in the contingency table in step 5, where the \(r_{ij}\) values are mapped back to the standard normal distribution.
 
@@ -309,6 +317,6 @@ This function takes the following arguments:
 The following heatmap shows the visualization of the associated p-values of Monte Carlo method in step 2:
 
 ```{r, fig.width=6, fig.height=10}
-plot_heatmap(test2$mc_pval[-50, -7])
+plot_heatmap(test2$mc_pval_adj[-50, -7])
 ```
 
