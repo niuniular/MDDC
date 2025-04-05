@@ -73,7 +73,7 @@ We try to follow the [GitHub flow](https://guides.github.com/introduction/flow/)
    - Write your code.
    - Test your code (bonus points for adding unit tests).
    - Document your code (see function documentation above).
-   - Check your code with `testthat`.
+   - Check your code with `pytest`.
 5. Commit and push your changes.
 6. Submit a [pull request](https://guides.github.com/activities/forking/#making-a-pull-request).
 

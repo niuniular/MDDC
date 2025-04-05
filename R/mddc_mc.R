@@ -44,25 +44,13 @@
 #' \item \code{mc_pval} returns the p values for each cell in the second step.
 #' For cells with a count greater than five, the p values are obtained
 #' via MC method. For cells with a count less than or equal to five,
-#' the p values are obtained via Fisher's exact tests. The Fisher exact p-values
-#' are not adjusted for multiplicity of testing.
-#' \item \code{mc_pval_adj} returns the adjusted p values using the
-#' Benjamini-Hochberg procedure for each cell in the second step.
+#' the p values are obtained via Fisher's exact tests.
 #' \item \code{mc_signal} returns the signals with a count greater than five and
-#' identified in the second step by MC method. Please note that the
-#' \strong{unadjusted p-values} are used here.
-#' 1 indicates signals, 0 for non signal.
+#' identified in the second step by MC method. 1 indicates signals, 0 for non
+#' signal.
 #' \item \code{fisher_signal} returns the signals with a count
 #' less than or equal to five and identified in the second step by
 #' Fisher's exact tests. 1 indicates signals, 0 for non signal.
-#' Please note that the \strong{unadjusted p-values} are used here.
-#' \item \code{mc_signal_adj} returns the signals with a count greater than five
-#' and identified in the second step by MC method using the
-#' \strong{adjusted p-values}. 1 indicates signals, 0 for non signal.
-#' \item \code{fisher_signal_adj} returns the signals with a count
-#' less than or equal to five and identified in the second step by
-#' Fisher's exact tests using the \strong{adjusted p-values}.
-#' 1 indicates signals, 0 for non signal.
 #' \item \code{corr_signal_pval} returns the p values for each cell in the
 #' contingency table in the fifth step, when the \eqn{r_{ij}} values are mapped
 #' back to the standard normal distribution.
@@ -79,7 +67,7 @@
 #' data(statin49)
 #'
 #' # apply the mddc_mc
-#' mc_res <- mddc_mc(statin49)
+#' mc_res <- mddc_boxplot(statin49)
 #'
 #' # signals identified in step 2 using MC method
 #' signal_step2 <- mc_res$mc_signal
@@ -154,28 +142,14 @@ mddc_mc <- function(
   }
 
   p_val_mat[is.na(p_val_mat)] <- 1
-
-  adj_p_val_mat <- matrix(p.adjust(p_val_mat, method = "BH"),
-    nrow = n_row,
-    ncol = n_col
-  )
-
   row.names(p_val_mat) <- row_names
   colnames(p_val_mat) <- col_names
-
-  row.names(adj_p_val_mat) <- row_names
-  colnames(adj_p_val_mat) <- col_names
 
 
   signal_mat <- ifelse((p_val_mat < (1 - quantile)) & (contin_table >
     5), 1, 0)
   second_signal_mat <- ifelse((p_val_mat < (1 - quantile)) & (contin_table <
     6), 1, 0)
-
-  signal_mat_adj <- ifelse((adj_p_val_mat < (1 - quantile)) & (contin_table >
-    5), 1, 0)
-  second_signal_mat_adj <-
-    ifelse((adj_p_val_mat < (1 - quantile)) & (contin_table < 6), 1, 0)
 
   res_all <- as.vector(Z_ij_mat)
   res_nonzero <- as.vector(Z_ij_mat[which(contin_table != 0)])
@@ -334,13 +308,13 @@ mddc_mc <- function(
   rownames(r_adj_pval) <- row_names
 
   list_mat <- list(
-    p_val_mat, adj_p_val_mat, signal_mat, second_signal_mat, signal_mat_adj,
-    second_signal_mat_adj, r_pval, r_adj_pval
+    p_val_mat, signal_mat, second_signal_mat, r_pval,
+    r_adj_pval
   )
 
   names(list_mat) <- c(
-    "mc_pval", "mc_pval_adj", "mc_signal", "fisher_signal", "mc_signal_adj",
-    "fisher_signal_adj", "corr_signal_pval", "corr_signal_adj_pval"
+    "mc_pval", "mc_signal", "fisher_signal", "corr_signal_pval",
+    "corr_signal_adj_pval"
   )
 
   return(list_mat)

@@ -11,11 +11,8 @@ test_that("test MDDC MC function", {
 
     expect_type(mddc_mc_res, "list")
     expect_equal(dim(contin_table), dim(mddc_mc_res$mc_pval))
-    expect_equal(dim(contin_table), dim(mddc_mc_res$mc_pval_adj))
     expect_equal(dim(contin_table), dim(mddc_mc_res$mc_signal))
-    expect_equal(dim(contin_table), dim(mddc_mc_res$mc_signal_adj))
     expect_equal(dim(contin_table), dim(mddc_mc_res$fisher_signal))
-    expect_equal(dim(contin_table), dim(mddc_mc_res$fisher_signal_adj))
     expect_equal(dim(contin_table), dim(mddc_mc_res$corr_signal_pval))
     expect_equal(dim(contin_table), dim(mddc_mc_res$corr_signal_adj_pval))
   }
