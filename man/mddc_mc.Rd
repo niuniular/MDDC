@@ -66,10 +66,12 @@ If NULL, no seed is set.}
 \value{
 A list with the following components:
 \itemize{
-\item \code{mc_pval} returns the p values for each cell in the second step.
-For cells with a count greater than five, the p values are obtained
-via MC method. For cells with a count less than or equal to five,
-the p values are obtained via Fisher's exact tests.
+\item \code{mc_pval} returns the p values for each cell in the second step using
+the Monte Carlo method.
+\item \code{fisher_pval} returns the p-values for each cell in the step 2 of
+the algorithm, calculated using the Monte Carlo method for cells with count
+greater than five, and Fisher’s exact test for cells with count less than or
+equal to five.
 \item \code{mc_signal} returns the signals with a count greater than five and
 identified in the second step by MC method. 1 indicates signals, 0 for non
 signal.

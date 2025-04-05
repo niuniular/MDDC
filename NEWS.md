@@ -1,5 +1,7 @@
-# MDDC 1.0.0
+# MDDC 1.1.0
 
 ## New features
 
-* Currently in progress
+# MDDC 1.0.0
+
+This is the first release of MDDC. 
