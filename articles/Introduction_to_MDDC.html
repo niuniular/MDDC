@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">MDDC</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -364,30 +364,17 @@ following code:</p>
 <span><span class="op">)</span></span></code></pre></div>
 <p>This function outputs a list with five components:</p>
 <ul>
-<li><p><code>mc_pval</code>: Returns the p values for each cell in the
-second step. For cells with a count greater than five, the p values are
-obtained via MC method. For cells with a count less than or equal to
-five, the p values are obtained via Fisher’s exact tests. The Fisher
-exact p-values are not adjusted for multiplicity of testing.</p></li>
-<li><p><code>mc_pval_adj</code>: Returns the adjusted p values using the
-Benjamini-Hochberg procedure for each cell in the second step.</p></li>
-<li><p><code>mc_signal</code>: Returns the signals with a count greater
-than five and identified in the second step by MC method. Please note
-that the unadjusted p-values are used here. 1 indicates signals, 0 for
-non signal.</p></li>
+<li><p><code>mc_pval</code>: Returns the p-values for each cell in step
+2. For cells with counts greater than five, the p-values are obtained
+via the Monte Carlo (MC) method. For cells with counts less than or
+equal to five, the p-values are obtained via Fisher’s exact
+tests.</p></li>
 <li><p><code>mc_signal</code>: Indicates signals for cells with counts
 greater than five, identified in step 2 by the MC method. A value of 1
 indicates a signal, while 0 indicates no signal.</p></li>
-<li><p><code>fisher_signal</code>: Returns the signals with a count less
-than or equal to five and identified in the second step by Fisher’s
-exact tests. 1 indicates signals, 0 for non signal. Please note that the
-unadjusted p-values are used here.</p></li>
-<li><p><code>mc_signal_adj</code>: Returns the signals with a count
-greater than five and identified in the second step by MC method using
-the adjusted p-values. 1 indicates signals, 0 for non signal.</p></li>
-<li><p><code>fisher_signal_adj</code>: Returns the signals with a count
-less than or equal to five and identified in the second step by Fisher’s
-exact tests using the adjusted p-values. 1 indicates signals, 0 for non
+<li><p><code>fisher_signal</code>: Indicates signals for cells with
+counts less than or equal to five, identified in step 2 by Fisher’s
+exact tests. A value of 1 indicates a signal, while 0 indicates no
 signal.</p></li>
 <li><p><code>corr_signal_pval</code>: Returns the p-values for each cell
 in the contingency table in step 5, where the
@@ -592,7 +579,7 @@ each cell in the heatmap. Default is 1.</p></li>
 <p>The following heatmap shows the visualization of the associated
 p-values of Monte Carlo method in step 2:</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_heatmap.html">plot_heatmap</a></span><span class="op">(</span><span class="va">test2</span><span class="op">$</span><span class="va">mc_pval_adj</span><span class="op">[</span><span class="op">-</span><span class="fl">50</span>, <span class="op">-</span><span class="fl">7</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plot_heatmap.html">plot_heatmap</a></span><span class="op">(</span><span class="va">test2</span><span class="op">$</span><span class="va">mc_pval</span><span class="op">[</span><span class="op">-</span><span class="fl">50</span>, <span class="op">-</span><span class="fl">7</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Introduction_to_MDDC_files/figure-html/unnamed-chunk-16-1.png" width="576"></p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

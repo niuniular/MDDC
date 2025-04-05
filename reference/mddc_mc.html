@@ -11,7 +11,7 @@ selection in the second step of the algorithm."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">MDDC</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -136,25 +136,13 @@ If NULL, no seed is set.</p></dd>
     <p>A list with the following components:</p><ul><li><p><code>mc_pval</code> returns the p values for each cell in the second step.
 For cells with a count greater than five, the p values are obtained
 via MC method. For cells with a count less than or equal to five,
-the p values are obtained via Fisher's exact tests. The Fisher exact p-values
-are not adjusted for multiplicity of testing.</p></li>
-<li><p><code>mc_pval_adj</code> returns the adjusted p values using the
-Benjamini-Hochberg procedure for each cell in the second step.</p></li>
+the p values are obtained via Fisher's exact tests.</p></li>
 <li><p><code>mc_signal</code> returns the signals with a count greater than five and
-identified in the second step by MC method. Please note that the
-<strong>unadjusted p-values</strong> are used here.
-1 indicates signals, 0 for non signal.</p></li>
+identified in the second step by MC method. 1 indicates signals, 0 for non
+signal.</p></li>
 <li><p><code>fisher_signal</code> returns the signals with a count
 less than or equal to five and identified in the second step by
-Fisher's exact tests. 1 indicates signals, 0 for non signal.
-Please note that the <strong>unadjusted p-values</strong> are used here.</p></li>
-<li><p><code>mc_signal_adj</code> returns the signals with a count greater than five
-and identified in the second step by MC method using the
-<strong>adjusted p-values</strong>. 1 indicates signals, 0 for non signal.</p></li>
-<li><p><code>fisher_signal_adj</code> returns the signals with a count
-less than or equal to five and identified in the second step by
-Fisher's exact tests using the <strong>adjusted p-values</strong>.
-1 indicates signals, 0 for non signal.</p></li>
+Fisher's exact tests. 1 indicates signals, 0 for non signal.</p></li>
 <li><p><code>corr_signal_pval</code> returns the p values for each cell in the
 contingency table in the fifth step, when the \(r_{ij}\) values are mapped
 back to the standard normal distribution.</p></li>
@@ -171,7 +159,7 @@ to decide whether to use <code>corr_signal_pval</code> or
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">statin49</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># apply the mddc_mc</span></span></span>
-<span class="r-in"><span><span class="va">mc_res</span> <span class="op">&lt;-</span> <span class="fu">mddc_mc</span><span class="op">(</span><span class="va">statin49</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">mc_res</span> <span class="op">&lt;-</span> <span class="fu"><a href="mddc_boxplot.html">mddc_boxplot</a></span><span class="op">(</span><span class="va">statin49</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># signals identified in step 2 using MC method</span></span></span>
 <span class="r-in"><span><span class="va">signal_step2</span> <span class="op">&lt;-</span> <span class="va">mc_res</span><span class="op">$</span><span class="va">mc_signal</span></span></span>
