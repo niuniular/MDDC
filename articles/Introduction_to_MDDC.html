@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">MDDC</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -364,14 +364,15 @@ following code:</p>
 <span><span class="op">)</span></span></code></pre></div>
 <p>This function outputs a list with five components:</p>
 <ul>
-<li><p><code>mc_pval</code>: Returns the p-values for each cell in step
-2. For cells with counts greater than five, the p-values are obtained
-via the Monte Carlo (MC) method. For cells with counts less than or
-equal to five, the p-values are obtained via Fisher’s exact
-tests.</p></li>
-<li><p><code>mc_signal</code>: Indicates signals for cells with counts
-greater than five, identified in step 2 by the MC method. A value of 1
-indicates a signal, while 0 indicates no signal.</p></li>
+<li><p><code>mc_pval</code>: returns the p values for each cell in the
+second step using the Monte Carlo method.</p></li>
+<li><p><code>fisher_pval</code>: returns the p-values for each cell in
+the step 2 of the algorithm, calculated using the Monte Carlo method for
+cells with count greater than five, and Fisher’s exact test for cells
+with count less than or equal to five.</p></li>
+<li><p><code>mc_signal</code>: returns the signals with a count greater
+than five and identified in the second step by MC method. 1 indicates
+signals, 0 for non signal.</p></li>
 <li><p><code>fisher_signal</code>: Indicates signals for cells with
 counts less than or equal to five, identified in step 2 by Fisher’s
 exact tests. A value of 1 indicates a signal, while 0 indicates no

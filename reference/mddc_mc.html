@@ -11,7 +11,7 @@ selection in the second step of the algorithm."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">MDDC</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -133,10 +133,12 @@ If NULL, no seed is set.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A list with the following components:</p><ul><li><p><code>mc_pval</code> returns the p values for each cell in the second step.
-For cells with a count greater than five, the p values are obtained
-via MC method. For cells with a count less than or equal to five,
-the p values are obtained via Fisher's exact tests.</p></li>
+    <p>A list with the following components:</p><ul><li><p><code>mc_pval</code> returns the p values for each cell in the second step using
+the Monte Carlo method.</p></li>
+<li><p><code>fisher_pval</code> returns the p-values for each cell in the step 2 of
+the algorithm, calculated using the Monte Carlo method for cells with count
+greater than five, and Fisher’s exact test for cells with count less than or
+equal to five.</p></li>
 <li><p><code>mc_signal</code> returns the signals with a count greater than five and
 identified in the second step by MC method. 1 indicates signals, 0 for non
 signal.</p></li>
