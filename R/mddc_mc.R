@@ -41,8 +41,8 @@
 #'
 #' @return A list with the following components:
 #' \itemize{
-#' \item \code{mc_pval} returns the p values for each cell in the second step using
-#' the Monte Carlo method.
+#' \item \code{mc_pval} returns the p values for each cell in the second step
+#' using the Monte Carlo method (Algorithm 3 of Liu et al.(2024)).
 #' \item \code{fisher_pval} returns the p-values for each cell in the step 2 of
 #' the algorithm, calculated using the Monte Carlo method for cells with count
 #' greater than five, and Fisher’s exact test for cells with count less than or
@@ -62,6 +62,12 @@
 #' \code{corr_signal_adj_pval}, and what threshold for p values should be used
 #' (for example, 0.05). Please see the example below.
 #' }
+#'
+#' @references
+#' Liu, A., Mukhopadhyay, R., and Markatou, M. (2024). MDDC: An R and Python
+#' package for adverse event identification in pharmacovigilance data.
+#' arXiv preprint. arXiv:2410.01168
+#'
 #' @export
 #'
 #' @examples
@@ -319,7 +325,7 @@ mddc_mc <- function(
   )
 
   names(list_mat) <- c(
-    "mc_pval", "fisher_pval" ,"mc_signal", "fisher_signal", "corr_signal_pval",
+    "mc_pval", "fisher_pval", "mc_signal", "fisher_signal", "corr_signal_pval",
     "corr_signal_adj_pval"
   )
 
