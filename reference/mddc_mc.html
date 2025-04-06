@@ -133,8 +133,8 @@ If NULL, no seed is set.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A list with the following components:</p><ul><li><p><code>mc_pval</code> returns the p values for each cell in the second step using
-the Monte Carlo method.</p></li>
+    <p>A list with the following components:</p><ul><li><p><code>mc_pval</code> returns the p values for each cell in the second step
+using the Monte Carlo method (Algorithm 3 of Liu et al.(2024)).</p></li>
 <li><p><code>fisher_pval</code> returns the p-values for each cell in the step 2 of
 the algorithm, calculated using the Monte Carlo method for cells with count
 greater than five, and Fisher’s exact test for cells with count less than or
@@ -154,6 +154,12 @@ to decide whether to use <code>corr_signal_pval</code> or
 <code>corr_signal_adj_pval</code>, and what threshold for p values should be used
 (for example, 0.05). Please see the example below.</p></li>
 </ul></div>
+    <div class="section level2">
+    <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
+    <p>Liu, A., Mukhopadhyay, R., and Markatou, M. (2024). MDDC: An R and Python
+package for adverse event identification in pharmacovigilance data.
+arXiv preprint. arXiv:2410.01168</p>
+    </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
