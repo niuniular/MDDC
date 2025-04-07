@@ -38,6 +38,11 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.1.0" id="mddc-110">MDDC 1.1.0<a class="anchor" aria-label="anchor" href="#mddc-110"></a></h2>
+<p>In this version, we have updated the output for the the <code><a href="../reference/mddc_mc.html">mddc_mc()</a></code> method.</p>
+<p>We now include additional output element:</p>
+<ul><li>
+<code>fisher_pval</code>: p-values for each cell in the step 2 of the algorithm, calculated using the Monte Carlo method for cells with count greater than five and p-values obtained from the Fisher’s exact test for cells with count less than or equal to five in the contingency table.</li>
+</ul><p>Another output element <code>mc_pval</code> is now updated and and now outputs: p-values for each cell in the step 2 of the algorithm, calculated using the Monte Carlo method.</p>
 <div class="section level3">
 <h3 id="new-features-1-1-0">New features<a class="anchor" aria-label="anchor" href="#new-features-1-1-0"></a></h3>
 </div>
