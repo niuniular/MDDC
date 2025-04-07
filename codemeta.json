@@ -2,36 +2,45 @@
   "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
   "@type": "SoftwareSourceCode",
   "identifier": "MDDC",
-  "description": "Methods for detecting signals related to (adverse event, drug) pairs, a data generation function for simulating pharmacovigilance datasets, and various utility functions.",
-  "name": "MDDC: Modified Detecting Deviating Cells (MDDC) Algorithm for Adverse Event Identification in Pharmacovigilance",
+  "description": "Methods for detecting signals related to (adverse event, medical product e.g. drugs, vaccines) pairs, a data generation function for simulating pharmacovigilance datasets, and various utility functions. For more details please see Liu A., Mukhopadhyay R., and Markatou M. <doi:10.48550/arXiv.2410.01168>.",
+  "name": "MDDC: Modified Detecting Deviating Cells Algorithm in Pharmacovigilance",
   "codeRepository": "https://github.com/niuniular/MDDC",
   "issueTracker": "https://github.com/niuniular/MDDC/issues",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.4.0 (2024-04-24)",
+  "runtimePlatform": "R version 4.4.2 (2024-10-31)",
+  "provider": {
+    "@id": "https://cran.r-project.org",
+    "@type": "Organization",
+    "name": "Comprehensive R Archive Network (CRAN)",
+    "url": "https://cran.r-project.org"
+  },
   "author": [
     {
       "@type": "Person",
       "givenName": "Anran",
       "familyName": "Liu",
-      "email": "anranliu@buffalo.edu"
+      "email": "anranliu@buffalo.edu",
+      "@id": "https://orcid.org/0000-0002-4504-9786"
     },
     {
       "@type": "Person",
       "givenName": "Raktim",
       "familyName": "Mukhopadhyay",
-      "email": "raktimmu@buffalo.edu"
+      "email": "raktimmu@buffalo.edu",
+      "@id": "https://orcid.org/0009-0007-8972-6682"
     },
     {
       "@type": "Person",
       "givenName": "Marianthi",
       "familyName": "Markatou",
-      "email": "markatou@buffalo.edu"
+      "email": "markatou@buffalo.edu",
+      "@id": "https://orcid.org/0000-0002-1453-8229"
     }
   ],
   "maintainer": [
@@ -39,52 +48,75 @@
       "@type": "Person",
       "givenName": "Anran",
       "familyName": "Liu",
-      "email": "anranliu@buffalo.edu"
+      "email": "anranliu@buffalo.edu",
+      "@id": "https://orcid.org/0000-0002-4504-9786"
+    }
+  ],
+  "softwareSuggestions": [
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "knitr",
+      "name": "knitr",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=knitr"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "rmarkdown",
+      "name": "rmarkdown",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=rmarkdown"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "roxygen2",
+      "name": "roxygen2",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=roxygen2"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "spelling",
+      "name": "spelling",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=spelling"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "testthat",
+      "name": "testthat",
+      "version": ">= 3.0.0",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=testthat"
     }
   ],
   "softwareRequirements": {
     "1": {
-      "@type": "SoftwareApplication",
-      "identifier": "stats",
-      "name": "stats"
-    },
-    "2": {
-      "@type": "SoftwareApplication",
-      "identifier": "MASS",
-      "name": "MASS",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=MASS"
-    },
-    "3": {
-      "@type": "SoftwareApplication",
-      "identifier": "Rcpp",
-      "name": "Rcpp",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=Rcpp"
-    },
-    "4": {
-      "@type": "SoftwareApplication",
-      "identifier": "foreach",
-      "name": "foreach",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=foreach"
-    },
-    "5": {
       "@type": "SoftwareApplication",
       "identifier": "doParallel",
       "name": "doParallel",
@@ -96,7 +128,60 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=doParallel"
     },
+    "2": {
+      "@type": "SoftwareApplication",
+      "identifier": "foreach",
+      "name": "foreach",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=foreach"
+    },
+    "3": {
+      "@type": "SoftwareApplication",
+      "identifier": "ggplot2",
+      "name": "ggplot2",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=ggplot2"
+    },
+    "4": {
+      "@type": "SoftwareApplication",
+      "identifier": "MASS",
+      "name": "MASS",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=MASS"
+    },
+    "5": {
+      "@type": "SoftwareApplication",
+      "identifier": "Rcpp",
+      "name": "Rcpp",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=Rcpp"
+    },
     "6": {
+      "@type": "SoftwareApplication",
+      "identifier": "stats",
+      "name": "stats"
+    },
+    "7": {
       "@type": "SoftwareApplication",
       "identifier": "R",
       "name": "R",
@@ -104,5 +189,43 @@
     },
     "SystemRequirements": null
   },
-  "fileSize": "4190.421KB"
+  "fileSize": "5970.316KB",
+  "citation": [
+    {
+      "@type": "ScholarlyArticle",
+      "datePublished": "2024",
+      "author": [
+        {
+          "@type": "Person",
+          "givenName": "Anran",
+          "familyName": "Liu"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Raktim",
+          "familyName": "Mukhopadhyay"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Marianthi",
+          "familyName": "Markatou"
+        }
+      ],
+      "name": "MDDC: An R and Python Package for Adverse Event Identification in Pharmacovigilance Data",
+      "description": "https://doi.org/10.48550/arXiv.2410.01168",
+      "isPartOf": {
+        "@type": "PublicationIssue",
+        "datePublished": "2024",
+        "isPartOf": {
+          "@type": ["PublicationVolume", "Periodical"],
+          "name": "arXiv preprint"
+        }
+      }
+    }
+  ],
+  "releaseNotes": "https://github.com/niuniular/MDDC/blob/master/NEWS.md",
+  "readme": "https://github.com/niuniular/MDDC/blob/main/README.md",
+  "contIntegration": ["https://github.com/niuniular/MDDC/actions/workflows/r.yml", "https://app.codecov.io/gh/niuniular/MDDC"],
+  "keywords": "pharmacovigilance",
+  "relatedLink": "https://CRAN.R-project.org/package=MDDC"
 }
