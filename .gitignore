@@ -11,3 +11,5 @@ docs/*
 *.code-workspace
 *.Rcheck
 *.tar.gz
+/doc/
+/Meta/
